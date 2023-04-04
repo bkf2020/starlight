@@ -1,0 +1,31 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>&#x1F320; Starlight: Confirm Deleting hint</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+	</head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>&#x1F320; Starlight: Confirm Deleting Hint</h1>
+			</div>
+			<div style="float: right;">
+				{% if user.is_authenticated %}
+					<a href="{% url 'profile' %}">{{ user.username }}</a> |
+					<a href="{% url 'logout' %}">Logout</a>
+				{% else %}
+					<a href="{% url 'login' %}?next={{ full_path }}">Login</a> |
+					<a href="{% url 'register' %}">Register</a>
+				{% endif %}
+			</div>
+		</div>
+        <form method="post">{% csrf_token %}
+			<p>Are you sure you want to delete the hint with text: "{{ object.text }}"</p>
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+    </body>
+</html>

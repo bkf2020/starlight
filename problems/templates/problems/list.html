@@ -1,0 +1,75 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>&#x1F320; Starlight: List of Problems</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+	</head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>&#x1F320; Starlight: List of Problems</h1>
+			</div>
+			<div style="float: right;">
+				{% if user.is_authenticated %}
+					<a href="{% url 'profile' %}">{{ user.username }}</a> |
+					<a href="{% url 'logout' %}">Logout</a>
+				{% else %}
+					<a href="{% url 'login' %}?next={{ full_path }}">Login</a> |
+					<a href="{% url 'register' %}">Register</a>
+				{% endif %}
+			</div>
+		</div>
+        <p>
+            Over <u><b>10,000</b></u> problems available. AMC 8/10/12 and AIME problems from years 2010-2023 are in the database.
+            Codeforces problems in the problemset are updated daily.
+        </p>
+        <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center;">
+            <input type="text" name="search" placeholder="Search for a problem.." value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid;">
+            <div>
+                <button type="submit" class="bg-blue">Search</button><a href="{% url 'problems-list' %}" class="buttonLink bg-cyan">Reset</a>
+            </div>
+        </form>
+        <div class="alert bg-green">
+            <details>
+            <p>
+                <summary><b>Need help searching?</b> Click for format/examples of problems</summary>
+                <ul>
+                    <li><b>AMC 8:</b> [year] AMC 8 Problem #, <i>Ex: 2013 AMC 8 Problem 1</i></li>
+                    <li><b>AMC 10:</b> [year] AMC 10A Problem # OR [year] AMC 10B Problem #, <i>Ex: 2015 AMC 10A Problem 16</i></li>
+                    <li><b>AMC 12:</b> [year] AMC 12A Problem # OR [year] AMC 12B Problem #, <i>Ex: 2021 AMC 12B Problem 25</i></li>
+                    <li><b>AIME:</b> [year] AIME I Problem # OR [year] AIME II Problem #, <i>Ex: 2013 AIME I Problem 8</i></li>
+                    <li><b>Codeforces:</b> Codeforces [contest id (e.g. 101)][problem id (e.g. A, B, C)]: [Codeforces problem name], <i>Ex: Codeforces 1336F: Journey</i></li>
+                </ul>
+            </p>
+            </details>
+        </div>
+        {% if page_obj %}
+            <table><tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Problem Name</th>
+                </tr>
+                {% for problem in page_obj %}
+                    <tr>
+                        <td>{{ problem.id }}</td>
+                        <td><a href="{% url 'problems-view' problem.id %}">{{ problem.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody></table>
+        {% endif %}
+        <div class="pagination">
+            {% with ''|center:page_obj.paginator.num_pages as range %}
+            {% for i in range %}
+                {% if forloop.counter == page_obj.number %}
+                     <a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&search={{ request.GET.search }}">{{ forloop.counter }}</a>
+                {% else %}
+                     <a class="paginationLink" href="?page={{ forloop.counter }}&search={{ request.GET.search }}">{{ forloop.counter }}</a>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+        </div>
+    </body>
+</html>

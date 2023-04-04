@@ -1,0 +1,93 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>&#x1F320; Starlight: {{ problem.name }}</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+	</head>
+    <body>
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>&#x1F320; {{ problem.name }}</h1>
+			</div>
+			<div style="float: right;">
+				{% if user.is_authenticated %}
+					<a href="{% url 'profile' %}">{{ user.username }}</a> |
+					<a href="{% url 'logout' %}">Logout</a>
+				{% else %}
+					<a href="{% url 'login' %}?next={{ request.path }}">Login</a> |
+					<a href="{% url 'register' %}">Register</a>
+				{% endif %}
+			</div>
+		</div>
+		<p>View the summary of the hints to this problem as well as the key insights/observations. Filter out problems with similar key insights/observations.</p>
+        <p>
+			<a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to problem</a> |
+			<a href="#summaryHints">Summary of hints</a> |
+			<a href="#summaryInsights">Summary of insights</a>
+		</p>
+		<h2 id="submit">Submit a new hint/key insight</h2>
+		{% if user.is_authenticated %}
+			{% if user_hints %}
+				<h3 id="userHints">Your Hints</h3>
+				<ol>
+				{% for hint in user_hints %}
+					<li>{{ hint.text }}</li>
+				{% endfor %}
+				</ol>
+			{% else %}
+				<p id="userHints">You currently don't have any hints.</p>
+			{% endif %}
+			<form method="POST">
+				{% csrf_token %}
+				{{ hint_form }}
+				<button type="submit">Submit hints</button>
+			</form>
+			{% if user_insights %}
+				<h3 id="userInsights">Your Insights</h3>
+				<ol>
+				{% for insight in user_insights %}
+					<li>{{ insight.text }}</li>
+				{% endfor %}
+				</ol>
+			{% else %}
+				<p id="userInsights">You currently don't have any hints.</p>
+			{% endif %}
+			<form method="POST">
+				{% csrf_token %}
+				{{ insight_form }}
+				<button type="submit">Submit insights</button>
+			</form>
+		{% else %}
+			<div class="alert alert-error">Please login before submitting new hints/insights.</div>
+		{% endif %}
+		<h2 id="summaryHints">Summary of hints</h2>
+		<ol>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+			<li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
+			<li>laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</li>
+			<li>dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+			<li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
+			<li>laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</li>
+			<li>dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+		</ol>
+		<h2 id="summaryInsights">Summary of key insights/observations</h2>
+		<ol>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+			<li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
+			<li>laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</li>
+			<li>dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+			<li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
+			<li>laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</li>
+			<li>dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+		</ol>
+    </body>
+</html>
