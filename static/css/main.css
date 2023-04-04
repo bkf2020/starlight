@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+
+body {
+	font-family: "Work Sans", "Segoe UI", "Roboto", "BlinkMacSystemFont", -apple-system, Helvetica, Arial, sans-serif;
+	background-color: snow;
+	color: #222;
+	margin-left: auto;
+	margin-right: auto;
+	width: 95%;
+	max-width: 1024px;
+	line-height: 1.5;
+}
+h1, h2, h3 {
+	line-height: 1.2;
+}
+
+a {
+	color: mediumblue;
+}
+
+.paginationLink {
+	padding: 0.25em;
+}
+
+.paginationSelected {
+	background-color: lightgray;
+	font-weight: 700;
+}
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	border-collapse: collapse;
+}
+tr:nth-child(even) {
+	background-color: lightgray;
+}
+td, th {
+	padding: 0.5em;
+	border: 1px solid #333;
+}
+.buttonLink, button {
+	font-family: inherit;
+	color: black;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	cursor: pointer;
+	border: none;
+	font-size: 1em;
+	margin: 0.3em;
+	text-decoration: none;
+	background-color: #ebcb8b;
+}
+button:hover {
+	background-color: #ffe1a4;
+}
+.bg-cyan {
+	background-color: #8fbcbb;
+}
+.buttonLink.bg-cyan:hover, button.bg-cyan:hover {
+	background-color: #aee6e6;
+}
+.bg-blue, .alert-info {
+	background-color: #88c0d0;
+}
+button.bg-blue:hover {
+	background-color: #9adaeb;
+}
+.bg-green, .alert-success {
+	background-color: #A3BE8C;
+}
+.bg-red, .alert-error, .errorlist {
+	background-color: salmon;
+}
+.alert, .errorlist {
+	border-radius: 0.5em;
+	border: 2px #444 dashed;
+	color: black;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	overflow-wrap: break-word;
+}
+.alert {
+	padding: 0.5em;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #2e3440;
+		color: #e5e9f0;
+	}
+	a {
+		color: #88c0d0;
+	}
+	tr:nth-child(even), .paginationSelected {
+		background-color: #4c566a;
+	}
+	td, th {
+		border: 1px solid #d8dee9;
+	}
+	.alert, .errorlist {
+		border-color: #e5e9f0;
+	}
+}
