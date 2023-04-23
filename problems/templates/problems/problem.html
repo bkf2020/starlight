@@ -34,7 +34,7 @@
 				<h3 id="userHints">Your Hints</h3>
 				<ol>
 				{% for hint in user_hints %}
-					<li>{{ hint.text }}</li>
+					<li>{{ hint.text }} <a href="{% url 'hint-update' hint.id %}">Update</a> <a href="{% url 'hint-delete' hint.id %}">Delete</a></li>
 				{% endfor %}
 				</ol>
 			{% else %}
@@ -49,7 +49,7 @@
 				<h3 id="userInsights">Your Insights</h3>
 				<ol>
 				{% for insight in user_insights %}
-					<li>{{ insight.text }}</li>
+					<li>{{ insight.text }} <a href="{% url 'insight-update' insight.id %}">Update</a> <a href="{% url 'insight-delete' insight.id %}">Delete</a></li>
 				{% endfor %}
 				</ol>
 			{% else %}

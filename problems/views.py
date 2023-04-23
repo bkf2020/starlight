@@ -22,6 +22,8 @@ def list(request):
     }
     return render(request, 'problems/list.html', context)
 
+# TODO: redirect urls for all these views
+
 class HintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Hint
     fields = ['text']
