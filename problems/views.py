@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
-from .models import Problem, Hint, Insight
+from .models import Problem, Hint, Insight, HintCluster
 from .forms import HintForm, InsightForm
 
 # Create your views here.
@@ -56,6 +56,7 @@ def problem(request, index):
     hint_form = HintForm()
     insight_form = InsightForm()
     if request.method == 'POST':
+        # TODO: at most 10 hints/insights, prevent duplicate hints/insights (maybe regarding other users too)
         if 'hint' in request.POST:
             hint_form = HintForm(request.POST)
             if hint_form.is_valid() and request.user.is_authenticated:
@@ -65,7 +66,6 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_hint.save()
-                return redirect(f'/problems/{index}')
         elif 'insight' in request.POST:
             insight_form = InsightForm(request.POST)
             if insight_form.is_valid() and request.user.is_authenticated:
@@ -75,13 +75,21 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_insight.save()
-                return redirect(f'/problems/{index}')
+        return redirect(f'/problems/{index}')
     
     problem = Problem.objects.get(id=index)
+    clustered_hints = []
+    hint_clusters = HintCluster.objects.filter(problem_id=index, first=True)[0:10]
+    for cluster in hint_clusters:
+        hints = Hint.objects.filter(id=cluster.hint_id)
+        if hints.count() > 0:
+            clustered_hints.append(hints.first())
+    
     context = {
         'insight_form': insight_form,
         'hint_form': hint_form,
-        'problem': problem
+        'problem': problem,
+        'clustered_hints': clustered_hints
     }
     if request.user.is_authenticated:
         user_hints = Hint.objects.filter(problem_id=index, username=request.user.username)

@@ -65,16 +65,9 @@
 		{% endif %}
 		<h2 id="summaryHints">Summary of hints</h2>
 		<ol>
-			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-			<li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
-			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
-			<li>laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</li>
-			<li>dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
-			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-			<li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
-			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco</li>
-			<li>laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</li>
-			<li>dolor in reprehenderit in voluptate velit esse cillum dolore eu</li>
+			{% for hint in clustered_hints %}
+				<li>{{ hint.text }}</li>
+			{% endfor %}
 		</ol>
 		<h2 id="summaryInsights">Summary of key insights/observations</h2>
 		<ol>
