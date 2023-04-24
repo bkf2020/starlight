@@ -99,3 +99,18 @@ def problem(request, index):
         context['user_hints'] = user_hints
         context['user_insights'] = user_insights
     return render(request, 'problems/problem.html', context)
+
+# TODO: add pagination
+def view_cluster(request):
+    cluster_id = request.GET.get('cluster')
+    problem_id = request.GET.get('problem')
+    search_hint = request.GET.get('type') == "hint"
+    if search_hint:
+        cluster = HintCluster.objects.filter(cluster_id=cluster_id, problem_id=problem_id)
+        hints = []
+        for hint_info in cluster:
+            hints.append(Hint.objects.get(id=hint_info.hint_id))
+        context = {
+            'hints': hints
+        }
+        return render(request, 'problems/view_cluster.html', context)

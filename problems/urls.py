@@ -9,4 +9,5 @@ urlpatterns = [
     path('insight/<int:pk>/update/', InsightUpdateView.as_view(), name='insight-update'),
     path('hint/<int:pk>/delete/', HintDeleteView.as_view(), name='hint-delete'),
     path('insight/<int:pk>/delete/', InsightDeleteView.as_view(), name='insight-delete'),
+    path('cluster/', views.view_cluster, name='view-cluster'),
 ]

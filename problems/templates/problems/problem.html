@@ -64,6 +64,7 @@
 			<div class="alert alert-error">Please login before submitting new hints/insights.</div>
 		{% endif %}
 		<h2 id="summaryHints">Summary of hints</h2>
+		<p>Similar hints are grouped together into the same "cluster". The summary shows the first hint in the top 10 clusters.</p>
 		<ol>
 			{% for hint in clustered_hints %}
 				<li>{{ hint.text }}</li>
