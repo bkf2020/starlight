@@ -60,8 +60,6 @@ for hint in Hint.objects.all():
     else:
         hints_problem_ids[hint.problem_id].append(hint)
 for problem_id in hints_problem_ids:
-    if(problem_id == -1):
-        continue
     print(problem_id)
     corpus = []
     sentence_id_hint = {}
@@ -69,6 +67,18 @@ for problem_id in hints_problem_ids:
         corpus.append(hint.text)
     for i in range(len(hints_problem_ids[problem_id])):
         sentence_id_hint[i] = hints_problem_ids[problem_id][i]
+
+    if len(corpus) == 0:
+        continue
+    elif len(corpus) == 1:
+        new_hint_cluster = HintCluster(
+            problem_id=problem_id,
+            hint=sentence_id_hint[0],
+            cluster_id=cluster_id,
+            first=True
+        )
+        new_hint_cluster.save()
+        continue
         
     print("embedding corpus")
     corpus_embeddings = embedder.encode(corpus)
