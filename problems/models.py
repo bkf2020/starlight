@@ -17,6 +17,6 @@ class Insight(models.Model):
 
 class HintCluster(models.Model):
     problem_id = models.IntegerField(default=-1)
-    hint_id = models.IntegerField(default=-1)
+    hint = models.ForeignKey(Hint, null=True, on_delete=models.CASCADE)
     cluster_id = models.IntegerField(default=-1)
     first = models.BooleanField(default=False)

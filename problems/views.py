@@ -83,9 +83,7 @@ def problem(request, index):
     clustered_hints = []
     hint_clusters = HintCluster.objects.filter(problem_id=index, first=True)[0:10]
     for cluster in hint_clusters:
-        hints = Hint.objects.filter(id=cluster.hint_id)
-        if hints.count() > 0:
-            clustered_hints.append(hints.first())
+        clustered_hints.append(cluster.hint)
     
     context = {
         'insight_form': insight_form,
@@ -109,7 +107,7 @@ def view_cluster(request):
         cluster = HintCluster.objects.filter(cluster_id=cluster_id, problem_id=problem_id)
         hints = []
         for hint_info in cluster:
-            hints.append(Hint.objects.get(id=hint_info.hint_id))
+            hints.append(hint_info.hint)
         context = {
             'hints': hints
         }

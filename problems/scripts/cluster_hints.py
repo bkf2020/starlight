@@ -60,13 +60,15 @@ for hint in Hint.objects.all():
     else:
         hints_problem_ids[hint.problem_id].append(hint)
 for problem_id in hints_problem_ids:
+    if(problem_id == -1):
+        continue
     print(problem_id)
     corpus = []
-    sentence_id_hint_id = {}
+    sentence_id_hint = {}
     for hint in hints_problem_ids[problem_id]:
         corpus.append(hint.text)
     for i in range(len(hints_problem_ids[problem_id])):
-        sentence_id_hint_id[i] = hints_problem_ids[problem_id][i].id
+        sentence_id_hint[i] = hints_problem_ids[problem_id][i]
         
     print("embedding corpus")
     corpus_embeddings = embedder.encode(corpus)
@@ -86,7 +88,7 @@ for problem_id in hints_problem_ids:
     for sentence_id, cluster_id in enumerate(cluster_assignment):
         new_hint_cluster = HintCluster(
             problem_id=problem_id,
-            hint_id=sentence_id_hint_id[sentence_id],
+            hint=sentence_id_hint[sentence_id],
             cluster_id=cluster_id
         )
         if cluster_id not in seen_cluster_id:
