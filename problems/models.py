@@ -29,18 +29,32 @@ class InsightCluster(models.Model):
     first = models.BooleanField(default=False)
 
 def update_first_hint_cluster(sender, **kwargs):
-    new_first = HintCluster.objects.first()
-    new_first.first = True
-    new_first.save()
+    problem_id = kwargs.get('instance').problem_id
+    cluster_id = kwargs.get('instance').cluster_id
+    new_first = HintCluster.objects.filter(
+        problem_id=problem_id,
+        cluster_id=cluster_id
+    )
+    if(new_first.count() > 0):
+        new_first = new_first.first()
+        new_first.first = True
+        new_first.save()
 
 def update_first_insight_cluster(sender, **kwargs):
-    new_first = InsightCluster.objects.first()
-    new_first.first = True
-    new_first.save()
+    problem_id = kwargs.get('instance').problem_id
+    cluster_id = kwargs.get('instance').cluster_id
+    new_first = InsightCluster.objects.filter(
+        problem_id=problem_id,
+        cluster_id=cluster_id
+    )
+    if(new_first.count() > 0):
+        new_first = new_first.first()
+        new_first.first = True
+        new_first.save()
 
 post_delete.connect(
-    update_first_hint_cluster, sender=Hint
+    update_first_hint_cluster, sender=HintCluster
 )
 post_delete.connect(
-    update_first_insight_cluster, sender=Insight
+    update_first_insight_cluster, sender=InsightCluster
 )
