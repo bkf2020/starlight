@@ -74,7 +74,7 @@ for problem_id in insights_problem_ids:
         new_insight_cluster = InsightCluster(
             problem_id=problem_id,
             insight=sentence_id_insight[0],
-            cluster_id=cluster_id,
+            cluster_id=0,
             first=True
         )
         new_insight_cluster.save()

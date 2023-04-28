@@ -74,7 +74,7 @@ for problem_id in hints_problem_ids:
         new_hint_cluster = HintCluster(
             problem_id=problem_id,
             hint=sentence_id_hint[0],
-            cluster_id=cluster_id,
+            cluster_id=0,
             first=True
         )
         new_hint_cluster.save()
