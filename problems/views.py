@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
-from .models import Problem, Hint, Insight, HintCluster
+from .models import Problem, Hint, Insight, HintCluster, InsightCluster
 from .forms import HintForm, InsightForm
 
 # Create your views here.
@@ -84,12 +84,18 @@ def problem(request, index):
     hint_clusters = HintCluster.objects.filter(problem_id=index, first=True)[0:10]
     for cluster in hint_clusters:
         clustered_hints.append(cluster.hint)
+
+    clustered_insights = []
+    insight_clusters = InsightCluster.objects.filter(problem_id=index, first=True)[0:10]
+    for cluster in insight_clusters:
+        clustered_insights.append(cluster.insight)
     
     context = {
         'insight_form': insight_form,
         'hint_form': hint_form,
         'problem': problem,
-        'clustered_hints': clustered_hints
+        'clustered_hints': clustered_hints,
+        'clustered_insights': clustered_insights
     }
     if request.user.is_authenticated:
         user_hints = Hint.objects.filter(problem_id=index, username=request.user.username)
