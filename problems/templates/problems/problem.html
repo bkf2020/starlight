@@ -66,14 +66,14 @@
 		<h2 id="summaryHints">Summary of hints</h2>
 		<p>Similar hints are grouped together into the same "cluster". The summary shows the first hint in the top 10 clusters.</p>
 		<ol>
-			{% for hint in clustered_hints %}
-				<li>{{ hint.text }}</li>
+			{% for hint_cluster in hint_clusters %}
+				<li>{{ hint_cluster.hint.text }} <a href="{% url 'view-cluster' %}?type=hint&problem={{ hint_cluster.problem_id }}&cluster={{ hint_cluster.cluster_id }}">View hints in this cluster</a></li>
 			{% endfor %}
 		</ol>
 		<h2 id="summaryInsights">Summary of key insights/observations</h2>
 		<ol>
-			{% for insight in clustered_insights %}
-				<li>{{ insight.text }}</li>
+			{% for insight_cluster in insight_clusters %}
+				<li>{{ insight_cluster.insight.text }} <a href="{% url 'view-cluster' %}?type=insight&problem={{ insight_cluster.problem_id }}&cluster={{ insight_cluster.cluster_id }}">View insights in this cluster</a></li>
 			{% endfor %}
 		</ol>
     </body>

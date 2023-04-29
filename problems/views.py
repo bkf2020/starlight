@@ -80,22 +80,15 @@ def problem(request, index):
         return redirect(f'/problems/{index}')
     
     problem = Problem.objects.get(id=index)
-    clustered_hints = []
     hint_clusters = HintCluster.objects.filter(problem_id=index, first=True)[0:10]
-    for cluster in hint_clusters:
-        clustered_hints.append(cluster.hint)
-
-    clustered_insights = []
     insight_clusters = InsightCluster.objects.filter(problem_id=index, first=True)[0:10]
-    for cluster in insight_clusters:
-        clustered_insights.append(cluster.insight)
     
     context = {
         'insight_form': insight_form,
         'hint_form': hint_form,
         'problem': problem,
-        'clustered_hints': clustered_hints,
-        'clustered_insights': clustered_insights
+        'hint_clusters': hint_clusters,
+        'insight_clusters': insight_clusters
     }
     if request.user.is_authenticated:
         user_hints = Hint.objects.filter(problem_id=index, username=request.user.username)
