@@ -118,3 +118,12 @@ def view_cluster(request):
             'hints': hints
         }
         return render(request, 'problems/view_cluster.html', context)
+    else:
+        cluster = InsightCluster.objects.filter(cluster_id=cluster_id, problem_id=problem_id)
+        insights = []
+        for insight_info in cluster:
+            insights.append(insight_info.insight)
+        context = {
+            'insights': insights
+        }
+        return render(request, 'problems/view_cluster.html', context)

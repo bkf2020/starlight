@@ -41,6 +41,15 @@
 					{{ hint.text }} by {{ hint.username }}
 				</li>
 			{% endfor %}
+		{% else %}
+			{% for insight in insights %}
+				<li>
+					{% if forloop.first %}
+						<b>Viewing insights similar to:</b>
+					{% endif %}
+					{{ insight.text }} by {{ insight.username }}
+				</li>
+			{% endfor %}
 		{% endif %}
     </body>
 </html>
