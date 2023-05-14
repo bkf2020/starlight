@@ -28,6 +28,12 @@ class InsightCluster(models.Model):
     cluster_id = models.IntegerField(default=-1)
     first = models.BooleanField(default=False)
 
+class OverallInsightCluster(models.Model):
+    problem_id = models.IntegerField(default=-1)
+    insight = models.ForeignKey(Insight, null=True, on_delete=models.CASCADE)
+    cluster_id_overall = models.IntegerField(default=-1)
+    cluster_id_in_problem = models.IntegerField(default=-1)
+
 def update_first_hint_cluster(sender, **kwargs):
     problem_id = kwargs.get('instance').problem_id
     cluster_id = kwargs.get('instance').cluster_id
