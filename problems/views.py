@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import UpdateView, DeleteView
-from .models import Problem, Hint, Insight, HintCluster, InsightCluster
+from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster
 from .forms import HintForm, InsightForm
 
 # Create your views here.
@@ -120,3 +120,34 @@ def view_cluster(request):
             'insights': insights
         }
         return render(request, 'problems/view_cluster.html', context)
+
+def problems_similar_insights(request):
+    search_type = request.GET.get('type')
+    if search_type == "individual":
+        insight_id = request.GET.get('insight')
+        insight = Insight.objects.filter(id=insight_id).first()
+        firstProblem = Problem.objects.filter(id=insight.problem_id)
+        if firstProblem.count() > 0:
+            firstProblem = firstProblem.first()
+        else:
+            firstProblem = Problem(name="N/A", url="#")
+        cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight).first().cluster_id_overall
+        cluster = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall)
+        problems = []
+        seen = {}
+        for info in cluster:
+            if info.problem_id in seen:
+                continue
+            seen[info.problem_id] = True
+            problem = Problem.objects.filter(id=info.problem_id)
+            if problem.count() > 0:
+                add_problem = problem.first()
+                add_problem.insights_matched = cluster.filter(problem_id=add_problem.id)
+                problems.append(add_problem)
+        context = {
+            'insight': insight,
+            'cluster': cluster,
+            'problems': problems,
+            'firstProblem': firstProblem
+        }
+        return render(request, 'problems/problems_similar_insights.html', context)
