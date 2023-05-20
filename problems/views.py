@@ -151,3 +151,45 @@ def problems_similar_insights(request):
             'firstProblem': firstProblem
         }
         return render(request, 'problems/problems_similar_insights.html', context)
+    elif search_type == "group":
+        insight_cluster_id = request.GET.get('cluster')
+        insight_problem_id = request.GET.get('problem')
+        insight_cluster = InsightCluster.objects.filter(cluster_id=insight_cluster_id, problem_id=insight_problem_id)
+        firstProblem = Problem.objects.filter(id=insight_problem_id)
+        if firstProblem.count() > 0:
+            firstProblem = firstProblem.first()
+        else:
+            firstProblem = Problem(name="N/A", url="#")
+        
+        problems = []
+        id_problem = {}
+        seen_cluster_id_overall = {}
+        for insight_info in insight_cluster:
+            cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight_info.insight).first().cluster_id_overall
+            overall_cluster = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall)
+            if cluster_id_overall in seen_cluster_id_overall:
+                continue
+            seen_cluster_id_overall[cluster_id_overall] = True
+
+            seen_problem = {}
+            for info in overall_cluster:
+                problem = Problem.objects.filter(id=info.problem_id)
+                if info.problem_id in seen_problem:
+                    continue
+                seen_problem[info.problem_id] = True
+
+                if problem.count() > 0:
+                    if info.problem_id in id_problem:
+                        id_problem[info.problem_id].insights_matched.append(overall_cluster.filter(problem_id=info.problem_id))
+                    else:
+                        add_problem = problem.first()
+                        add_problem.insights_matched = [overall_cluster.filter(problem_id=info.problem_id)]
+                        id_problem[info.problem_id] = add_problem
+        for problem_id in id_problem:
+            problems.append(id_problem[problem_id])
+        context = {
+            'problems': problems,
+            'firstProblem': firstProblem,
+            'firstInsight': insight_cluster[0].insight
+        }
+        return render(request, 'problems/problems_similar_insights.html', context)
