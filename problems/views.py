@@ -151,16 +151,25 @@ def problems_similar_insights(request):
             'firstProblem': firstProblem
         }
         return render(request, 'problems/problems_similar_insights.html', context)
-    elif search_type == "group":
-        insight_cluster_id = request.GET.get('cluster')
-        insight_problem_id = request.GET.get('problem')
-        insight_cluster = InsightCluster.objects.filter(cluster_id=insight_cluster_id, problem_id=insight_problem_id)
-        firstProblem = Problem.objects.filter(id=insight_problem_id)
-        if firstProblem.count() > 0:
-            firstProblem = firstProblem.first()
+    else:
+        if search_type == 'group':
+            insight_cluster_id = request.GET.get('cluster')
+            insight_problem_id = request.GET.get('problem')
+            insight_cluster = InsightCluster.objects.filter(cluster_id=insight_cluster_id, problem_id=insight_problem_id)
+            firstProblem = Problem.objects.filter(id=insight_problem_id)
+            if firstProblem.count() > 0:
+                firstProblem = firstProblem.first()
+            else:
+                firstProblem = Problem(name="N/A", url="#")
         else:
-            firstProblem = Problem(name="N/A", url="#")
-        
+            insight_problem_id = request.GET.get('problem')
+            insight_cluster = InsightCluster.objects.filter(problem_id=insight_problem_id)
+            firstProblem = Problem.objects.filter(id=insight_problem_id)
+            if firstProblem.count() > 0:
+                firstProblem = firstProblem.first()
+            else:
+                firstProblem = Problem(name="N/A", url="#")
+
         problems = []
         id_problem = {}
         seen_cluster_id_overall = {}

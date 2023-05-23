@@ -75,6 +75,31 @@
 					{% endif %}
 				{% endfor %}
 			</ul>
+		{% else %}
+			<p>Viewing other problems with insights similar to <b>ANY insight of</b> <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.</p>
+			<ul>
+				{% for problem in problems %}
+					{% if problem != firstProblem %}
+						<li>
+							<p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></p>
+							{% if problem.insights_matched %}
+								<details>
+									<summary>Shared similar insights</summary>
+										{% for insight_cluster in problem.insights_matched %}
+											{% for insight_info in insight_cluster %}
+												<ul>
+													<li>
+														{{ insight_info.insight.text }}
+													</li>
+												</ul>
+											{% endfor %}
+										{% endfor %}
+								</details>
+							{% endif %}
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
 		{% endif %}
     </body>
 </html>
