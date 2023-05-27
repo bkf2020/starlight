@@ -202,3 +202,26 @@ def problems_similar_insights(request):
             'firstInsight': insight_cluster[0].insight
         }
         return render(request, 'problems/problems_similar_insights.html', context)
+
+def shared_insights(request):
+    search_type = request.GET.get('type')
+    if search_type == "individual":
+        insight_id = request.GET.get('insight')
+        insight = Insight.objects.filter(id=insight_id).first()
+        other_problem_id = request.GET.get('otherProblem')
+        otherProblem = Problem.objects.filter(id=other_problem_id).first()
+        firstProblem = Problem.objects.filter(id=insight.problem_id)
+        if firstProblem.count() > 0:
+            firstProblem = firstProblem.first()
+        else:
+            firstProblem = Problem(name="N/A", url="#")
+        cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight).first().cluster_id_overall
+        shared_insights = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall, problem_id=other_problem_id)
+        context = {
+            'insight': insight,
+            'shared_insights': shared_insights,
+            'firstProblem': firstProblem,
+            'otherProblem': otherProblem
+        }
+        return render(request, 'problems/shared_insights.html', context)
+    return redirect('/')

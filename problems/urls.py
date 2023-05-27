@@ -11,4 +11,5 @@ urlpatterns = [
     path('insight/<int:pk>/delete/', InsightDeleteView.as_view(), name='insight-delete'),
     path('cluster/', views.view_cluster, name='view-cluster'),
     path('problemsSimilarInsights/', views.problems_similar_insights, name='problems-similar-insights'),
+    path('sharedInsights/', views.shared_insights, name='shared-insights'),
 ]
