@@ -33,6 +33,33 @@
                     <li>{{ insight_info.insight.text }}</li>
                 {% endfor %}
             </ul>
+		{% elif request.GET.type == "group" %}
+            <p>
+                Viewing insights from <a href="{{ otherProblem.link }}">{{ otherProblem.name }}</a>
+                that are similar (thus shared) with <b>any insight</b> in this <b>group</b> of <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.
+                The first insight of this group is:
+				<blockquote>{{ firstInsight.text }}</blockquote>
+            </p>
+			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}">View all insights in this group</a>
+			<ul>
+				{% for insight_cluster in shared_insights %}
+					{% for insight_info in insight_cluster %}
+						<li>{{ insight_info.insight.text }}</li>
+					{% endfor %}
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>
+                Viewing insights from <a href="{{ otherProblem.link }}">{{ otherProblem.name }}</a>
+                that are similar (thus shared) with <b>ANY insight</b> of <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.
+            </p>
+			<ul>
+				{% for insight_cluster in shared_insights %}
+					{% for insight_info in insight_cluster %}
+						<li>{{ insight_info.insight.text }}</li>
+					{% endfor %}
+				{% endfor %}
+			</ul>
         {% endif %}
     </body>
 </html>

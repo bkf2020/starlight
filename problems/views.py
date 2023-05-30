@@ -224,4 +224,42 @@ def shared_insights(request):
             'otherProblem': otherProblem
         }
         return render(request, 'problems/shared_insights.html', context)
-    return redirect('/')
+    else:
+        if search_type == 'group':
+            insight_cluster_id = request.GET.get('cluster')
+            insight_problem_id = request.GET.get('insightProblem')
+            insight_cluster = InsightCluster.objects.filter(cluster_id=insight_cluster_id, problem_id=insight_problem_id)
+            firstProblem = Problem.objects.filter(id=insight_problem_id)
+            if firstProblem.count() > 0:
+                firstProblem = firstProblem.first()
+            else:
+                firstProblem = Problem(name="N/A", url="#")
+            other_problem_id = request.GET.get('otherProblem')
+            otherProblem = Problem.objects.filter(id=other_problem_id).first()
+        else:
+            first_problem_id = request.GET.get('firstProblem')
+            firstProblem = Problem.objects.filter(id=first_problem_id)
+            if firstProblem.count() > 0:
+                firstProblem = firstProblem.first()
+            else:
+                firstProblem = Problem(name="N/A", url="#")
+            insight_cluster = InsightCluster.objects.filter(problem_id=first_problem_id)
+            other_problem_id = request.GET.get('otherProblem')
+            otherProblem = Problem.objects.filter(id=other_problem_id).first()
+        
+        seen_cluster_id_overall = {}
+        shared_insights = []
+        for insight_info in insight_cluster:
+            cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight_info.insight).first().cluster_id_overall
+            overall_cluster = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall)
+            if cluster_id_overall in seen_cluster_id_overall:
+                continue
+            seen_cluster_id_overall[cluster_id_overall] = True
+            shared_insights.append(overall_cluster.filter(problem_id=other_problem_id))
+        context = {
+            'shared_insights': shared_insights,
+            'firstProblem': firstProblem,
+            'firstInsight': insight_cluster[0].insight,
+            'otherProblem': otherProblem
+        }
+        return render(request, 'problems/shared_insights.html', context)
