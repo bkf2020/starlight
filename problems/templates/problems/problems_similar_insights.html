@@ -60,15 +60,15 @@
 							{% if problem.insights_matched %}
 								<details>
 									<summary>Shared similar insights</summary>
-										{% for insight_cluster in problem.insights_matched %}
-											{% for insight_info in insight_cluster %}
-												<ul>
+										<ul>
+											{% for insight_cluster in problem.insights_matched %}
+												{% for insight_info in insight_cluster %}
 													<li>
 														{{ insight_info.insight.text }}
 													</li>
-												</ul>
+												{% endfor %}
 											{% endfor %}
-										{% endfor %}
+										</ul>
 								</details>
 							{% endif %}
 						</li>
@@ -85,15 +85,15 @@
 							{% if problem.insights_matched %}
 								<details>
 									<summary>Shared similar insights</summary>
-										{% for insight_cluster in problem.insights_matched %}
-											{% for insight_info in insight_cluster %}
-												<ul>
+										<ul>
+											{% for insight_cluster in problem.insights_matched %}
+												{% for insight_info in insight_cluster %}
 													<li>
 														{{ insight_info.insight.text }}
 													</li>
-												</ul>
+												{% endfor %}
 											{% endfor %}
-										{% endfor %}
+										</ul>
 								</details>
 							{% endif %}
 						</li>
