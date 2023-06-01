@@ -80,8 +80,8 @@ def problem(request, index):
         return redirect(f'/problems/{index}')
     
     problem = Problem.objects.get(id=index)
-    hint_clusters = HintCluster.objects.filter(problem_id=index, first=True)[0:10]
-    insight_clusters = InsightCluster.objects.filter(problem_id=index, first=True)[0:10]
+    hint_clusters = HintCluster.objects.filter(problem_id=index, first=True).order_by('cluster_id')[0:10]
+    insight_clusters = InsightCluster.objects.filter(problem_id=index, first=True).order_by('cluster_id')[0:10]
     
     context = {
         'insight_form': insight_form,
@@ -120,6 +120,23 @@ def view_cluster(request):
             'insights': insights
         }
         return render(request, 'problems/view_cluster.html', context)
+
+def view_all_summary(request):
+    problem_id = request.GET.get('problem')
+    problem = Problem.objects.filter(id=problem_id).first()
+    search_hint = request.GET.get('type') == "hint"
+    if search_hint:
+        hints_insights = HintCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id')
+    else:
+        hints_insights = InsightCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id')
+    paginator = Paginator(hints_insights, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+        'problem': problem
+    }
+    return render(request, 'problems/view_all_summary.html', context)
 
 def problems_similar_insights(request):
     search_type = request.GET.get('type')

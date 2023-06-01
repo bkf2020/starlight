@@ -12,4 +12,5 @@ urlpatterns = [
     path('cluster/', views.view_cluster, name='view-cluster'),
     path('problemsSimilarInsights/', views.problems_similar_insights, name='problems-similar-insights'),
     path('sharedInsights/', views.shared_insights, name='shared-insights'),
+    path('viewAllSummary/', views.view_all_summary, name='view-all-summary'),
 ]
