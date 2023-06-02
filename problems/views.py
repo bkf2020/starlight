@@ -97,6 +97,23 @@ def problem(request, index):
         context['user_insights'] = user_insights
     return render(request, 'problems/problem.html', context)
 
+def view_all_hints_insights(request):
+    search_type = request.GET.get('type')
+    problem_id = request.GET.get('problem')
+    problem = Problem.objects.filter(id=problem_id).first()
+    if search_type == "hint":
+        hints_insights = Hint.objects.filter(problem_id=problem_id).order_by('id')
+    else:
+        hints_insights = Insight.objects.filter(problem_id=problem_id).order_by('id')
+    paginator = Paginator(hints_insights, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+        'problem': problem
+    }
+    return render(request, 'problems/view_all_hints_insights.html', context)
+
 # TODO: add pagination
 def view_cluster(request):
     cluster_id = request.GET.get('cluster')
@@ -129,7 +146,7 @@ def view_all_summary(request):
         hints_insights = HintCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id')
     else:
         hints_insights = InsightCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id')
-    paginator = Paginator(hints_insights, 20)
+    paginator = Paginator(hints_insights, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
