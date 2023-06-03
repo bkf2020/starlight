@@ -33,6 +33,7 @@
 			</div>
 		</div>
 		{% if request.GET.type == "hint" %}
+			<ul>
 			{% for hint in hints %}
 				<li>
 					{% if forloop.first %}
@@ -41,7 +42,9 @@
 					{{ hint.text }} by {{ hint.username }}
 				</li>
 			{% endfor %}
+			</ul>
 		{% else %}
+			<ul>
 			{% for insight in insights %}
 				<li>
 					{% if forloop.first %}
@@ -50,6 +53,7 @@
 					{{ insight.text }} by {{ insight.username }}
 				</li>
 			{% endfor %}
+			</ul>
 		{% endif %}
     </body>
 </html>
