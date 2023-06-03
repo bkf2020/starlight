@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap');
 
 body {
 	font-family: "Work Sans", "Segoe UI", "Roboto", "BlinkMacSystemFont", -apple-system, Helvetica, Arial, sans-serif;
@@ -13,6 +13,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
 }
+html {
+	border-top: 0.4em #d08770 solid;
+}
+
 h1, h2, h3 {
 	line-height: 1.2;
 }
