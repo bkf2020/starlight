@@ -10,6 +10,7 @@
 		    <title>&#x1F320; Starlight: View First Insight of each Insight Cluster from {{ problem.name }}</title>
         {% endif %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %}" />
 	</head>
     <body>
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -30,11 +31,16 @@
 				{% endif %}
 			</div>
 		</div>
+        <div class="overlay hidden" id="clusterModelOverlay">
+            <div class="modal" id="clusterModal">
+                <h3>Viewing all hints in this cluster:</h3>
+            </div>
+        </div>
         <p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to {{ problem.name }}</a></p>
         <ul>
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}
-                    <li>{{ info.hint.text }}</li>
+                    <li>{{ info.hint.text }} <button class="viewHintCluster">View this cluster</button></li>
                 {% else %}
                     <li>{{ info.insight.text }}</li>
                 {% endif %}
@@ -52,4 +58,5 @@
             {% endwith %}
         </div>
     </body>
+	<script type="text/javascript" src="{% static 'js/viewModal.js' %}"></script>
 </html>

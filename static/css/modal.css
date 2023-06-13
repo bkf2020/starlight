@@ -1,0 +1,32 @@
+.overlay {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.hidden {
+    display: none;
+}
+.modal {
+    margin-left: auto;
+	margin-right: auto;
+    width: 90%;
+	max-width: 900px;
+    background-color: snow;
+    margin-top: 2em;
+    padding: 1em;
+    border-radius: 1em;
+}
+@media (prefers-color-scheme: dark) {
+    .modal {
+		background-color: #2e3440;
+		color: #e5e9f0;
+	}
+    .overlay {
+        background-color: #e5e9f0ab;
+    }
+}
