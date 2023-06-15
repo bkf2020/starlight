@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse
 from django.views.generic.edit import UpdateView, DeleteView
 from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster
 from .forms import HintForm, InsightForm
@@ -119,23 +121,34 @@ def view_cluster(request):
     cluster_id = request.GET.get('cluster')
     problem_id = request.GET.get('problem')
     search_hint = request.GET.get('type') == "hint"
+    use_json = request.GET.get('json') == "true"
     if search_hint:
         cluster = HintCluster.objects.filter(cluster_id=cluster_id, problem_id=problem_id)
         hints = []
         for hint_info in cluster:
-            hints.append(hint_info.hint)
+            if use_json:
+                hints.append(model_to_dict(hint_info.hint))
+            else:
+                hints.append(hint_info.hint)
         context = {
             'hints': hints
         }
+        if use_json:
+            return JsonResponse(context)
         return render(request, 'problems/view_cluster.html', context)
     else:
         cluster = InsightCluster.objects.filter(cluster_id=cluster_id, problem_id=problem_id)
         insights = []
         for insight_info in cluster:
-            insights.append(insight_info.insight)
+            if use_json:
+                insights.append(model_to_dict(insight_info.insight))
+            else:
+                insights.append(insight_info.insight)
         context = {
             'insights': insights
         }
+        if use_json:
+            return JsonResponse(context)
         return render(request, 'problems/view_cluster.html', context)
 
 def view_all_summary(request):

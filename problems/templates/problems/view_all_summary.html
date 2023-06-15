@@ -33,16 +33,15 @@
 		</div>
         <div class="overlay hidden" id="clusterModelOverlay">
             <div class="modal" id="clusterModal">
-                <h3>Viewing all hints in this cluster:</h3>
             </div>
         </div>
         <p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to {{ problem.name }}</a></p>
         <ul>
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}
-                    <li>{{ info.hint.text }} <button class="viewHintCluster">View this cluster</button></li>
+                    <li>{{ info.hint.text }} <button class="viewHintCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
                 {% else %}
-                    <li>{{ info.insight.text }}</li>
+                    <li>{{ info.insight.text }} <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
                 {% endif %}
             {% endfor %}
         </ul>

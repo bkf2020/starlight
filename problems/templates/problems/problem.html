@@ -25,8 +25,8 @@
 		<p>View the summary of the hints to this problem as well as the key insights/observations. Filter out problems with similar key insights/observations.</p>
         <p>
 			<a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to problem</a> |
-			<a href="#summaryHints">Summary of hints</a> |
-			<a href="#summaryInsights">Summary of insights</a>
+			<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint">Summary of hints</a> |
+			<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight">Summary of insights and similar problems</a>
 		</p>
 		<h2 id="submit">Submit a new hint/key insight</h2>
 		{% if user.is_authenticated %}
