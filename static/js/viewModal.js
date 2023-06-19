@@ -17,7 +17,7 @@ for(let i = 0; i < viewHintClusterBtns.length; i++) {
             description.appendChild(document.createTextNode("Viewing all hints of this cluster:"));
             document.getElementById("clusterModal").append(description);
             document.getElementById("clusterModal").append(listHints);
-            document.getElementById("clusterModelOverlay").classList.remove("hidden");
+            document.getElementById("clusterModelOverlay").classList.add("visible");
         } catch (error) {
             console.error("Error:", error);
         }
@@ -40,7 +40,7 @@ for(let i = 0; i < viewInsightClusterBtns.length; i++) {
             description.appendChild(document.createTextNode("Viewing all insights of this cluster:"));
             document.getElementById("clusterModal").append(description);
             document.getElementById("clusterModal").append(listInsights);
-            document.getElementById("clusterModelOverlay").classList.remove("hidden");
+            document.getElementById("clusterModelOverlay").classList.add("visible");
         } catch (error) {
             console.error("Error:", error);
         }

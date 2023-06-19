@@ -1,5 +1,5 @@
 .overlay {
-    display: block;
+    display: none;
     position: absolute;
     top: 0px;
     left: 0;
@@ -8,8 +8,17 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
 }
-.hidden {
-    display: none;
+@keyframes fadeIn {  
+    from {
+        opacity: 0;
+    }  
+    to {  
+        opacity: 1;  
+    }  
+}
+.visible {
+    display: block;
+    animation: fadeIn 0.2s ease-in;
 }
 .modal {
     margin-left: auto;
