@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
+from django.core import serializers
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse
@@ -170,6 +171,7 @@ def view_all_summary(request):
 
 def problems_similar_insights(request):
     search_type = request.GET.get('type')
+    json = request.GET.get('json') == "true"
     if search_type == "individual":
         insight_id = request.GET.get('insight')
         insight = Insight.objects.filter(id=insight_id).first()
@@ -236,22 +238,28 @@ def problems_similar_insights(request):
 
                 if problem.count() > 0:
                     if info.problem_id in id_problem:
-                        id_problem[info.problem_id].insights_matched.append(overall_cluster.filter(problem_id=info.problem_id))
+                        if not json: id_problem[info.problem_id].insights_matched.append(overall_cluster.filter(problem_id=info.problem_id))
                     else:
                         add_problem = problem.first()
-                        add_problem.insights_matched = [overall_cluster.filter(problem_id=info.problem_id)]
+                        if not json: add_problem.insights_matched = [overall_cluster.filter(problem_id=info.problem_id)]
                         id_problem[info.problem_id] = add_problem
         for problem_id in id_problem:
-            problems.append(id_problem[problem_id])
+            if json:
+                problems.append(model_to_dict(id_problem[problem_id]))
+            else:
+                problems.append(id_problem[problem_id])
         context = {
             'problems': problems,
-            'firstProblem': firstProblem,
-            'firstInsight': insight_cluster[0].insight
+            'firstProblem': model_to_dict(firstProblem) if json else firstProblem,
+            'firstInsight': model_to_dict(insight_cluster[0].insight) if json else insight_cluster[0].insight
         }
+        if json:
+            return JsonResponse(context)
         return render(request, 'problems/problems_similar_insights.html', context)
 
 def shared_insights(request):
     search_type = request.GET.get('type')
+    json = request.GET.get('json') == "true"
     if search_type == "individual":
         insight_id = request.GET.get('insight')
         insight = Insight.objects.filter(id=insight_id).first()
@@ -302,11 +310,17 @@ def shared_insights(request):
             if cluster_id_overall in seen_cluster_id_overall:
                 continue
             seen_cluster_id_overall[cluster_id_overall] = True
-            shared_insights.append(overall_cluster.filter(problem_id=other_problem_id))
+            if json:
+                for insight_info in overall_cluster.filter(problem_id=other_problem_id):
+                    shared_insights.append(model_to_dict(insight_info.insight))
+            else:
+                shared_insights.append(overall_cluster.filter(problem_id=other_problem_id))
         context = {
             'shared_insights': shared_insights,
-            'firstProblem': firstProblem,
-            'firstInsight': insight_cluster[0].insight,
-            'otherProblem': otherProblem
+            'firstProblem': model_to_dict(firstProblem) if json else firstProblem,
+            'firstInsight': model_to_dict(insight_cluster[0].insight) if json else insight_cluster[0].insight,
+            'otherProblem': model_to_dict(otherProblem) if json else otherProblem
         }
+        if json:
+            return JsonResponse(context)
         return render(request, 'problems/shared_insights.html', context)

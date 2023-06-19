@@ -41,7 +41,11 @@
                 {% if request.GET.type == "hint" %}
                     <li>{{ info.hint.text }} <button class="viewHintCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
                 {% else %}
-                    <li>{{ info.insight.text }} <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
+                    <li>
+                        {{ info.insight.text }}
+                        <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button>
+                        <button class="viewSimilarProblems" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">Problems with common insights to this cluster</button>
+                    </li>
                 {% endif %}
             {% endfor %}
         </ul>

@@ -20,6 +20,10 @@
     display: block;
     animation: fadeIn 0.2s ease-in;
 }
+.visibleSlower {
+    display: block;
+    animation: fadeIn 0.1s ease-in;
+}
 .modal {
     margin-left: auto;
 	margin-right: auto;
