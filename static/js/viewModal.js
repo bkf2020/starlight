@@ -1,9 +1,9 @@
 const viewHintClusterBtns = document.getElementsByClassName("viewHintCluster");
 for(let i = 0; i < viewHintClusterBtns.length; i++) {
     viewHintClusterBtns[i].addEventListener("click", async function (event) {
+        if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         try {
-            console.log(event.target);
-            console.log(event.target.getAttribute("problemid"));
+            document.getElementById("clusterModal").replaceChildren();
             const hintCluster = await fetch("/problems/cluster/?type=hint&problem=" + event.target.getAttribute("problemid").toString() + "&cluster=" + event.target.getAttribute("clusterid").toString() + "&json=true");
             const hintClusterData = await hintCluster.json();
             var listHints = document.createElement("ul");
@@ -26,7 +26,9 @@ for(let i = 0; i < viewHintClusterBtns.length; i++) {
 const viewInsightClusterBtns = document.getElementsByClassName("viewInsightCluster");
 for(let i = 0; i < viewInsightClusterBtns.length; i++) {
     viewInsightClusterBtns[i].addEventListener("click", async function (event) {
+        if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         try {
+            document.getElementById("clusterModal").replaceChildren();
             const insightCluster = await fetch("/problems/cluster/?type=insight&problem=" + event.target.getAttribute("problemid").toString() + "&cluster=" + event.target.getAttribute("clusterid").toString() + "&json=true");
             const insightClusterData = await insightCluster.json();
             var listInsights = document.createElement("ul");
@@ -49,7 +51,9 @@ for(let i = 0; i < viewInsightClusterBtns.length; i++) {
 const viewSimilarProblemsBtns = document.getElementsByClassName("viewSimilarProblems");
 for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
     viewSimilarProblemsBtns[i].addEventListener("click", async function (event) {
+        if(document.getElementById("clusterModelOverlay").classList.contains("visibleSlower")) return;
         try {
+            document.getElementById("clusterModal").replaceChildren();
             const problemId = event.target.getAttribute("problemid").toString(), clusterId = event.target.getAttribute("clusterid").toString();
             const similarProblems = await fetch("/problems/problemsSimilarInsights/?type=insight&problem=" + problemId + "&cluster=" + clusterId + "&json=true");
             const similarProblemsData = await similarProblems.json();
