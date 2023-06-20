@@ -31,6 +31,11 @@
 			</div>
 		</div>
         <p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to {{ problem.name }}</a></p>
+        {% if request.GET.type == "hint" %}
+            <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint">Back to summary of hints</a></p>
+        {% else %}
+            <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight">Back to summary of insights</a></p>
+        {% endif %}
         <ul>
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}

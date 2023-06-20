@@ -36,6 +36,12 @@
             </div>
         </div>
         <p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to {{ problem.name }}</a></p>
+        {% if request.GET.type == "hint" %}
+            <p><a href="{% url 'view-all-hints-insights' %}?type=hint&problem={{ problem.id }}">View every single hint</a></p>
+        {% else %}
+            <p><a href="{% url 'view-all-hints-insights' %}?type=insight&problem={{ problem.id }}">View every single insight</a></p>
+            <p><a href="{% url 'problems-similar-insights' %}?type=all&problem={{ problem.id }}">SIMILAR Problems with insights similar to ANY insight of this problem</a></p>
+        {% endif %}
         <ul>
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}
