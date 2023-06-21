@@ -34,7 +34,7 @@
 		</div>
 		{% if request.GET.type == "hint" %}
 			<ul>
-			{% for hint in hints %}
+			{% for hint in page_obj %}
 				<li>
 					{% if forloop.first %}
 						<b>Viewing hints similar to:</b>
@@ -45,7 +45,7 @@
 			</ul>
 		{% else %}
 			<ul>
-			{% for insight in insights %}
+			{% for insight in page_obj %}
 				<li>
 					{% if forloop.first %}
 						<b>Viewing insights similar to:</b>
@@ -55,5 +55,28 @@
 			{% endfor %}
 			</ul>
 		{% endif %}
+		<div class="pagination">
+			{% if page_obj.has_previous %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.previous_page_number }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}">&larr;</a>
+			{% endif %}
+			<span>
+				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+			{% if page_obj.has_next %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.next_page_number }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}">&rarr;</a>
+			{% endif %}
+		</div>
+		<details>
+			<summary>View links to all pages</summary>
+			{% with ''|center:page_obj.paginator.num_pages as range %}
+            {% for i in range %}
+                {% if forloop.counter == page_obj.number %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}">{{ forloop.counter }}</a>
+                {% else %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}">{{ forloop.counter }}</a>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+		</details>
     </body>
 </html>

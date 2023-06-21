@@ -131,11 +131,26 @@ def view_cluster(request):
                 hints.append(model_to_dict(hint_info.hint))
             else:
                 hints.append(hint_info.hint)
-        context = {
-            'hints': hints
-        }
+        paginator = Paginator(hints, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         if use_json:
+            new_page_obj = {}
+            new_page_obj["hints"] = []
+            for hint in page_obj:
+                new_page_obj["hints"].append(hint)
+            new_page_obj["num_pages"] = page_obj.paginator.num_pages
+            new_page_obj["has_previous"] = page_obj.has_previous()
+            new_page_obj["has_next"] = page_obj.has_next()
+            new_page_obj["number"] = page_obj.number
+            context = {
+                'new_page_obj': new_page_obj
+            }
             return JsonResponse(context)
+        else:
+            context = {
+                'page_obj': page_obj
+            }
         return render(request, 'problems/view_cluster.html', context)
     else:
         cluster = InsightCluster.objects.filter(cluster_id=cluster_id, problem_id=problem_id)
@@ -145,11 +160,26 @@ def view_cluster(request):
                 insights.append(model_to_dict(insight_info.insight))
             else:
                 insights.append(insight_info.insight)
-        context = {
-            'insights': insights
-        }
+        paginator = Paginator(insights, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         if use_json:
+            new_page_obj = {}
+            new_page_obj["insights"] = []
+            for insight in page_obj:
+                new_page_obj["insights"].append(insight)
+            new_page_obj["num_pages"] = page_obj.paginator.num_pages
+            new_page_obj["has_previous"] = page_obj.has_previous()
+            new_page_obj["has_next"] = page_obj.has_next()
+            new_page_obj["number"] = page_obj.number
+            context = {
+                'new_page_obj': new_page_obj
+            }
             return JsonResponse(context)
+        else:
+            context = {
+                'page_obj': page_obj
+            }
         return render(request, 'problems/view_cluster.html', context)
 
 def view_all_summary(request):

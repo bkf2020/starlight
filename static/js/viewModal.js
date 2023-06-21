@@ -1,51 +1,140 @@
+async function populateHintPage(page, problemId, clusterId) {
+    try {
+        const hintCluster = await fetch("/problems/cluster/?type=hint&problem=" + problemId.toString() + "&cluster=" + clusterId.toString() + "&json=true&page=" + page.toString());
+        const hintClusterData = await hintCluster.json();
+        document.getElementById("clusterModalContent").replaceChildren();
+        var listHints = document.createElement("ul");
+        for(var idx in hintClusterData["new_page_obj"]["hints"]) {
+            var hint = hintClusterData["new_page_obj"]["hints"][idx];
+            var hintItem = document.createElement("li");
+            hintItem.innerText = hint["text"];
+            listHints.appendChild(hintItem);
+        }
+        var description = document.createElement("h3");
+        description.appendChild(document.createTextNode("Viewing all hints of this cluster:"));
+        document.getElementById("clusterModalContent").append(description);
+        document.getElementById("clusterModalContent").append(listHints);
+        var paginationDiv = document.createElement("div");
+        if(hintClusterData["new_page_obj"]["has_previous"]) {
+            var before = document.createElement("a");
+            before.href = "#";
+            before.appendChild(document.createTextNode("\u{02190}"));
+            before.addEventListener('click', () => {
+                renderHintPage(page - 1, problemId, clusterId, false);
+            });
+            before.classList.add("paginationLink");
+            before.classList.add("paginationArrow");
+            paginationDiv.appendChild(before);
+        }
+        var spanInformation = document.createElement("span");
+        spanInformation.appendChild(document.createTextNode("Page " + hintClusterData["new_page_obj"]["number"].toString() + " of " + hintClusterData["new_page_obj"]["num_pages"]));
+        paginationDiv.append(spanInformation);
+        if(hintClusterData["new_page_obj"]["has_next"]) {
+            var after = document.createElement("a");
+            after.href = "#";
+            after.appendChild(document.createTextNode("\u{02192}"));
+            after.addEventListener('click', () => {
+                renderHintPage(page + 1, problemId, clusterId, false);
+            });
+            after.classList.add("paginationLink");
+            after.classList.add("paginationArrow");
+            paginationDiv.appendChild(after);
+        }
+        document.getElementById("clusterModalContent").appendChild(paginationDiv);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+function renderHintPage(page, problemId, clusterId, firstTime) {
+    if(firstTime) {
+        populateHintPage(page, problemId, clusterId);
+        return;
+    }
+    document.getElementById("clusterModalContent").classList.remove("fade");
+    setTimeout(() => {
+        requestAnimationFrame(() => {
+            populateHintPage(page, problemId, clusterId);
+            document.getElementById("clusterModalContent").classList.add("fade");
+        });
+    }, 100);
+}
+
 const viewHintClusterBtns = document.getElementsByClassName("viewHintCluster");
 for(let i = 0; i < viewHintClusterBtns.length; i++) {
     viewHintClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
-        try {
-            document.getElementById("clusterModal").replaceChildren();
-            const hintCluster = await fetch("/problems/cluster/?type=hint&problem=" + event.target.getAttribute("problemid").toString() + "&cluster=" + event.target.getAttribute("clusterid").toString() + "&json=true");
-            const hintClusterData = await hintCluster.json();
-            var listHints = document.createElement("ul");
-            for(var idx in hintClusterData["hints"]) {
-                var hint = hintClusterData["hints"][idx];
-                var hintItem = document.createElement("li");
-                hintItem.innerText = hint["text"];
-                listHints.appendChild(hintItem);
-            }
-            var description = document.createElement("h3");
-            description.appendChild(document.createTextNode("Viewing all hints of this cluster:"));
-            document.getElementById("clusterModal").append(description);
-            document.getElementById("clusterModal").append(listHints);
-            document.getElementById("clusterModelOverlay").classList.add("visible");
-        } catch (error) {
-            console.error("Error:", error);
-        }
+        renderHintPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
+        document.getElementById("clusterModelOverlay").classList.add("visible");
     });
+}
+
+async function populateInsightPage(page, problemId, clusterId) {
+    try {
+        const insightCluster = await fetch("/problems/cluster/?type=insight&problem=" + problemId.toString() + "&cluster=" + clusterId.toString() + "&json=true&page=" + page.toString());
+        const insightClusterData = await insightCluster.json();
+        document.getElementById("clusterModalContent").replaceChildren();
+        var listInsights = document.createElement("ul");
+        for(var idx in insightClusterData["new_page_obj"]["insights"]) {
+            var insight = insightClusterData["new_page_obj"]["insights"][idx];
+            var insightItem = document.createElement("li");
+            insightItem.innerText = insight["text"];
+            listInsights.appendChild(insightItem);
+        }
+        var description = document.createElement("h3");
+        description.appendChild(document.createTextNode("Viewing all insights of this cluster:"));
+        document.getElementById("clusterModalContent").append(description);
+        document.getElementById("clusterModalContent").append(listInsights);
+        var paginationDiv = document.createElement("div");
+        if(insightClusterData["new_page_obj"]["has_previous"]) {
+            var before = document.createElement("a");
+            before.href = "#";
+            before.appendChild(document.createTextNode("\u{02190}"));
+            before.addEventListener('click', () => {
+                renderInsightPage(page - 1, problemId, clusterId, false);
+            });
+            before.classList.add("paginationLink");
+            before.classList.add("paginationArrow");
+            paginationDiv.appendChild(before);
+        }
+        var spanInformation = document.createElement("span");
+        spanInformation.appendChild(document.createTextNode("Page " + insightClusterData["new_page_obj"]["number"].toString() + " of " + insightClusterData["new_page_obj"]["num_pages"]));
+        paginationDiv.append(spanInformation);
+        if(insightClusterData["new_page_obj"]["has_next"]) {
+            var after = document.createElement("a");
+            after.href = "#";
+            after.appendChild(document.createTextNode("\u{02192}"));
+            after.addEventListener('click', () => {
+                renderInsightPage(page + 1, problemId, clusterId, false);
+            });
+            after.classList.add("paginationLink");
+            after.classList.add("paginationArrow");
+            paginationDiv.appendChild(after);
+        }
+        document.getElementById("clusterModalContent").appendChild(paginationDiv);
+    } catch {
+        console.error("Error:", error);
+    }
+}
+
+function renderInsightPage(page, problemId, clusterId, firstTime) {
+    if(firstTime) {
+        populateInsightPage(page, problemId, clusterId);
+        return;
+    }
+    document.getElementById("clusterModalContent").classList.remove("fade");
+    setTimeout(() => {
+        requestAnimationFrame(() => {
+            populateInsightPage(page, problemId, clusterId);
+            document.getElementById("clusterModalContent").classList.add("fade");
+        });
+    }, 100);
 }
 const viewInsightClusterBtns = document.getElementsByClassName("viewInsightCluster");
 for(let i = 0; i < viewInsightClusterBtns.length; i++) {
     viewInsightClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
-        try {
-            document.getElementById("clusterModal").replaceChildren();
-            const insightCluster = await fetch("/problems/cluster/?type=insight&problem=" + event.target.getAttribute("problemid").toString() + "&cluster=" + event.target.getAttribute("clusterid").toString() + "&json=true");
-            const insightClusterData = await insightCluster.json();
-            var listInsights = document.createElement("ul");
-            for(var idx in insightClusterData["insights"]) {
-                var insight = insightClusterData["insights"][idx];
-                var insightItem = document.createElement("li");
-                insightItem.innerText = insight["text"];
-                listInsights.appendChild(insightItem);
-            }
-            var description = document.createElement("h3");
-            description.appendChild(document.createTextNode("Viewing all insights of this cluster:"));
-            document.getElementById("clusterModal").append(description);
-            document.getElementById("clusterModal").append(listInsights);
-            document.getElementById("clusterModelOverlay").classList.add("visible");
-        } catch (error) {
-            console.error("Error:", error);
-        }
+        renderInsightPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
+        document.getElementById("clusterModelOverlay").classList.add("visible");
     });
 }
 const viewSimilarProblemsBtns = document.getElementsByClassName("viewSimilarProblems");

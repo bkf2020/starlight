@@ -16,6 +16,14 @@
         opacity: 1;  
     }  
 }
+@keyframes fadeOut {  
+    from {
+        opacity: 1;
+    }  
+    to {  
+        opacity: 0;  
+    }  
+}
 .visible {
     display: block;
     animation: fadeIn 0.2s ease-in;
@@ -33,6 +41,16 @@
     margin-top: 2em;
     padding: 1em;
     border-radius: 1em;
+    max-height: min(700px, calc(90vh - 3em));
+    overflow-y: auto;
+}
+.hidden {
+    opacity: 0;
+    transition: opacity 0.1s linear;
+}
+.fade {
+    opacity: 1;
+    transition: opacity 0.1s linear;
 }
 @media (prefers-color-scheme: dark) {
     .modal {
