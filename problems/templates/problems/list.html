@@ -61,6 +61,18 @@
             </tbody></table>
         {% endif %}
         <div class="pagination">
+            {% if page_obj.has_previous %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search }}">&larr;</a>
+			{% endif %}
+			<span>
+				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+			{% if page_obj.has_next %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search }}">&rarr;</a>
+			{% endif %}
+        </div>
+        <details>
+			<summary>View links to all pages</summary>
             {% with ''|center:page_obj.paginator.num_pages as range %}
             {% for i in range %}
                 {% if forloop.counter == page_obj.number %}
@@ -70,6 +82,6 @@
                 {% endif %}
             {% endfor %}
             {% endwith %}
-        </div>
+        </details>
     </body>
 </html>

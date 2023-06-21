@@ -28,7 +28,9 @@ a {
 .paginationLink {
 	padding: 0.25em;
 }
-
+.paginationArrow {
+	font-size: 1.5em;
+}
 .paginationSelected {
 	background-color: lightgray;
 	font-weight: 700;
