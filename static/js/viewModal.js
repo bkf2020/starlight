@@ -137,54 +137,103 @@ for(let i = 0; i < viewInsightClusterBtns.length; i++) {
         document.getElementById("clusterModelOverlay").classList.add("visible");
     });
 }
+
+async function populateProblemPage(page, problemId, clusterId, firstTime, button) {
+    try {
+        document.getElementById("clusterModal").style.height = "calc(" + document.getElementById("clusterModal").offsetHeight.toString() + "px" + " - 2em)";
+        document.getElementById("clusterModalContent").replaceChildren();
+        problemId = problemId.toString(); clusterId = clusterId.toString();
+        const similarProblems = await fetch("/problems/problemsSimilarInsights/?type=group&problem=" + problemId + "&cluster=" + clusterId + "&page=" + page.toString() + "&json=true");
+        const similarProblemsData = await similarProblems.json();
+        var listProblems = document.createElement("ul");
+        for(var idx in similarProblemsData["new_page_obj"]["problems"]) {
+            var problem = similarProblemsData["new_page_obj"]["problems"][idx];
+            if(problem["id"] == similarProblemsData["firstProblem"]["id"]) {
+                continue;
+            }
+            var problemItem = document.createElement("li");
+            var problemLink = document.createElement("a");
+            problemLink.href = problem["link"];
+            problemLink.appendChild(document.createTextNode(problem["name"]));
+            problemItem.appendChild(problemLink);
+            var sharedInsightsDetails = document.createElement("details");
+            var sharedInsightsSummary = document.createElement("summary");
+            sharedInsightsSummary.appendChild(document.createTextNode("Shared similar insights from this problem:"));
+            var sharedInsightsList = document.createElement("ul");
+            try {
+                const sharedInsights = await fetch("/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId + "&json=true");
+                const sharedInsightsData = await sharedInsights.json();
+                for(var idx in sharedInsightsData["shared_insights"]) {
+                    var sharedInsight = sharedInsightsData["shared_insights"][idx];
+                    var sharedInsightPoint = document.createElement("li");
+                    sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text));
+                    sharedInsightsList.appendChild(sharedInsightPoint);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            sharedInsightsDetails.append(sharedInsightsSummary);
+            sharedInsightsDetails.append(sharedInsightsList);
+            problemItem.appendChild(sharedInsightsDetails);
+            listProblems.appendChild(problemItem);
+        }
+        var description = document.createElement("h3");
+        description.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
+        document.getElementById("clusterModalContent").append(description);
+        document.getElementById("clusterModalContent").append(listProblems);
+        var paginationDiv = document.createElement("div");
+        if(similarProblemsData["new_page_obj"]["has_previous"]) {
+            var before = document.createElement("a");
+            before.href = "#";
+            before.appendChild(document.createTextNode("\u{02190}"));
+            before.addEventListener('click', () => {
+                renderProblemPage(page - 1, problemId, clusterId, false, button);
+            });
+            before.classList.add("paginationLink");
+            before.classList.add("paginationArrow");
+            paginationDiv.appendChild(before);
+        }
+        var spanInformation = document.createElement("span");
+        spanInformation.appendChild(document.createTextNode("Page " + similarProblemsData["new_page_obj"]["number"].toString() + " of " + similarProblemsData["new_page_obj"]["num_pages"]));
+        paginationDiv.append(spanInformation);
+        if(similarProblemsData["new_page_obj"]["has_next"]) {
+            var after = document.createElement("a");
+            after.href = "#";
+            after.appendChild(document.createTextNode("\u{02192}"));
+            after.addEventListener('click', () => {
+                renderProblemPage(page + 1, problemId, clusterId, false, button);
+            });
+            after.classList.add("paginationLink");
+            after.classList.add("paginationArrow");
+            paginationDiv.appendChild(after);
+        }
+        document.getElementById("clusterModalContent").appendChild(paginationDiv);
+        document.getElementById("clusterModal").style.height = null;
+        if(firstTime) document.getElementById("clusterModelOverlay").classList.add("visibleSlower");
+        else document.getElementById("clusterModalContent").classList.add("fade");
+        console.log(button);
+        button.disabled = false;
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+function renderProblemPage(page, problemId, clusterId, firstTime, button) {
+    if(firstTime) {
+        populateProblemPage(page, problemId, clusterId, firstTime, button);
+        return;
+    }
+    document.getElementById("clusterModalContent").classList.remove("fade");
+    setTimeout(() => {
+        requestAnimationFrame(() => {
+            populateProblemPage(page, problemId, clusterId, firstTime, button);
+        });
+    }, 100);
+}
 const viewSimilarProblemsBtns = document.getElementsByClassName("viewSimilarProblems");
 for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
-    viewSimilarProblemsBtns[i].addEventListener("click", async function (event) {
+    viewSimilarProblemsBtns[i].addEventListener("click", function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visibleSlower")) return;
-        try {
-            document.getElementById("clusterModal").replaceChildren();
-            const problemId = event.target.getAttribute("problemid").toString(), clusterId = event.target.getAttribute("clusterid").toString();
-            const similarProblems = await fetch("/problems/problemsSimilarInsights/?type=insight&problem=" + problemId + "&cluster=" + clusterId + "&json=true");
-            const similarProblemsData = await similarProblems.json();
-            var listProblems = document.createElement("ul");
-            for(var idx in similarProblemsData["problems"]) {
-                var problem = similarProblemsData["problems"][idx];
-                if(problem["id"] == similarProblemsData["firstProblem"]["id"]) {
-                    continue;
-                }
-                var problemItem = document.createElement("li");
-                var problemLink = document.createElement("a");
-                problemLink.href = problem["link"];
-                problemLink.appendChild(document.createTextNode(problem["name"]));
-                problemItem.appendChild(problemLink);
-                var sharedInsightsDetails = document.createElement("details");
-                var sharedInsightsSummary = document.createElement("summary");
-                sharedInsightsSummary.appendChild(document.createTextNode("Shared similar insights from this problem:"));
-                var sharedInsightsList = document.createElement("ul");
-                try {
-                    const sharedInsights = await fetch("/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId + "&json=true");
-                    const sharedInsightsData = await sharedInsights.json();
-                    for(var idx in sharedInsightsData["shared_insights"]) {
-                        var sharedInsight = sharedInsightsData["shared_insights"][idx];
-                        var sharedInsightPoint = document.createElement("li");
-                        sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text));
-                        sharedInsightsList.appendChild(sharedInsightPoint);
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                }
-                sharedInsightsDetails.append(sharedInsightsSummary);
-                sharedInsightsDetails.append(sharedInsightsList);
-                problemItem.appendChild(sharedInsightsDetails);
-                listProblems.appendChild(problemItem);
-            }
-            var description = document.createElement("h3");
-            description.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
-            document.getElementById("clusterModal").append(description);
-            document.getElementById("clusterModal").append(listProblems);
-            document.getElementById("clusterModelOverlay").classList.add("visibleSlower");
-        } catch (error) {
-            console.error("Error:", error);
-        }
+        event.target.disabled = true;
+        renderProblemPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true, event.target);
     });
 }

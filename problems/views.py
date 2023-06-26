@@ -117,7 +117,6 @@ def view_all_hints_insights(request):
     }
     return render(request, 'problems/view_all_hints_insights.html', context)
 
-# TODO: add pagination
 def view_cluster(request):
     cluster_id = request.GET.get('cluster')
     problem_id = request.GET.get('problem')
@@ -274,17 +273,36 @@ def problems_similar_insights(request):
                         if not json: add_problem.insights_matched = [overall_cluster.filter(problem_id=info.problem_id)]
                         id_problem[info.problem_id] = add_problem
         for problem_id in id_problem:
+            if str(problem_id) == insight_problem_id:
+                continue
             if json:
                 problems.append(model_to_dict(id_problem[problem_id]))
             else:
                 problems.append(id_problem[problem_id])
-        context = {
-            'problems': problems,
-            'firstProblem': model_to_dict(firstProblem) if json else firstProblem,
-            'firstInsight': model_to_dict(insight_cluster[0].insight) if json else insight_cluster[0].insight
-        }
+        paginator = Paginator(problems, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         if json:
+            new_page_obj = {}
+            new_page_obj["problems"] = []
+            for problem in page_obj:
+                new_page_obj["problems"].append(problem)
+            new_page_obj["num_pages"] = page_obj.paginator.num_pages
+            new_page_obj["has_previous"] = page_obj.has_previous()
+            new_page_obj["has_next"] = page_obj.has_next()
+            new_page_obj["number"] = page_obj.number
+            context = {
+                'new_page_obj': new_page_obj,
+                'firstProblem': model_to_dict(firstProblem),
+                'firstInsight': model_to_dict(insight_cluster[0].insight)
+            }
             return JsonResponse(context)
+        else:
+            context = {
+                'page_obj': page_obj,
+                'firstProblem': firstProblem,
+                'firstInsight': insight_cluster[0].insight
+            }
         return render(request, 'problems/problems_similar_insights.html', context)
 
 def shared_insights(request):

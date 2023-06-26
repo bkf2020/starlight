@@ -79,7 +79,7 @@
 			<p>Viewing other problems with insights similar to <b>ANY insight of</b> <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.</p>
 			<p><a href="{% url 'view-all-summary' %}?problem={{ firstProblem.id }}&type=insight">Back to summary of insights</a></p>
 			<ul>
-				{% for problem in problems %}
+				{% for problem in page_obj %}
 					{% if problem != firstProblem %}
 						<li>
 							<p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></p>
@@ -102,5 +102,28 @@
 				{% endfor %}
 			</ul>
 		{% endif %}
+		<div class="pagination">
+			{% if page_obj.has_previous %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.previous_page_number }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">&larr;</a>
+			{% endif %}
+			<span>
+				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+			{% if page_obj.has_next %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.next_page_number }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">&rarr;</a>
+			{% endif %}
+		</div>
+		<details>
+			<summary>View links to all pages</summary>
+			{% with ''|center:page_obj.paginator.num_pages as range %}
+            {% for i in range %}
+                {% if forloop.counter == page_obj.number %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">{{ forloop.counter }}</a>
+                {% else %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">{{ forloop.counter }}</a>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+		</details>
     </body>
 </html>
