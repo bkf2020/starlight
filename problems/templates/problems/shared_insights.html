@@ -29,7 +29,7 @@
                 <blockquote>{{ insight.text }}</blockquote>
             </p>
             <ul>
-                {% for insight_info in shared_insights %}
+                {% for insight_info in page_obj %}
                     <li>{{ insight_info.insight.text }}</li>
                 {% endfor %}
             </ul>
@@ -42,10 +42,8 @@
             </p>
 			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}">View all insights in this group</a>
 			<ul>
-				{% for insight_cluster in shared_insights %}
-					{% for insight_info in insight_cluster %}
-						<li>{{ insight_info.insight.text }}</li>
-					{% endfor %}
+				{% for insight in page_obj %}
+					<li>{{ insight.text }}</li>
 				{% endfor %}
 			</ul>
 		{% else %}
@@ -54,12 +52,33 @@
                 that are similar (thus shared) with <b>ANY insight</b> of <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.
             </p>
 			<ul>
-				{% for insight_cluster in shared_insights %}
-					{% for insight_info in insight_cluster %}
-						<li>{{ insight_info.insight.text }}</li>
-					{% endfor %}
+				{% for insight in page_obj %}
+					<li>{{ insight.text }}</li>
 				{% endfor %}
 			</ul>
         {% endif %}
+		<div class="pagination">
+			{% if page_obj.has_previous %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.previous_page_number }}&type={{ request.GET.type }}&firstProblem={{ request.GET.firstProblem }}&insightProblem={{ request.GET.insightProblem }}&otherProblem={{ request.GET.otherProblem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">&larr;</a>
+			{% endif %}
+			<span>
+				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+			{% if page_obj.has_next %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.next_page_number }}&type={{ request.GET.type }}&firstProblem={{ request.GET.firstProblem }}&insightProblem={{ request.GET.insightProblem }}&otherProblem={{ request.GET.otherProblem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">&rarr;</a>
+			{% endif %}
+		</div>
+		<details>
+			<summary>View links to all pages</summary>
+			{% with ''|center:page_obj.paginator.num_pages as range %}
+            {% for i in range %}
+                {% if forloop.counter == page_obj.number %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type={{ request.GET.type }}&firstProblem={{ request.GET.firstProblem }}&insightProblem={{ request.GET.insightProblem }}&otherProblem={{ request.GET.otherProblem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">{{ forloop.counter }}</a>
+                {% else %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type={{ request.GET.type }}&firstProblem={{ request.GET.firstProblem }}&insightProblem={{ request.GET.insightProblem }}&otherProblem={{ request.GET.otherProblem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">{{ forloop.counter }}</a>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+		</details>
     </body>
 </html>

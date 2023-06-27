@@ -161,10 +161,10 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             sharedInsightsSummary.appendChild(document.createTextNode("Shared similar insights from this problem:"));
             var sharedInsightsList = document.createElement("ul");
             try {
-                const sharedInsights = await fetch("/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId + "&json=true");
+                const sharedInsights = await fetch("/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId + "&json=true&page=1");
                 const sharedInsightsData = await sharedInsights.json();
-                for(var idx in sharedInsightsData["shared_insights"]) {
-                    var sharedInsight = sharedInsightsData["shared_insights"][idx];
+                for(var idx in sharedInsightsData["new_page_obj"]["shared_insights"]) {
+                    var sharedInsight = sharedInsightsData["new_page_obj"]["shared_insights"][idx];
                     var sharedInsightPoint = document.createElement("li");
                     sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text));
                     sharedInsightsList.appendChild(sharedInsightPoint);
@@ -211,7 +211,6 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
         document.getElementById("clusterModal").style.height = null;
         if(firstTime) document.getElementById("clusterModelOverlay").classList.add("visibleSlower");
         else document.getElementById("clusterModalContent").classList.add("fade");
-        console.log(button);
         button.disabled = false;
     } catch (error) {
         console.error("Error:", error);

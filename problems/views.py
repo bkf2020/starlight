@@ -221,7 +221,11 @@ def problems_similar_insights(request):
             if problem.count() > 0:
                 add_problem = problem.first()
                 insights_from_problem = cluster.filter(problem_id=add_problem.id)
-                add_problem.insights_matched = insights_from_problem
+                add_problem.insights_matched = []
+                for insight_info in insights_from_problem:
+                    if len(add_problem.insights_matched) == 10:
+                        break
+                    add_problem.insights_matched.append(insight_info)
                 add_problem.insights_matched_size = insights_from_problem.count()
                 problems.append(add_problem)
         problems = sorted(problems, key=lambda problem: (problem.insights_matched_size, problem.id), reverse=True)
@@ -270,13 +274,22 @@ def problems_similar_insights(request):
 
                 if problem.count() > 0:
                     if info.problem_id in id_problem:
-                        insights_from_problem = overall_cluster.filter(problem_id=info.problem_id)
-                        if not json: id_problem[info.problem_id].insights_matched.append(insights_from_problem)
+                        insights_from_problem = overall_cluster.filter(problem_id=info.problem_id).order_by('id')
+                        if not json:
+                            for insight_info in insights_from_problem:
+                                if len(id_problem[info.problem_id].insights_matched) == 10:
+                                    break
+                                id_problem[info.problem_id].insights_matched.append(insight_info)
                         id_problem[info.problem_id].insights_matched_size += insights_from_problem.count()
                     else:
                         add_problem = problem.first()
-                        insights_from_problem = overall_cluster.filter(problem_id=info.problem_id)
-                        if not json: add_problem.insights_matched = [insights_from_problem]
+                        insights_from_problem = overall_cluster.filter(problem_id=info.problem_id).order_by('id')
+                        if not json:
+                            add_problem.insights_matched = []
+                            for insight_info in insights_from_problem:
+                                if len(add_problem.insights_matched) == 10:
+                                    break
+                                add_problem.insights_matched.append(insight_info)
                         id_problem[info.problem_id] = add_problem
                         id_problem[info.problem_id].insights_matched_size = insights_from_problem.count()
         id_problem = dict(sorted(id_problem.items(), key=lambda problem: (problem[1].insights_matched_size, problem[0]), reverse=True))
@@ -328,9 +341,12 @@ def shared_insights(request):
             firstProblem = Problem(name="N/A", url="#")
         cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight).first().cluster_id_overall
         shared_insights = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall, problem_id=other_problem_id).order_by('id')
+        paginator = Paginator(shared_insights, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = {
             'insight': insight,
-            'shared_insights': shared_insights,
+            'page_obj': page_obj,
             'firstProblem': firstProblem,
             'otherProblem': otherProblem
         }
@@ -366,17 +382,34 @@ def shared_insights(request):
             if cluster_id_overall in seen_cluster_id_overall:
                 continue
             seen_cluster_id_overall[cluster_id_overall] = True
-            if json:
-                for insight_info in overall_cluster.filter(problem_id=other_problem_id).order_by('id'):
+            for insight_info in overall_cluster.filter(problem_id=other_problem_id).order_by('id'):
+                if json:
                     shared_insights.append(model_to_dict(insight_info.insight))
-            else:
-                shared_insights.append(overall_cluster.filter(problem_id=other_problem_id).order_by('id'))
-        context = {
-            'shared_insights': shared_insights,
-            'firstProblem': model_to_dict(firstProblem) if json else firstProblem,
-            'firstInsight': model_to_dict(insight_cluster[0].insight) if json else insight_cluster[0].insight,
-            'otherProblem': model_to_dict(otherProblem) if json else otherProblem
-        }
+                else:
+                    shared_insights.append(insight_info.insight)
+        paginator = Paginator(shared_insights, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         if json:
+            new_page_obj = {}
+            new_page_obj["shared_insights"] = []
+            for insight in page_obj:
+                new_page_obj["shared_insights"].append(insight)
+            new_page_obj["num_pages"] = page_obj.paginator.num_pages
+            new_page_obj["has_previous"] = page_obj.has_previous()
+            new_page_obj["has_next"] = page_obj.has_next()
+            new_page_obj["number"] = page_obj.number
+            context = {
+                'new_page_obj': new_page_obj,
+                'firstProblem': model_to_dict(firstProblem),
+                'firstInsight': model_to_dict(insight_cluster[0].insight),
+            'otherProblem': model_to_dict(otherProblem)
+            }
             return JsonResponse(context)
+        context = {
+            'page_obj': page_obj,
+            'firstProblem': firstProblem,
+            'firstInsight': insight_cluster[0].insight,
+            'otherProblem': otherProblem
+        }
         return render(request, 'problems/shared_insights.html', context)
