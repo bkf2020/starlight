@@ -46,15 +46,27 @@
             {% endfor %}
         </ul>
         <div class="pagination">
-            {% with ''|center:page_obj.paginator.num_pages as range %}
+			{% if page_obj.has_previous %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.previous_page_number }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">&larr;</a>
+			{% endif %}
+			<span>
+				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+			</span>
+			{% if page_obj.has_next %}
+   	        	<a class="paginationLink" href="?page={{ page_obj.next_page_number }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">&rarr;</a>
+			{% endif %}
+		</div>
+		<details>
+			<summary>View links to all pages</summary>
+			{% with ''|center:page_obj.paginator.num_pages as range %}
             {% for i in range %}
                 {% if forloop.counter == page_obj.number %}
-                     <a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">{{ forloop.counter }}</a>
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">{{ forloop.counter }}</a>
                 {% else %}
-                     <a class="paginationLink" href="?page={{ forloop.counter }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">{{ forloop.counter }}</a>
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">{{ forloop.counter }}</a>
                 {% endif %}
             {% endfor %}
             {% endwith %}
-        </div>
+		</details>
     </body>
 </html>
