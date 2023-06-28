@@ -154,6 +154,8 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             var problemItem = document.createElement("li");
             var problemLink = document.createElement("a");
             problemLink.href = problem["link"];
+            problemLink.target = "_blank";
+            problemLink.rel = "noopener noreferrer";
             problemLink.appendChild(document.createTextNode(problem["name"]));
             problemItem.appendChild(problemLink);
             var sharedInsightsDetails = document.createElement("details");

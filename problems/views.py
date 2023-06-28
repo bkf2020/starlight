@@ -214,7 +214,7 @@ def problems_similar_insights(request):
         problems = []
         seen = {}
         for info in cluster:
-            if info.problem_id in seen:
+            if info.problem_id in seen or info.problem_id == firstProblem.id:
                 continue
             seen[info.problem_id] = True
             problem = Problem.objects.filter(id=info.problem_id)
@@ -229,10 +229,13 @@ def problems_similar_insights(request):
                 add_problem.insights_matched_size = insights_from_problem.count()
                 problems.append(add_problem)
         problems = sorted(problems, key=lambda problem: (problem.insights_matched_size, problem.id), reverse=True)
+        paginator = Paginator(problems, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = {
             'insight': insight,
             'cluster': cluster,
-            'problems': problems,
+            'page_obj': page_obj,
             'firstProblem': firstProblem
         }
         return render(request, 'problems/problems_similar_insights.html', context)

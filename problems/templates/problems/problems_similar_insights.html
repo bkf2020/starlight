@@ -27,7 +27,7 @@
 				<blockquote><quote>{{ insight.text }}</quote></blockquote>
 			</p>
 			<ul>
-				{% for problem in problems %}
+				{% for problem in page_obj %}
 					{% if problem != firstProblem %}
 						<li>
 							<p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></p>
