@@ -174,6 +174,12 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             } catch (error) {
                 console.error("Error:", error);
             }
+            var sharedInsightsLink = document.createElement("a");
+            sharedInsightsLink.href = "/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId;
+            sharedInsightsLink.target = "_blank";
+            sharedInsightsLink.rel = "noopener noreferrer";
+            sharedInsightsLink.appendChild(document.createTextNode("View ALL insights of this problem that are shared with this cluster"));
+            sharedInsightsList.appendChild(sharedInsightsLink);
             sharedInsightsDetails.append(sharedInsightsSummary);
             sharedInsightsDetails.append(sharedInsightsList);
             problemItem.appendChild(sharedInsightsDetails);
