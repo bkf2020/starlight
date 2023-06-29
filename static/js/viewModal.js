@@ -244,3 +244,8 @@ for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
         renderProblemPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true, event.target);
     });
 }
+document.getElementById("closeModalButton").addEventListener("click", function (event) {
+    var clusterModelOverlay = document.getElementById("clusterModelOverlay");
+    if(clusterModelOverlay.classList.contains("visible")) clusterModelOverlay.classList.remove("visible");
+    if(clusterModelOverlay.classList.contains("visibleSlower")) clusterModelOverlay.classList.remove("visibleSlower");
+});

@@ -81,6 +81,9 @@ button.bg-blue:hover {
 .bg-red, .alert-error, .errorlist {
 	background-color: salmon;
 }
+button.bg-red:hover {
+	background-color: lightsalmon;
+}
 .alert, .errorlist {
 	border-radius: 0.5em;
 	border: 2px #444 dashed;
