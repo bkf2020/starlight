@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %}" />
 	</head>
     <body>
+        <main>
         <div style="display: flex; justify-content: space-between; align-items: center;">
 			<div>
                 {% if request.GET.type == "hint" %}
@@ -81,6 +82,7 @@
             {% endfor %}
             {% endwith %}
 		</details>
+        </main>
     </body>
 	<script type="text/javascript" src="{% static 'js/viewModal.js' %}"></script>
 </html>

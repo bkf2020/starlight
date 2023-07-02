@@ -1,3 +1,4 @@
+var scrollYVal = 0;
 async function populateHintPage(page, problemId, clusterId) {
     try {
         const hintCluster = await fetch("/problems/cluster/?type=hint&problem=" + problemId.toString() + "&cluster=" + clusterId.toString() + "&json=true&page=" + page.toString());
@@ -64,6 +65,10 @@ for(let i = 0; i < viewHintClusterBtns.length; i++) {
     viewHintClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         renderHintPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
+        scrollYVal = window.scrollY;
+        console.log(scrollYVal);
+        document.body.style.top = "-" + scrollYVal.toString() + "px";
+        document.body.style.position = "fixed";
         document.getElementById("clusterModelOverlay").classList.add("visible");
     });
 }
@@ -144,6 +149,10 @@ for(let i = 0; i < viewInsightClusterBtns.length; i++) {
     viewInsightClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         renderInsightPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
+        scrollYVal = window.scrollY;
+        console.log(scrollYVal);
+        document.body.style.top = "-" + scrollYVal.toString() + "px";
+        document.body.style.position = "fixed";
         document.getElementById("clusterModelOverlay").classList.add("visible");
     });
 }
@@ -251,6 +260,10 @@ for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
     viewSimilarProblemsBtns[i].addEventListener("click", function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visibleSlower")) return;
         event.target.disabled = true;
+        scrollYVal = window.scrollY;
+        console.log(scrollYVal);
+        document.body.style.top = "-" + scrollYVal.toString() + "px";
+        document.body.style.position = "fixed";
         renderProblemPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true, event.target);
     });
 }
@@ -258,4 +271,7 @@ document.getElementById("closeModalButton").addEventListener("click", function (
     var clusterModelOverlay = document.getElementById("clusterModelOverlay");
     if(clusterModelOverlay.classList.contains("visible")) clusterModelOverlay.classList.remove("visible");
     if(clusterModelOverlay.classList.contains("visibleSlower")) clusterModelOverlay.classList.remove("visibleSlower");
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, scrollYVal);
 });

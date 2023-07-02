@@ -1,6 +1,6 @@
 .overlay {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0;
     z-index: 1;
@@ -53,6 +53,31 @@
     opacity: 1;
     transition: opacity 0.1s linear;
 }
+main {
+    font-family: "Work Sans", "Segoe UI", "Roboto", "BlinkMacSystemFont", -apple-system, Helvetica, Arial, sans-serif;
+	background-color: snow;
+	color: #222;
+	margin-left: auto;
+	margin-right: auto;
+	width: 95%;
+	max-width: 1024px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+body {
+    margin-left: initial;
+    margin-right: initial;
+    max-width: initial;
+    width: 100%;
+    min-height: 100%;
+    border-top: 0.4em #d08770 solid;
+    margin-top: 0px;
+}
+html {
+    border-top: initial;
+}
 @media (prefers-color-scheme: dark) {
     .modal {
 		background-color: #2e3440;
@@ -61,4 +86,8 @@
     .overlay {
         background-color: #e5e9f0ab;
     }
+    main {
+		background-color: #2e3440;
+		color: #e5e9f0;
+	}
 }
