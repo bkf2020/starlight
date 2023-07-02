@@ -78,6 +78,16 @@ async function populateInsightPage(page, problemId, clusterId) {
             var insight = insightClusterData["new_page_obj"]["insights"][idx];
             var insightItem = document.createElement("li");
             insightItem.innerText = insight["text"];
+            var similarProblemsInsightList = document.createElement("ul");
+            var similarProblemsInsight = document.createElement("li");
+            var similarProblemsInsightLink = document.createElement("a");
+            similarProblemsInsightLink.innerText = "View similar problems that share ONLY this INSIGHT";
+            similarProblemsInsightLink.href = "/problems/problemsSimilarInsights/?type=individual&insight=" + insight["id"].toString();
+            similarProblemsInsightLink.target = "_blank";
+            similarProblemsInsightLink.rel = "noopener noreferrer";
+            similarProblemsInsight.append(similarProblemsInsightLink);
+            similarProblemsInsightList.append(similarProblemsInsight);
+            insightItem.append(similarProblemsInsightList);
             listInsights.appendChild(insightItem);
         }
         var description = document.createElement("h3");

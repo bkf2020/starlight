@@ -51,6 +51,10 @@
 						<b>Viewing insights similar to:</b>
 					{% endif %}
 					{{ insight.text }} by {{ insight.username }}
+					<ul>
+						<li><a href="{% url 'problems-similar-insights' %}?type=individual&insight={{ insight.id }}" target="_blank" rel="noopener noreferrer">
+							View similar problems that share ONLY this INSIGHT</a></li>
+					</ul>
 				</li>
 			{% endfor %}
 			</ul>

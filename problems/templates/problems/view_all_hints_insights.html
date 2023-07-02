@@ -42,6 +42,10 @@
                     <li>{{ info.text }}</li>
                 {% else %}
                     <li>{{ info.text }}</li>
+					<ul>
+						<li><a href="{% url 'problems-similar-insights' %}?type=individual&insight={{ info.id }}" target="_blank" rel="noopener noreferrer">
+							View similar problems that share ONLY this INSIGHT</a></li>
+					</ul>
                 {% endif %}
             {% endfor %}
         </ul>
