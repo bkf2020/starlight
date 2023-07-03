@@ -24,8 +24,8 @@
 		</div>
 		{% if request.GET.type == "individual" %}
             <p>
-                Viewing insights from <a href="{{ otherProblem.link }}">{{ otherProblem.name }}</a>
-                that are similar (thus shared) with <b>only this insight</b> from <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>:
+                Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
+                that are similar (thus shared) with <b>only this insight</b> from <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>:
                 <blockquote>{{ insight.text }}</blockquote>
             </p>
             <ul>
@@ -35,12 +35,12 @@
             </ul>
 		{% elif request.GET.type == "group" %}
             <p>
-                Viewing insights from <a href="{{ otherProblem.link }}">{{ otherProblem.name }}</a>
-                that are similar (thus shared) with <b>any insight</b> in this <b>group</b> of <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.
+                Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
+                that are similar (thus shared) with <b>any insight</b> in this <b>group</b> of <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.
                 The first insight of this group is:
 				<blockquote>{{ firstInsight.text }}</blockquote>
             </p>
-			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}">View all insights in this group</a>
+			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}" target="_blank" rel="noopener noreferrer">View all insights in this group</a>
 			<ul>
 				{% for insight in page_obj %}
 					<li>{{ insight.text }}</li>
@@ -48,8 +48,8 @@
 			</ul>
 		{% else %}
 			<p>
-                Viewing insights from <a href="{{ otherProblem.link }}">{{ otherProblem.name }}</a>
-                that are similar (thus shared) with <b>ANY insight</b> of <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.
+                Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
+                that are similar (thus shared) with <b>ANY insight</b> of <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.
             </p>
 			<ul>
 				{% for insight in page_obj %}

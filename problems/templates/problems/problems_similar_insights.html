@@ -23,7 +23,8 @@
 			</div>
 		</div>
 		{% if request.GET.type == "individual" %}
-			<p>Viewing other problems with insights similar to <b>only this insight</b> from <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>:
+			<p>Viewing other problems with insights similar to <b>only this insight</b> from
+				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>:
 				<blockquote><quote>{{ insight.text }}</quote></blockquote>
 			</p>
 			<ul>
@@ -53,10 +54,11 @@
 				{% endfor %}
 			</ul>
 		{% elif request.GET.type == "group" %}
-			<p>Viewing other problems with insights similar to <b>insights in this group</b> from <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>. One insight from the group:
+			<p>Viewing other problems with insights similar to <b>insights in this group</b> from
+				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>. One insight from the group:
 				<blockquote><quote>{{ firstInsight.text }}</quote></blockquote>
 			</p>
-			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.problem }}">View all insights in this group</a>
+			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.problem }}" target="_blank" rel="noopener noreferrer">View all insights in this group</a>
 			<ul>
 				{% for problem in page_obj %}
 					{% if problem != firstProblem %}
@@ -84,7 +86,7 @@
 				{% endfor %}
 			</ul>
 		{% else %}
-			<p>Viewing other problems with insights similar to <b>ANY insight of</b> <a href="{{ firstProblem.link }}">{{ firstProblem.name }}</a>.</p>
+			<p>Viewing other problems with insights similar to <b>ANY insight of</b> <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.</p>
 			<p><a href="{% url 'view-all-summary' %}?problem={{ firstProblem.id }}&type=insight">Back to summary of insights</a></p>
 			<ul>
 				{% for problem in page_obj %}
