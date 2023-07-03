@@ -33,6 +33,7 @@
 			</div>
 		</div>
 		{% if request.GET.type == "hint" %}
+			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=hint">Back to summary of hints in problem</a>
 			<ul>
 			{% for hint in page_obj %}
 				<li>
@@ -44,6 +45,7 @@
 			{% endfor %}
 			</ul>
 		{% else %}
+			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=insight">Back to summary of insights in problem</a>
 			<ul>
 			{% for insight in page_obj %}
 				<li>

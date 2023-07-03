@@ -66,7 +66,6 @@ for(let i = 0; i < viewHintClusterBtns.length; i++) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         renderHintPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
         scrollYVal = window.scrollY;
-        console.log(scrollYVal);
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
         document.getElementById("clusterModelOverlay").classList.add("visible");
@@ -150,7 +149,6 @@ for(let i = 0; i < viewInsightClusterBtns.length; i++) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         renderInsightPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
         scrollYVal = window.scrollY;
-        console.log(scrollYVal);
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
         document.getElementById("clusterModelOverlay").classList.add("visible");
@@ -261,7 +259,6 @@ for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visibleSlower")) return;
         event.target.disabled = true;
         scrollYVal = window.scrollY;
-        console.log(scrollYVal);
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
         renderProblemPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true, event.target);
