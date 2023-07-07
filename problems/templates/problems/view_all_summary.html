@@ -5,21 +5,22 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% if request.GET.type == "hint" %}
-		    <title>&#x1F320; Starlight: View First Hint of each Hint Cluster from {{ problem.name }}</title>
+		    <title>&#x1F320; Starlight: View Summary of Hints from {{ problem.name }}</title>
         {% else %}
-		    <title>&#x1F320; Starlight: View First Insight of each Insight Cluster from {{ problem.name }}</title>
+		    <title>&#x1F320; Starlight: View Summary of Insights from {{ problem.name }}</title>
         {% endif %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %}" />
 	</head>
     <body>
         <main>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="border-bottom: 0.1em solid;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
 			<div>
                 {% if request.GET.type == "hint" %}
-		            <h1>&#x1F320; Starlight: View First Hint of each Hint Cluster from {{ problem.name }}</h1>
+		            <h1>&#x1F320; Starlight: View Summary of Hints</h1>
                 {% else %}
-		            <h1>&#x1F320; Starlight: View First Insight of each Insight Cluster from {{ problem.name }}</h1>
+		            <h1>&#x1F320; Starlight: View Summary of Insights</h1>
                 {% endif %}
 			</div>
 			<div style="float: right;">
@@ -31,6 +32,8 @@
 					<a href="{% url 'register' %}">Register</a>
 				{% endif %}
 			</div>
+            </div>
+            <h2 style="margin-top: 0px;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></h2>
 		</div>
         <div class="overlay" id="clusterModelOverlay">
             <div class="modal" id="clusterModal">
@@ -39,26 +42,47 @@
                 </div>
             </div>
         </div>
-        <p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to {{ problem.name }}</a></p>
         {% if request.GET.type == "hint" %}
-            <p><a href="{% url 'view-all-hints-insights' %}?type=hint&problem={{ problem.id }}">View every single hint</a></p>
+            <div style="border-bottom: 0.1em solid;">
+                <h3>About this page</h3>
+                <p style="margin-bottom: 0.5em;">
+                    Similar hints are placed in the same <b>group/cluster</b>. This page shows the first hint of each clusters, with 10 clusters a page.
+                    The clusters are sorted by the ones with the most number of hints. <b>This helps give a summarized version of the hints.</b>
+                </p>
+                <p><a href="{% url 'view-all-hints-insights' %}?type=hint&problem={{ problem.id }}" class="buttonLink bg-orange">View every single hint</a></p>
+            </div>
         {% else %}
-            <p><a href="{% url 'view-all-hints-insights' %}?type=insight&problem={{ problem.id }}">View every single insight</a></p>
-            <p><a href="{% url 'problems-similar-insights' %}?type=all&problem={{ problem.id }}">SIMILAR Problems with insights similar to ANY insight of this problem</a></p>
+            <div style="border-bottom: 0.1em solid;">
+                <h3>About this page</h3>
+                <p style="margin-bottom: 0.5em;">
+                    Similar insights are placed in the same <b>group/cluster</b>. This page shows the first insight of each clusters, with 10 clusters a page.
+                    The clusters are sorted by the ones with the most number of insights. <b>This helps give a summarized version of the insights.</b>
+                </p>
+                <div style="margin-bottom: 0.5em;">
+                    <a href="{% url 'view-all-hints-insights' %}?type=insight&problem={{ problem.id }}" class="buttonLink bg-blue">View every single insight</a>
+                    <a href="{% url 'problems-similar-insights' %}?type=all&problem={{ problem.id }}" class="buttonLink bg-green">SIMILAR Problems with insights similar to ANY insight of this problem</a>
+                </div>
+            </div>
         {% endif %}
-        <ul>
-            {% for info in page_obj %}
-                {% if request.GET.type == "hint" %}
-                    <li>{{ info.hint.text }} <button class="viewHintCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
-                {% else %}
-                    <li>
-                        {{ info.insight.text }}
-                        <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button>
-                        <button class="viewSimilarProblems" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">Problems with common insights to this cluster</button>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+        {% for info in page_obj %}
+            {% if request.GET.type == "hint" %}
+                <div class="hintInsightContainer">
+                    <ul style="margin: 0.5em 0px 0px 0px;">
+                        <li>{{ info.hint.text }} <button class="viewHintCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="hintInsightContainer">
+                    <ul style="margin: 0.5em 0px 0px 0px;"><li>
+                        <p style="margin-top: 0.4em; margin-bottom: 0.4em;">{{ info.insight.text }}</p>
+                        <div>
+                            <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button>
+                            <button class="viewSimilarProblems bg-orange" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">Problems with common insights to this cluster</button>
+                        </div>
+                    </li></ul>
+                </div>
+            {% endif %}
+        {% endfor %}
         <div class="pagination">
 			{% if page_obj.has_previous %}
    	        	<a class="paginationLink" href="?page={{ page_obj.previous_page_number }}&problem={{ request.GET.problem }}&type={{ request.GET.type }}">&larr;</a>

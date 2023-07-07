@@ -21,10 +21,13 @@ h1, h2, h3 {
 	line-height: 1.2;
 }
 
-a {
+a, a:visited {
 	color: mediumblue;
 }
-
+.pagination {
+	border-top: 0.1em solid;
+	padding-top: 1em;
+}
 .paginationLink {
 	padding: 0.25em;
 }
@@ -60,6 +63,10 @@ td, th {
 	text-decoration: none;
 	background-color: #ebcb8b;
 }
+.buttonLink {
+	display: inline-block;
+	padding: 0.4em !important;
+}
 button:hover {
 	background-color: #ffe1a4;
 }
@@ -72,17 +79,26 @@ button:hover {
 .bg-blue, .alert-info {
 	background-color: #88c0d0;
 }
-button.bg-blue:hover {
+.buttonLink.bg-blue:hover, button.bg-blue:hover {
 	background-color: #9adaeb;
 }
 .bg-green, .alert-success {
 	background-color: #A3BE8C;
+}
+.buttonLink.bg-green:hover, button.bg-green:hover {
+	background-color: #bddda2;
 }
 .bg-red, .alert-error, .errorlist {
 	background-color: salmon;
 }
 button.bg-red:hover {
 	background-color: lightsalmon;
+}
+.bg-orange {
+	background-color: #f19c82;
+}
+.buttonLink.bg-orange:hover, button.bg-orange:hover {
+	background-color: #ffa68b;
 }
 .alert, .errorlist {
 	border-radius: 0.5em;
@@ -95,13 +111,20 @@ button.bg-red:hover {
 .alert {
 	padding: 0.5em;
 }
-
+.hintInsightContainer {
+	background-color: #e5e9f0;
+	border-radius: 0.5em;
+	padding: 0.25em 0.5em 0.5em 0.5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	border-left: solid #b48ead;
+}
 @media (prefers-color-scheme: dark) {
 	body {
 		background-color: #2e3440;
 		color: #e5e9f0;
 	}
-	a {
+	a, a:visited {
 		color: #88c0d0;
 	}
 	tr:nth-child(even), .paginationSelected {
@@ -112,5 +135,8 @@ button.bg-red:hover {
 	}
 	.alert, .errorlist {
 		border-color: #e5e9f0;
+	}
+	.hintInsightContainer {
+		background-color: #434c5e;
 	}
 }
