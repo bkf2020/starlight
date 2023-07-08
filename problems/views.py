@@ -186,9 +186,16 @@ def view_all_summary(request):
     problem = Problem.objects.filter(id=problem_id).first()
     search_hint = request.GET.get('type') == "hint"
     if search_hint:
-        hints_insights = HintCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id')
+        hints_insights = []
+        for hint in HintCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id'):
+            hint.cluster_size = HintCluster.objects.filter(problem_id=problem_id).count()
+            hints_insights.append(hint)
     else:
-        hints_insights = InsightCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id')
+        hints_insights = []
+        for cluster in InsightCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id'):
+            cluster.cluster_size = InsightCluster.objects.filter(problem_id=problem_id).count()
+            hints_insights.append(cluster)
+    hint_insights = sorted(hints_insights, key=lambda hint_insight: (hint_insight.cluster_size, hint_insight.id), reverse=True)
     paginator = Paginator(hints_insights, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
