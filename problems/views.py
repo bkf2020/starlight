@@ -278,20 +278,24 @@ def problems_similar_insights(request):
                 if problem.count() > 0:
                     if info.problem_id in id_problem:
                         insights_from_problem = overall_cluster.filter(problem_id=info.problem_id).order_by('id')
-                        if not json:
-                            for insight_info in insights_from_problem:
-                                if len(id_problem[info.problem_id].insights_matched) == 10:
-                                    break
+                        for insight_info in insights_from_problem:
+                            if len(id_problem[info.problem_id].insights_matched) == 10:
+                                break
+                            if json:
+                                id_problem[info.problem_id].insights_matched.append(model_to_dict(insight_info.insight))
+                            else:
                                 id_problem[info.problem_id].insights_matched.append(insight_info)
                         id_problem[info.problem_id].insights_matched_size += insights_from_problem.count()
                     else:
                         add_problem = problem.first()
                         insights_from_problem = overall_cluster.filter(problem_id=info.problem_id).order_by('id')
-                        if not json:
-                            add_problem.insights_matched = []
-                            for insight_info in insights_from_problem:
-                                if len(add_problem.insights_matched) == 10:
-                                    break
+                        add_problem.insights_matched = []
+                        for insight_info in insights_from_problem:
+                            if len(add_problem.insights_matched) == 10:
+                                break
+                            if json:
+                                add_problem.insights_matched.append(model_to_dict(insight_info.insight))
+                            else:
                                 add_problem.insights_matched.append(insight_info)
                         id_problem[info.problem_id] = add_problem
                         id_problem[info.problem_id].insights_matched_size = insights_from_problem.count()
@@ -300,7 +304,9 @@ def problems_similar_insights(request):
             if str(problem_id) == insight_problem_id:
                 continue
             if json:
-                problems.append(model_to_dict(id_problem[problem_id]))
+                problem_dict = model_to_dict(id_problem[problem_id])
+                problem_dict["insights_matched"] = id_problem[problem_id].insights_matched
+                problems.append(problem_dict)
             else:
                 problems.append(id_problem[problem_id])
         paginator = Paginator(problems, 10)

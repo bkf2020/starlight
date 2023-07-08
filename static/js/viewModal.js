@@ -195,17 +195,11 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             var sharedInsightsSummary = document.createElement("summary");
             sharedInsightsSummary.appendChild(document.createTextNode("Shared similar insights from this problem:"));
             var sharedInsightsList = document.createElement("ul");
-            try {
-                const sharedInsights = await fetch("/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId + "&json=true&page=1");
-                const sharedInsightsData = await sharedInsights.json();
-                for(var idx in sharedInsightsData["new_page_obj"]["shared_insights"]) {
-                    var sharedInsight = sharedInsightsData["new_page_obj"]["shared_insights"][idx];
-                    var sharedInsightPoint = document.createElement("li");
-                    sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text));
-                    sharedInsightsList.appendChild(sharedInsightPoint);
-                }
-            } catch (error) {
-                console.error("Error:", error);
+            for(var idx in problem["insights_matched"]) {
+                var sharedInsight = problem["insights_matched"][idx];
+                var sharedInsightPoint = document.createElement("li");
+                sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text));
+                sharedInsightsList.appendChild(sharedInsightPoint);
             }
             var sharedInsightsLink = document.createElement("a");
             sharedInsightsLink.href = "/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId;
