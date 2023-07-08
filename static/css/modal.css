@@ -41,7 +41,7 @@
     margin-top: 2em;
     padding: 1em;
     border-radius: 1em;
-    max-height: min(700px, calc(90vh - 3em));
+    max-height: min(700px, calc(90% - 3em));
     overflow-y: auto;
     min-height: 150px;
 }

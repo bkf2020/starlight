@@ -65,7 +65,7 @@ for(let i = 0; i < viewHintClusterBtns.length; i++) {
     viewHintClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         renderHintPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
-        scrollYVal = window.scrollY;
+        scrollYVal = window.pageYOffset;
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
         document.getElementById("clusterModelOverlay").classList.add("visible");
@@ -154,7 +154,7 @@ for(let i = 0; i < viewInsightClusterBtns.length; i++) {
     viewInsightClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
         renderInsightPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
-        scrollYVal = window.scrollY;
+        scrollYVal = window.pageYOffset;
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
         document.getElementById("clusterModelOverlay").classList.add("visible");
@@ -177,7 +177,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             var problemItemDiv = document.createElement("div");
             var problemItemUl = document.createElement("ul");
             var problemItem = document.createElement("li");
-            var problemLink = document.createElement("a");
+            var problemLink = document.createElement("a"); // TODO: SET font size to large
             problemLink.href = problem["link"];
             problemLink.target = "_blank";
             problemLink.rel = "noopener noreferrer";
@@ -281,7 +281,7 @@ for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
     viewSimilarProblemsBtns[i].addEventListener("click", function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visibleSlower")) return;
         event.target.disabled = true;
-        scrollYVal = window.scrollY;
+        scrollYVal = window.pageYOffset;
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
         renderProblemPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true, event.target);
