@@ -49,7 +49,7 @@
                     Similar hints are placed in the same <b>group/cluster</b>. This page shows the first hint of each clusters, with 10 clusters a page.
                     The clusters are sorted by the ones with the most number of hints. <b>This helps give a summarized version of the hints.</b>
                 </p>
-                <p><a href="{% url 'view-all-hints-insights' %}?type=hint&problem={{ problem.id }}" class="buttonLink bg-orange">View every single hint</a></p>
+                <p><a href="{% url 'view-all-hints-insights' %}?type=hint&problem={{ problem.id }}" class="buttonLink bg-green">View every single hint</a></p>
             </div>
         {% else %}
             <div style="border-bottom: 0.1em solid;">
@@ -60,16 +60,19 @@
                 </p>
                 <div style="margin-bottom: 0.5em;">
                     <a href="{% url 'view-all-hints-insights' %}?type=insight&problem={{ problem.id }}" class="buttonLink bg-blue">View every single insight</a>
-                    <a href="{% url 'problems-similar-insights' %}?type=all&problem={{ problem.id }}" class="buttonLink bg-green">SIMILAR Problems with insights similar to ANY insight of this problem</a>
+                    <a href="{% url 'problems-similar-insights' %}?type=all&problem={{ problem.id }}" class="buttonLink bg-green"><b>SIMILAR Problems</b> with insights similar to <b>ANY insight of this problem</b></a>
                 </div>
             </div>
         {% endif %}
         {% for info in page_obj %}
             {% if request.GET.type == "hint" %}
                 <div class="hintInsightContainer">
-                    <ul style="margin: 0.5em 0px 0px 0px;">
-                        <li>{{ info.hint.text }} <button class="viewHintCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
-                    </ul>
+                    <details>
+                        <summary>Click to show first hint of cluster #{{ info.pos }}</summary>
+                        <ul style="margin: 0.5em 0px 0px 0px;">
+                            <li>{{ info.hint.text }} <button class="viewHintCluster bg-cyan" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
+                        </ul>
+                    </details>
                 </div>
             {% else %}
                 <div class="hintInsightContainer">
@@ -77,7 +80,7 @@
                         <p style="margin-top: 0.4em; margin-bottom: 0.4em;">{{ info.insight.text }}</p>
                         <div>
                             <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button>
-                            <button class="viewSimilarProblems bg-orange" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">Problems with common insights to this cluster</button>
+                            <button class="viewSimilarProblems bg-orange" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">Problems with <b>insights similar</b> to any one in this <b>cluster</b></button>
                         </div>
                     </li></ul>
                 </div>

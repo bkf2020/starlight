@@ -187,7 +187,8 @@ def view_all_summary(request):
     search_hint = request.GET.get('type') == "hint"
     if search_hint:
         hints_insights = []
-        for hint in HintCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id'):
+        for pos, hint in enumerate(HintCluster.objects.filter(problem_id=problem_id, first=True).order_by('cluster_id'), start=1):
+            hint.pos = pos
             hint.cluster_size = HintCluster.objects.filter(problem_id=problem_id).count()
             hints_insights.append(hint)
     else:

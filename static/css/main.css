@@ -67,6 +67,9 @@ td, th {
 	display: inline-block;
 	padding: 0.4em !important;
 }
+a.buttonLink:visited {
+	color: black !important;
+}
 button:hover {
 	background-color: #ffe1a4;
 }
