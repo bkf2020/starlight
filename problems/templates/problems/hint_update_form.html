@@ -24,7 +24,8 @@
 		</div>
         <form method="post">{% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Update">
+			<button type="submit" class="bg-blue">Update hint</button>
+            <a href="{% url 'problems-view' object.problem_id %}?type=hint" class="buttonLink bg-gray">Cancel</button>
         </form>
     </body>
 </html>

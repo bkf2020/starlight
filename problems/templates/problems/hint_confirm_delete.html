@@ -23,9 +23,11 @@
 			</div>
 		</div>
         <form method="post">{% csrf_token %}
-			<p>Are you sure you want to delete the hint with text: "{{ object.text }}"</p>
+			<p>Are you sure you want to delete the hint with text:</p>
+			<blockquote>{{ object.text }}</blockquote>
             {{ form.as_p }}
-            <input type="submit" value="Update">
+            <button type="submit" class="bg-red">Yes, delete hint</button>
+            <a href="{% url 'problems-view' object.problem_id %}?type=hint" class="buttonLink bg-gray">Cancel</button>
         </form>
     </body>
 </html>

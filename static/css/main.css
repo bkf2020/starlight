@@ -70,7 +70,7 @@ td, th {
 a.buttonLink:visited {
 	color: black !important;
 }
-button:hover {
+button:hover, .buttonLink:hover {
 	background-color: #ffe1a4;
 }
 .bg-cyan {
@@ -94,11 +94,18 @@ button:hover {
 .bg-red, .alert-error, .errorlist {
 	background-color: salmon;
 }
-button.bg-red:hover {
+.buttonLink.bg-red:hover, button.bg-red:hover {
 	background-color: lightsalmon;
 }
 .bg-orange {
 	background-color: #f19c82;
+}
+.bg-gray {
+	background-color: #e5e9f0;
+	border: black solid 0.15em;
+}
+.buttonLink.bg-gray:hover {
+	background-color: gainsboro;
 }
 .buttonLink.bg-orange:hover, button.bg-orange:hover {
 	background-color: #ffa68b;
@@ -121,6 +128,7 @@ button.bg-red:hover {
 	margin-top: 1em;
 	margin-bottom: 1em;
 	border-left: solid #b48ead;
+	overflow-wrap: break-word;
 }
 @media (prefers-color-scheme: dark) {
 	body {
@@ -141,5 +149,11 @@ button.bg-red:hover {
 	}
 	.hintInsightContainer {
 		background-color: #434c5e;
+	}
+	.bg-gray {
+		background-color: #ddd;
+	}
+	.buttonLink.bg-gray:hover {
+		background-color: whitesmoke;
 	}
 }

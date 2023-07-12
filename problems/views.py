@@ -31,6 +31,8 @@ class HintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Hint
     fields = ['text']
     template_name_suffix = '_update_form'
+    def get_success_url(self):
+        return f"/problems/{self.get_object().problem_id}?type=hint"
     def test_func(self):
         return self.request.user.username == self.get_object().username
 
@@ -38,6 +40,8 @@ class InsightUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Insight
     fields = ['text']
     template_name_suffix = '_update_form'
+    def get_success_url(self):
+        return f"/problems/{self.get_object().problem_id}?type=insight"
     def test_func(self):
         return self.request.user.username == self.get_object().username
 
@@ -45,6 +49,8 @@ class HintDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Hint
     fields = ['text']
     template_name_suffix = '_confirm_delete'
+    def get_success_url(self):
+        return f"/problems/{self.get_object().problem_id}?type=hint"
     def test_func(self):
         return self.request.user.username == self.get_object().username
 
@@ -52,6 +58,8 @@ class InsightDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Insight
     fields = ['text']
     template_name_suffix = '_confirm_delete'
+    def get_success_url(self):
+        return f"/problems/{self.get_object().problem_id}?type=insight"
     def test_func(self):
         return self.request.user.username == self.get_object().username
 
@@ -71,6 +79,7 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_hint.save()
+            return redirect(f'/problems/{index}?type=hint')
         elif 'insight' in request.POST:
             insight_form = InsightForm(request.POST)
             if insight_form.is_valid() and request.user.is_authenticated:
@@ -80,18 +89,15 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_insight.save()
+            return redirect(f'/problems/{index}?type=insight')
         return redirect(f'/problems/{index}')
     
     problem = Problem.objects.get(id=index)
-    hint_clusters = HintCluster.objects.filter(problem_id=index, first=True).order_by('cluster_id')[0:10]
-    insight_clusters = InsightCluster.objects.filter(problem_id=index, first=True).order_by('cluster_id')[0:10]
     
     context = {
         'insight_form': insight_form,
         'hint_form': hint_form,
-        'problem': problem,
-        'hint_clusters': hint_clusters,
-        'insight_clusters': insight_clusters
+        'problem': problem
     }
     if request.user.is_authenticated:
         user_hints = Hint.objects.filter(problem_id=index, username=request.user.username)

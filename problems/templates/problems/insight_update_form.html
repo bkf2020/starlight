@@ -24,7 +24,8 @@
 		</div>
         <form method="post">{% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Confirm">
+			<button type="submit" class="bg-blue">Update insight</button>
+            <a href="{% url 'problems-view' object.problem_id %}?type=insight" class="buttonLink bg-gray">Cancel</button>
         </form>
     </body>
 </html>

@@ -28,53 +28,54 @@
 			<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint">Summary of hints</a> |
 			<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight">Summary of insights and similar problems</a>
 		</p>
-		<h2 id="submit">Submit a new hint/key insight</h2>
-		{% if user.is_authenticated %}
-			{% if user_hints %}
-				<h3 id="userHints">Your Hints</h3>
-				<ol>
-				{% for hint in user_hints %}
-					<li>{{ hint.text }} <a href="{% url 'hint-update' hint.id %}">Update</a> <a href="{% url 'hint-delete' hint.id %}">Delete</a></li>
-				{% endfor %}
-				</ol>
+		{% if request.GET.type == "hint" %}
+			<h2 id="submit">Submit a new hint</h2>
+			{% if user.is_authenticated %}
+				{% if user_hints %}
+					<h3 id="userHints">Your Hints</h3>
+					<ol>
+					{% for hint in user_hints %}
+						<li><div class="hintInsightContainer">
+							<p style="margin-top: 0.5em; margin-bottom: 0.5em;">{{ hint.text }}</p>
+							<a class="buttonLink bg-blue" href="{% url 'hint-update' hint.id %}">Edit</a><a class="buttonLink bg-red" href="{% url 'hint-delete' hint.id %}">Delete</a>
+						</div></li>
+					{% endfor %}
+					</ol>
+				{% else %}
+					<p id="userHints">You currently don't have any hints.</p>
+				{% endif %}
+				<form method="POST">
+					{% csrf_token %}
+					{{ hint_form }}
+					<button type="submit" class="bg-green">Submit hints</button>
+				</form>
 			{% else %}
-				<p id="userHints">You currently don't have any hints.</p>
+				<div class="alert alert-error">Please login before submitting new hints/insights.</div>
 			{% endif %}
-			<form method="POST">
-				{% csrf_token %}
-				{{ hint_form }}
-				<button type="submit">Submit hints</button>
-			</form>
-			{% if user_insights %}
-				<h3 id="userInsights">Your Insights</h3>
-				<ol>
-				{% for insight in user_insights %}
-					<li>{{ insight.text }} <a href="{% url 'insight-update' insight.id %}">Update</a> <a href="{% url 'insight-delete' insight.id %}">Delete</a></li>
-				{% endfor %}
-				</ol>
-			{% else %}
-				<p id="userInsights">You currently don't have any insights/observations.</p>
-			{% endif %}
-			<form method="POST">
-				{% csrf_token %}
-				{{ insight_form }}
-				<button type="submit">Submit insights</button>
-			</form>
 		{% else %}
-			<div class="alert alert-error">Please login before submitting new hints/insights.</div>
+			<h2 id="submit">Submit a new insight</h2>
+			{% if user.is_authenticated %}
+				{% if user_insights %}
+					<h3 id="userInsights">Your Insights</h3>
+					<ol>
+					{% for insight in user_insights %}
+						<li><div class="hintInsightContainer">
+							<p style="margin-top: 0.5em; margin-bottom: 0.5em;">{{ insight.text }}</p>
+							<a class="buttonLink bg-blue" href="{% url 'insight-update' insight.id %}">Update</a><a class="buttonLink bg-red" href="{% url 'insight-delete' insight.id %}">Delete</a>
+						</div></li>
+					{% endfor %}
+					</ol>
+				{% else %}
+					<p id="userInsights">You currently don't have any insights/observations.</p>
+				{% endif %}
+				<form method="POST">
+					{% csrf_token %}
+					{{ insight_form }}
+					<button type="submit" class="bg-green">Submit insights</button>
+				</form>
+			{% else %}
+				<div class="alert alert-error">Please login before submitting new hints/insights.</div>
+			{% endif %}
 		{% endif %}
-		<h2 id="summaryHints">Summary of hints</h2>
-		<p>Similar hints are grouped together into the same "cluster". The summary shows the first hint in the top 10 clusters.</p>
-		<ol>
-			{% for hint_cluster in hint_clusters %}
-				<li>{{ hint_cluster.hint.text }} <a href="{% url 'view-cluster' %}?type=hint&problem={{ hint_cluster.problem_id }}&cluster={{ hint_cluster.cluster_id }}">View hints in this cluster</a></li>
-			{% endfor %}
-		</ol>
-		<h2 id="summaryInsights">Summary of key insights/observations</h2>
-		<ol>
-			{% for insight_cluster in insight_clusters %}
-				<li>{{ insight_cluster.insight.text }} <a href="{% url 'view-cluster' %}?type=insight&problem={{ insight_cluster.problem_id }}&cluster={{ insight_cluster.cluster_id }}">View insights in this cluster</a></li>
-			{% endfor %}
-		</ol>
     </body>
 </html>
