@@ -37,7 +37,7 @@
 					{% for hint in user_hints %}
 						<li><div class="hintInsightContainer">
 							<p style="margin-top: 0.5em; margin-bottom: 0.5em;">{{ hint.text }}</p>
-							<a class="buttonLink bg-blue" href="{% url 'hint-update' hint.id %}">Edit</a><a class="buttonLink bg-red" href="{% url 'hint-delete' hint.id %}">Delete</a>
+							<a class="buttonLink bg-blue changeButton" href="{% url 'hint-update' hint.id %}">Edit</a><a class="buttonLink bg-red changeButton" href="{% url 'hint-delete' hint.id %}">Delete</a>
 						</div></li>
 					{% endfor %}
 					</ol>
@@ -61,7 +61,7 @@
 					{% for insight in user_insights %}
 						<li><div class="hintInsightContainer">
 							<p style="margin-top: 0.5em; margin-bottom: 0.5em;">{{ insight.text }}</p>
-							<a class="buttonLink bg-blue" href="{% url 'insight-update' insight.id %}">Update</a><a class="buttonLink bg-red" href="{% url 'insight-delete' insight.id %}">Delete</a>
+							<a class="buttonLink bg-blue changeButton" href="{% url 'insight-update' insight.id %}">Update</a><a class="buttonLink bg-red changeButton" href="{% url 'insight-delete' insight.id %}">Delete</a>
 						</div></li>
 					{% endfor %}
 					</ol>
@@ -71,11 +71,12 @@
 				<form method="POST">
 					{% csrf_token %}
 					{{ insight_form }}
-					<button type="submit" class="bg-green">Submit insights</button>
+					<button type="submit" class="bg-green changeButton">Submit insights</button>
 				</form>
 			{% else %}
 				<div class="alert alert-error">Please login before submitting new hints/insights.</div>
 			{% endif %}
 		{% endif %}
     </body>
+	<script type="text/javascript" src="{% static 'js/saveScrollPosition.js' %}"></script>
 </html>

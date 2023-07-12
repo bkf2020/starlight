@@ -79,7 +79,7 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_hint.save()
-            return redirect(f'/problems/{index}?type=hint')
+            return redirect(f'/problems/{index}?type=hint#id_hint')
         elif 'insight' in request.POST:
             insight_form = InsightForm(request.POST)
             if insight_form.is_valid() and request.user.is_authenticated:
@@ -89,7 +89,7 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_insight.save()
-            return redirect(f'/problems/{index}?type=insight')
+            return redirect(f'/problems/{index}?type=insight#id_insight')
         return redirect(f'/problems/{index}')
     
     problem = Problem.objects.get(id=index)
@@ -100,8 +100,8 @@ def problem(request, index):
         'problem': problem
     }
     if request.user.is_authenticated:
-        user_hints = Hint.objects.filter(problem_id=index, username=request.user.username)
-        user_insights = Insight.objects.filter(problem_id=index, username=request.user.username)
+        user_hints = Hint.objects.filter(problem_id=index, username=request.user.username).order_by("id")
+        user_insights = Insight.objects.filter(problem_id=index, username=request.user.username).order_by("id")
         context['user_hints'] = user_hints
         context['user_insights'] = user_insights
     return render(request, 'problems/problem.html', context)
