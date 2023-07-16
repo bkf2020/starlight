@@ -8,9 +8,10 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 	</head>
     <body>
-		<div style="display: flex; justify-content: space-between; align-items: center;">
+		<div style="border-bottom: 0.1em solid;">
+			<div style="display: flex; justify-content: space-between; align-items: center;">
 			<div>
-				<h1>&#x1F320; {{ problem.name }}</h1>
+				<h1>&#x1F320; Starlight: Add/edit hints or insights</h1>
 			</div>
 			<div style="float: right;">
 				{% if user.is_authenticated %}
@@ -21,13 +22,32 @@
 					<a href="{% url 'register' %}">Register</a>
 				{% endif %}
 			</div>
+			</div>
+			<h2 style="margin-top: 0px;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a> (<a href="{% url 'problems-list' %}">View all problems</a>)</h2>
+			<nav class="navbar">
+				{% if request.GET.type == "hint" %}
+					<div class="navDiv">
+						<a href="{% url 'problems-view' problem.id %}?type=insight" class="navLink">&#x270D;&#xFE0F; Add/edit insights</a>
+					</div>
+					<div class="navDiv">
+						<a href="#" class="navSelected navLink">&#x1F4DD; Add/edit hints</a>
+					</div>
+				{% else %}
+					<div class="navDiv">
+						<a href="#" class="navSelected navLink">&#x270D;&#xFE0F; Add/edit insights</a>
+					</div>
+					<div class="navDiv">
+						<a href="{% url 'problems-view' problem.id %}?type=hint" class="navLink">&#x1F4DD; Add/edit hints</a>
+					</div>
+				{% endif %}
+				<div class="navDiv">
+					<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint" class="navLink">&#x1F4A1; Summary of hints</a>
+				</div>
+				<div class="navDiv" id="lastLinkNav">
+					<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight" class="navLink">&#129504; Summary of insights and similar problems</a>
+				</div>
+			</nav>
 		</div>
-		<p>View the summary of the hints to this problem as well as the key insights/observations. Filter out problems with similar key insights/observations.</p>
-        <p>
-			<a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to problem</a> |
-			<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint">Summary of hints</a> |
-			<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight">Summary of insights and similar problems</a>
-		</p>
 		{% if request.GET.type == "hint" %}
 			<h2 id="submit">Submit a new hint</h2>
 			{% if user.is_authenticated %}

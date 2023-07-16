@@ -33,7 +33,30 @@
 				{% endif %}
 			</div>
             </div>
-            <h2 style="margin-top: 0px;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></h2>
+            <h2 style="margin-top: 0px;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a> (<a href="{% url 'problems-list' %}">View all problems</a>)</h2>
+            <nav class="navbar">
+				<div class="navDiv">
+					<a href="{% url 'problems-view' problem.id %}?type=insight" class="navLink">&#x270D;&#xFE0F; Add/edit insights</a>
+				</div>
+				<div class="navDiv">
+					<a href="{% url 'problems-view' problem.id %}?type=hint" class="navLink">&#x1F4DD; Add/edit hints</a>
+				</div>
+                {% if request.GET.type == 'hint' %}
+				    <div class="navDiv">
+					    <a href="#" class="navLink navSelected">&#x1F4A1; Summary of hints</a>
+				    </div>
+				    <div class="navDiv" id="lastLinkNav">
+					    <a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight" class="navLink">&#129504; Summary of insights and similar problems</a>
+				    </div>
+                {% else %}
+				    <div class="navDiv">
+					    <a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint" class="navLink">&#x1F4A1; Summary of hints</a>
+				    </div>
+				    <div class="navDiv" id="lastLinkNav">
+					    <a href="#" class="navLink navSelected">&#129504; Summary of insights and similar problems</a>
+				    </div>
+                {% endif %}
+			</nav>
 		</div>
         <div class="overlay" id="clusterModelOverlay">
             <div class="modal" id="clusterModal">

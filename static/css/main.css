@@ -130,6 +130,29 @@ button:hover, .buttonLink:hover {
 	border-left: solid #b48ead;
 	overflow-wrap: break-word;
 }
+.navbar {
+	display: inline-grid;
+	grid-template-columns: repeat(4, auto);
+	align-items: center;
+}
+.navLink, .navLink:visited {
+	color: inherit;
+	text-decoration: none;
+	padding: 0.4em;
+	display: inline-block;
+}
+.navLink:hover {
+	background-color: lightgray;
+	border-radius: 0.2em;
+}
+.navDiv {
+	margin-right: 0.5em;
+	padding-bottom: 0.1em;
+	text-align: center;
+}
+.navSelected {
+	border-bottom: solid 0.2em #A3BE8C;
+}
 @media (prefers-color-scheme: dark) {
 	body {
 		background-color: #2e3440;
@@ -155,5 +178,27 @@ button:hover, .buttonLink:hover {
 	}
 	.buttonLink.bg-gray:hover {
 		background-color: whitesmoke;
+	}
+	.navLink:hover {
+		background-color: #434C5E;
+		border-radius: 0.2em;
+	}
+}
+@media screen and (max-width: 760px) {
+	.navbar {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+	#lastLinkNav {
+		grid-column: span 3;
+	}
+	h1 {
+		font-size: 1.6em;
+	}
+	h2 {
+		font-size: 1.3em;
+	}
+	h3 {
+		font-size: 1.15em;
 	}
 }
