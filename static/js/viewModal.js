@@ -64,7 +64,7 @@ const viewHintClusterBtns = document.getElementsByClassName("viewHintCluster");
 for(let i = 0; i < viewHintClusterBtns.length; i++) {
     viewHintClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
-        renderHintPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
+        renderHintPage(1, event.currentTarget.getAttribute("problemid"), event.currentTarget.getAttribute("clusterid"), true);
         scrollYVal = window.pageYOffset;
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
@@ -153,7 +153,7 @@ const viewInsightClusterBtns = document.getElementsByClassName("viewInsightClust
 for(let i = 0; i < viewInsightClusterBtns.length; i++) {
     viewInsightClusterBtns[i].addEventListener("click", async function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visible")) return;
-        renderInsightPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true);
+        renderInsightPage(1, event.currentTarget.getAttribute("problemid"), event.currentTarget.getAttribute("clusterid"), true);
         scrollYVal = window.pageYOffset;
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
@@ -274,11 +274,11 @@ const viewSimilarProblemsBtns = document.getElementsByClassName("viewSimilarProb
 for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
     viewSimilarProblemsBtns[i].addEventListener("click", function (event) {
         if(document.getElementById("clusterModelOverlay").classList.contains("visibleSlower")) return;
-        event.target.disabled = true;
+        event.currentTarget.disabled = true;
         scrollYVal = window.pageYOffset;
         document.body.style.top = "-" + scrollYVal.toString() + "px";
         document.body.style.position = "fixed";
-        renderProblemPage(1, event.target.getAttribute("problemid"), event.target.getAttribute("clusterid"), true, event.target);
+        renderProblemPage(1, event.currentTarget.getAttribute("problemid"), event.currentTarget.getAttribute("clusterid"), true, event.currentTarget);
     });
 }
 document.getElementById("closeModalButton").addEventListener("click", function (event) {
