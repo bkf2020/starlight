@@ -87,6 +87,11 @@
                 </div>
             </div>
         {% endif %}
+        {% if not page_obj %}
+            <center style="margin-top: 2em; margin-bottom: 2em;">
+                <h3>There are no hint or insight clusters available currently.</h3>
+            </center>
+        {% endif %}
         {% for info in page_obj %}
             {% if request.GET.type == "hint" %}
                 <div class="hintInsightContainer">

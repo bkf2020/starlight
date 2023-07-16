@@ -3,7 +3,7 @@ from django.forms.models import model_to_dict
 from django.core import serializers
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.views.generic.edit import UpdateView, DeleteView
 from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster
 from .forms import HintForm, InsightForm
@@ -218,12 +218,18 @@ def problems_similar_insights(request):
     if search_type == "individual":
         insight_id = request.GET.get('insight')
         insight = Insight.objects.filter(id=insight_id).first()
-        firstProblem = Problem.objects.filter(id=insight.problem_id)
+        try:
+            firstProblem = Problem.objects.filter(id=insight.problem_id)
+        except:
+            return HttpResponseNotFound("404 error with individual insight specified/insight not specified/insight not found")
         if firstProblem.count() > 0:
             firstProblem = firstProblem.first()
         else:
-            firstProblem = Problem(name="N/A", url="#")
-        cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight).first().cluster_id_overall
+            return HttpResponseNotFound("404 problem not found")
+        try:
+            cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight).first().cluster_id_overall
+        except AttributeError:
+            return HttpResponseNotFound("404 error with insight specified/the system has not considered problems similar to this insight yet")
         cluster = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall)
         problems = []
         seen = {}
@@ -262,7 +268,7 @@ def problems_similar_insights(request):
             if firstProblem.count() > 0:
                 firstProblem = firstProblem.first()
             else:
-                firstProblem = Problem(name="N/A", url="#")
+                return HttpResponseNotFound("404 problem not found")
         else:
             insight_problem_id = request.GET.get('problem')
             insight_cluster = InsightCluster.objects.filter(problem_id=insight_problem_id)
@@ -270,13 +276,22 @@ def problems_similar_insights(request):
             if firstProblem.count() > 0:
                 firstProblem = firstProblem.first()
             else:
-                firstProblem = Problem(name="N/A", url="#")
+                return HttpResponseNotFound("404 problem not found")
 
         problems = []
         id_problem = {}
         seen_cluster_id_overall = {}
+        if insight_cluster.count() == 0:
+            context = {
+                "none_in_cluster": True
+            }
+            if json: return JsonResponse(context)
+            return render(request, 'problems/problems_similar_insights.html', context)
         for insight_info in insight_cluster:
-            cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight_info.insight).first().cluster_id_overall
+            try:
+                cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight_info.insight).first().cluster_id_overall
+            except:
+                return HttpResponseNotFound("please try again later... not all similar problems have been considered")
             overall_cluster = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall)
             if cluster_id_overall in seen_cluster_id_overall:
                 continue

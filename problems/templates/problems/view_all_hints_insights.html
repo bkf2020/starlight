@@ -36,6 +36,11 @@
         {% else %}
             <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight">Back to summary of insights</a></p>
         {% endif %}
+		{% if not page_obj %}
+            <center style="margin-top: 2em; margin-bottom: 2em;">
+                <h3>There are no hints/insights available currently.</h3>
+            </center>
+        {% endif %}
         <ul>
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}

@@ -27,6 +27,11 @@
 				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>:
 				<blockquote><quote>{{ insight.text }}</quote></blockquote>
 			</p>
+			{% if not page_obj %}
+				<center>
+					<h3>There are no problems that are similar to the specified problem currently with these conditions.</h3>
+				</center>
+        	{% endif %}
 			<ul>
 				{% for problem in page_obj %}
 					{% if problem != firstProblem %}
@@ -54,11 +59,20 @@
 				{% endfor %}
 			</ul>
 		{% elif request.GET.type == "group" %}
+			{% if none_in_cluster %}
+				<center><h3>There are no insights in the cluster specified.</h3></center>
+				<p><a href="{% url 'view-all-summary' %}?problem={{ request.GET.problem }}&type=insight">Back to summary of insights</a></p>
+			{% else %}
 			<p>Viewing other problems with insights similar to <b>insights in this group</b> from
 				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>. One insight from the group:
 				<blockquote><quote>{{ firstInsight.text }}</quote></blockquote>
 			</p>
 			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.problem }}" target="_blank" rel="noopener noreferrer">View all insights in this group</a>
+			{% if not page_obj %}
+				<center>
+					<h3>There are no problems that are similar to the specified problem currently with these conditions.</h3>
+				</center>
+        	{% endif %}
 			<ul>
 				{% for problem in page_obj %}
 					{% if problem != firstProblem %}
@@ -85,9 +99,19 @@
 					{% endif %}
 				{% endfor %}
 			</ul>
+			{% endif %}
 		{% else %}
+			{% if none_in_cluster %}
+				<center><h3>There are no insight clusters in this problem.</h3></center>
+				<p><a href="{% url 'view-all-summary' %}?problem={{ request.GET.problem }}&type=insight">Back to summary of insights</a></p>
+			{% else %}
 			<p>Viewing other problems with insights similar to <b>ANY insight of</b> <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.</p>
 			<p><a href="{% url 'view-all-summary' %}?problem={{ firstProblem.id }}&type=insight">Back to summary of insights</a></p>
+			{% if not page_obj %}
+				<center>
+					<h3>There are no problems that are similar to the specified problem currently in the given conditions.</h3>
+				</center>
+        	{% endif %}
 			<ul>
 				{% for problem in page_obj %}
 					{% if problem != firstProblem %}
@@ -114,7 +138,9 @@
 					{% endif %}
 				{% endfor %}
 			</ul>
+			{% endif %}
 		{% endif %}
+		{% if not none_in_cluster %}
 		<div class="pagination">
 			{% if page_obj.has_previous %}
    	        	<a class="paginationLink" href="?page={{ page_obj.previous_page_number }}&type={{ request.GET.type }}&problem={{ request.GET.problem }}&cluster={{ request.GET.cluster }}&insight={{ request.GET.insight }}">&larr;</a>
@@ -138,5 +164,6 @@
             {% endfor %}
             {% endwith %}
 		</details>
+		{% endif %}
     </body>
 </html>

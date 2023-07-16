@@ -34,6 +34,11 @@
 		</div>
 		{% if request.GET.type == "hint" %}
 			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=hint">Back to summary of hints in problem</a>
+			{% if not page_obj %}
+            	<center style="margin-top: 2em; margin-bottom: 2em;">
+                	<h3>There are no hints in this cluster currently.</h3>
+            	</center>
+        	{% endif %}
 			<ul>
 			{% for hint in page_obj %}
 				<li>
@@ -46,6 +51,11 @@
 			</ul>
 		{% else %}
 			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=insight">Back to summary of insights in problem</a>
+			{% if not page_obj %}
+            	<center style="margin-top: 2em; margin-bottom: 2em;">
+                	<h3>There are no insights in this cluster currently.</h3>
+            	</center>
+        	{% endif %}
 			<ul>
 			{% for insight in page_obj %}
 				<li>
