@@ -14,6 +14,11 @@ async function populateHintPage(page, problemId, clusterId) {
         var description = document.createElement("h3");
         description.appendChild(document.createTextNode("Viewing all hints of this cluster:"));
         document.getElementById("clusterModalContent").append(description);
+        if(hintClusterData["new_page_obj"]["hints"].length == 0) {
+            var noHintsCurrently = document.createElement("h3");
+            noHintsCurrently.appendChild(document.createTextNode("There are no hints currently in this cluster. Perhaps it was recently deleted"));
+            description.appendChild(noHintsCurrently);
+        }
         document.getElementById("clusterModalContent").append(listHints);
         var paginationDiv = document.createElement("div");
         if(hintClusterData["new_page_obj"]["has_previous"]) {
@@ -127,6 +132,11 @@ async function populateInsightPage(page, problemId, clusterId) {
             renderProblemPage(1, event.currentTarget.getAttribute("problemid"), event.currentTarget.getAttribute("clusterid"), true, event.currentTarget);
         });
         description.appendChild(similarProblemsButton);
+        if(insightClusterData["new_page_obj"]["insights"].length == 0) {
+            var noInsightsCurrently = document.createElement("h3");
+            noInsightsCurrently.appendChild(document.createTextNode("There are no insights currently in this cluster. Perhaps it was recently deleted"));
+            description.appendChild(noInsightsCurrently);
+        }
         document.getElementById("clusterModalContent").append(description);
         document.getElementById("clusterModalContent").append(listInsights);
         var paginationDiv = document.createElement("div");
@@ -194,6 +204,38 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
         const similarProblems = await fetch("/problems/problemsSimilarInsights/?type=group&problem=" + problemId + "&cluster=" + clusterId + "&page=" + page.toString() + "&json=true");
         const similarProblemsData = await similarProblems.json();
         var listProblems = document.createElement("div");
+        if(similarProblemsData.hasOwnProperty("not_all_similar")) {
+            var description = document.createElement("div");
+            var descriptionH3 = document.createElement("h3");
+            descriptionH3.style.marginBottom = "0.3em";
+            descriptionH3.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
+            var pleaseWaitH3 = document.createElement("h3");
+            pleaseWaitH3.appendChild(document.createTextNode("Please try again later... Not all similar problems have been considered. We are in the process of doing so"));
+            description.appendChild(descriptionH3);
+            description.appendChild(pleaseWaitH3);
+            document.getElementById("clusterModalContent").appendChild(description);
+            if(firstTime) document.getElementById("clusterModelOverlay").classList.add("visibleSlower");
+            else document.getElementById("clusterModalContent").classList.add("fade");
+            button.disabled = false;
+            document.getElementById("clusterModal").style.height = null;
+            return;
+        }
+        if(similarProblemsData.hasOwnProperty("none_in_cluster")) {
+            var description = document.createElement("div");
+            var descriptionH3 = document.createElement("h3");
+            descriptionH3.style.marginBottom = "0.3em";
+            descriptionH3.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
+            var tryagainH3 = document.createElement("h3");
+            tryagainH3.appendChild(document.createTextNode("The insight cluster has nothing in it! Perhaps all the insights were deleted recently. Please refresh the page."));
+            description.appendChild(descriptionH3);
+            description.appendChild(tryagainH3);
+            document.getElementById("clusterModalContent").appendChild(description);
+            if(firstTime) document.getElementById("clusterModelOverlay").classList.add("visibleSlower");
+            else document.getElementById("clusterModalContent").classList.add("fade");
+            button.disabled = false;
+            document.getElementById("clusterModal").style.height = null;
+            return;
+        }
         for(var idx in similarProblemsData["new_page_obj"]["problems"]) {
             var problem = similarProblemsData["new_page_obj"]["problems"][idx];
             if(problem["id"] == similarProblemsData["firstProblem"]["id"]) {
@@ -276,6 +318,11 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             document.getElementById("clusterModelOverlay").classList.add("visible");
         });
         description.appendChild(insightClusterButton);
+        if(similarProblemsData["new_page_obj"]["problems"].length == 0) {
+            var noProblemsCurrently = document.createElement("h3");
+            noProblemsCurrently.appendChild(document.createTextNode("There are no problems currently that are similar to this one with these conditions. Try refreshing maybe."));
+            description.appendChild(noProblemsCurrently);
+        }
         document.getElementById("clusterModalContent").append(description);
         document.getElementById("clusterModalContent").append(listProblems);
         var paginationDiv = document.createElement("div");

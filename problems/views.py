@@ -291,6 +291,9 @@ def problems_similar_insights(request):
             try:
                 cluster_id_overall = OverallInsightCluster.objects.filter(insight=insight_info.insight).first().cluster_id_overall
             except:
+                if json:
+                    context = {'not_all_similar': True}
+                    return JsonResponse(context)
                 return HttpResponseNotFound("please try again later... not all similar problems have been considered")
             overall_cluster = OverallInsightCluster.objects.filter(cluster_id_overall=cluster_id_overall)
             if cluster_id_overall in seen_cluster_id_overall:
