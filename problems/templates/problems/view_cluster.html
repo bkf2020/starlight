@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 	</head>
     <body>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 0.1em solid;">
 			{% if request.GET.type == "hint" %}
 				<div>
 					<h1>&#x1F320; Starlight: View Hint Cluster</h1>
@@ -22,7 +22,7 @@
 					<h1>&#x1F320; Starlight: View Insight Cluster</h1>
 				</div>
 			{% endif %}
-			<div style="float: right;">
+			<div style="float: right; padding-left: 0.7em;">
 				{% if user.is_authenticated %}
 					<a href="{% url 'profile' %}">{{ user.username }}</a> |
 					<a href="{% url 'logout' %}">Logout</a>
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 		{% if request.GET.type == "hint" %}
-			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=hint">Back to summary of hints in problem</a>
+			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=hint" class="buttonLink">Back to summary of hints in problem</a>
 			{% if not page_obj %}
             	<center style="margin-top: 2em; margin-bottom: 2em;">
                 	<h3>There are no hints in this cluster currently.</h3>
@@ -50,7 +50,7 @@
 			{% endfor %}
 			</ul>
 		{% else %}
-			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=insight">Back to summary of insights in problem</a>
+			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=insight" class="buttonLink">Back to summary of insights in problem</a>
 			{% if not page_obj %}
             	<center style="margin-top: 2em; margin-bottom: 2em;">
                 	<h3>There are no insights in this cluster currently.</h3>

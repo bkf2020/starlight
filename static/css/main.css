@@ -130,6 +130,10 @@ button:hover, .buttonLink:hover {
 	border-left: solid #b48ead;
 	overflow-wrap: break-word;
 }
+blockquote {
+	border-left: 0.3em solid #A3BE8C;
+	padding-left: 0.5em;
+}
 .navbar {
 	display: inline-grid;
 	grid-template-columns: repeat(4, auto);

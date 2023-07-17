@@ -8,11 +8,11 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 	</head>
     <body>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 0.1em solid;">
 			<div>
 		        <h1>&#x1F320; Starlight: View Shared Insights Between Problems</h1>
 			</div>
-			<div style="float: right;">
+			<div style="float: right; padding-left: 0.7em;">
 				{% if user.is_authenticated %}
 					<a href="{% url 'profile' %}">{{ user.username }}</a> |
 					<a href="{% url 'logout' %}">Logout</a>
@@ -23,34 +23,35 @@
 			</div>
 		</div>
 		{% if request.GET.type == "individual" %}
+			<div class="hintInsightContainer">
             <p>
                 Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
                 that are similar (thus shared) with <b>only this insight</b> from <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>:
                 <blockquote>{{ insight.text }}</blockquote>
-            </p>
+            </p></div>
             <ul>
                 {% for insight_info in page_obj %}
                     <li>{{ insight_info.insight.text }}</li>
                 {% endfor %}
             </ul>
 		{% elif request.GET.type == "group" %}
-            <p>
+            <div class="hintInsightContainer"><p>
                 Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
-                that are similar (thus shared) with <b>any insight</b> in this <b>group</b> of <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.
-                The first insight of this group is:
+                that are similar (thus shared) with <b>any insight in this cluster</b></mark> of <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.
+                The first insight of this cluster is:
 				<blockquote>{{ firstInsight.text }}</blockquote>
-            </p>
-			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}" target="_blank" rel="noopener noreferrer">View all insights in this group</a>
+            </p></div>
+			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}" target="_blank" rel="noopener noreferrer" class="buttonLink">View all insights in this cluster</a>
 			<ul>
 				{% for insight in page_obj %}
 					<li>{{ insight.text }}</li>
 				{% endfor %}
 			</ul>
 		{% else %}
-			<p>
+			<div class="hintInsightContainer"><p>
                 Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
                 that are similar (thus shared) with <b>ANY insight</b> of <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.
-            </p>
+            </p></div>
 			<ul>
 				{% for insight in page_obj %}
 					<li>{{ insight.text }}</li>

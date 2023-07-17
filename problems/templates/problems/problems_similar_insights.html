@@ -8,11 +8,11 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 	</head>
     <body>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 0.1em solid;">
 			<div>
 				<h1>&#x1F320; Starlight: View Problems with Similar Insights</h1>
 			</div>
-			<div style="float: right;">
+			<div style="float: right; padding-left: 0.7em;">
 				{% if user.is_authenticated %}
 					<a href="{% url 'profile' %}">{{ user.username }}</a> |
 					<a href="{% url 'logout' %}">Logout</a>
@@ -32,11 +32,12 @@
 					<h3>There are no problems that are similar to the specified problem currently with these conditions.</h3>
 				</center>
         	{% endif %}
-			<ul>
-				{% for problem in page_obj %}
-					{% if problem != firstProblem %}
+			{% for problem in page_obj %}
+				{% if problem != firstProblem %}
+					<div class="hintInsightContainer">
+					<ul style="margin-top: 0em; margin-bottom: 0em;">
 						<li>
-							<p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></p>
+							<a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a>
 							{% if problem.insights_matched %}
 								<details>
 									<summary>Shared similar insights</summary>
@@ -55,9 +56,10 @@
 								</details>
 							{% endif %}
 						</li>
-					{% endif %}
-				{% endfor %}
-			</ul>
+					</ul>
+					</div>
+				{% endif %}
+			{% endfor %}
 		{% elif request.GET.type == "group" %}
 			{% if none_in_cluster %}
 				<center><h3>There are no insights in the cluster specified.</h3></center>
@@ -67,17 +69,18 @@
 				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>. One insight from the group:
 				<blockquote><quote>{{ firstInsight.text }}</quote></blockquote>
 			</p>
-			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.problem }}" target="_blank" rel="noopener noreferrer">View all insights in this group</a>
+			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.problem }}" target="_blank" rel="noopener noreferrer" class="buttonLink">View all insights in this group</a>
 			{% if not page_obj %}
 				<center>
 					<h3>There are no problems that are similar to the specified problem currently with these conditions.</h3>
 				</center>
         	{% endif %}
-			<ul>
-				{% for problem in page_obj %}
-					{% if problem != firstProblem %}
+			{% for problem in page_obj %}
+				{% if problem != firstProblem %}
+				<div class="hintInsightContainer">
+					<ul style="margin-bottom: 0em; margin-top: 0em;">
 						<li>
-							<p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></p>
+							<a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a>
 							{% if problem.insights_matched %}
 								<details>
 									<summary>Shared similar insights</summary>
@@ -96,9 +99,10 @@
 								</details>
 							{% endif %}
 						</li>
-					{% endif %}
-				{% endfor %}
-			</ul>
+					</ul>
+				</div>
+				{% endif %}
+			{% endfor %}
 			{% endif %}
 		{% else %}
 			{% if none_in_cluster %}
@@ -106,17 +110,17 @@
 				<p><a href="{% url 'view-all-summary' %}?problem={{ request.GET.problem }}&type=insight">Back to summary of insights</a></p>
 			{% else %}
 			<p>Viewing other problems with insights similar to <b>ANY insight of</b> <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.</p>
-			<p><a href="{% url 'view-all-summary' %}?problem={{ firstProblem.id }}&type=insight">Back to summary of insights</a></p>
+			<p><a href="{% url 'view-all-summary' %}?problem={{ firstProblem.id }}&type=insight" class="buttonLink bg-green">Back to summary of insights</a></p>
 			{% if not page_obj %}
 				<center>
 					<h3>There are no problems that are similar to the specified problem currently in the given conditions.</h3>
 				</center>
         	{% endif %}
-			<ul>
-				{% for problem in page_obj %}
-					{% if problem != firstProblem %}
+			{% for problem in page_obj %}
+				{% if problem != firstProblem %}
+					<div class="hintInsightContainer"><ul style="margin-top: 0em; margin-bottom: 0em;">
 						<li>
-							<p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></p>
+							<a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a>
 							{% if problem.insights_matched %}
 								<details>
 									<summary>Shared similar insights</summary>
@@ -135,9 +139,9 @@
 								</details>
 							{% endif %}
 						</li>
-					{% endif %}
-				{% endfor %}
-			</ul>
+					</ul></div>
+				{% endif %}
+			{% endfor %}
 			{% endif %}
 		{% endif %}
 		{% if not none_in_cluster %}

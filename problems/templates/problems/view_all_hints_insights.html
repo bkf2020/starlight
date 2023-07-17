@@ -12,15 +12,16 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 	</head>
     <body>
+		<div style="border-bottom: 0.1em solid;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
 			<div>
                 {% if request.GET.type == "hint" %}
-		            <h1>&#x1F320; Starlight: View All Hints from {{ problem.name }}</h1>
+		            <h1>&#x1F320; Starlight: View All Hints from Problem</h1>
                 {% else %}
-		            <h1>&#x1F320; Starlight: View All Insights from {{ problem.name }}</h1>
+		            <h1>&#x1F320; Starlight: View All Insights from Problem</h1>
                 {% endif %}
 			</div>
-			<div style="float: right;">
+			<div style="float: right; padding-left: 0.7em;">
 				{% if user.is_authenticated %}
 					<a href="{% url 'profile' %}">{{ user.username }}</a> |
 					<a href="{% url 'logout' %}">Logout</a>
@@ -30,27 +31,32 @@
 				{% endif %}
 			</div>
 		</div>
-        <p><a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">Link to {{ problem.name }}</a></p>
+		<div>
+			<h2 style="margin-top: 0px;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a> (<a href="{% url 'problems-list' %}">View all problems</a>)</h2>
+		</div>
+		</div>
         {% if request.GET.type == "hint" %}
-            <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint">Back to summary of hints</a></p>
+            <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint" class="buttonLink bg-cyan">Back to summary of hints</a></p>
         {% else %}
-            <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight">Back to summary of insights</a></p>
+            <p><a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight" class="buttonLink bg-green">Back to summary of insights</a></p>
         {% endif %}
 		{% if not page_obj %}
             <center style="margin-top: 2em; margin-bottom: 2em;">
                 <h3>There are no hints/insights available currently.</h3>
             </center>
         {% endif %}
-        <ul>
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}
-                    <li>{{ info.text }}</li>
+                    <ul><li>{{ info.text }}</li></ul>
                 {% else %}
-                    <li>{{ info.text }}</li>
-					<ul>
-						<li><a href="{% url 'problems-similar-insights' %}?type=individual&insight={{ info.id }}" target="_blank" rel="noopener noreferrer">
-							View similar problems that share ONLY this INSIGHT</a></li>
-					</ul>
+					<div class="hintInsightContainer">
+						<ul style="margin-top: 0em; margin-bottom: 0em;">
+                    	<li>{{ info.text }}</li>
+						<ul>
+							<li><a href="{% url 'problems-similar-insights' %}?type=individual&insight={{ info.id }}" target="_blank" rel="noopener noreferrer">
+								View similar problems that share ONLY this INSIGHT</a></li>
+						</ul></ul>
+					</div>
                 {% endif %}
             {% endfor %}
         </ul>
