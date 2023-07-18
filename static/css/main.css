@@ -157,6 +157,23 @@ blockquote {
 .navSelected {
 	border-bottom: solid 0.2em #A3BE8C;
 }
+textarea {
+	display: block;
+	max-width: 98%;
+	font: inherit;
+	color: inherit;
+	background-color: #e5e9f0;
+	border: 0.15em solid;
+	border-radius: 0.5em;
+	padding: 0.5em;
+}
+textarea::placeholder {
+	color: gray;
+}
+textarea:focus {
+	outline: none;
+	border: darkcyan 0.2em solid;
+}
 @media (prefers-color-scheme: dark) {
 	body {
 		background-color: #2e3440;
@@ -186,6 +203,16 @@ blockquote {
 	.navLink:hover {
 		background-color: #434C5E;
 		border-radius: 0.2em;
+	}
+	textarea {
+		background-color: #434c5e;
+	}
+	textarea::placeholder {
+		color: lightgray;
+	}
+	textarea:focus {
+		outline: none;
+		border: #88c0d0 0.2em solid;
 	}
 }
 @media screen and (max-width: 760px) {

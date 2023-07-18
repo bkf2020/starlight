@@ -67,6 +67,7 @@
 				<form method="POST">
 					{% csrf_token %}
 					{{ hint_form }}
+					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 					<button type="submit" class="bg-green">Submit hints</button>
 				</form>
 			{% else %}
@@ -91,6 +92,7 @@
 				<form method="POST">
 					{% csrf_token %}
 					{{ insight_form }}
+					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 					<button type="submit" class="bg-green changeButton">Submit insights</button>
 				</form>
 			{% else %}
@@ -98,5 +100,18 @@
 			{% endif %}
 		{% endif %}
     </body>
+	<style>
+		label {
+			font-size: large;
+			font-weight: bold;
+		}
+		textarea {
+			width: min(96%, 850px);
+		}
+		div.hintInsightContainer {
+			max-width: 850px;
+		}
+	</style>
 	<script type="text/javascript" src="{% static 'js/saveScrollPosition.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/showCharactersLeft.js' %}"></script>
 </html>

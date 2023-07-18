@@ -23,9 +23,21 @@
 			</div>
 		</div>
         <form method="post">{% csrf_token %}
-            {{ form.as_p }}
+            {{ form }}
+			<p style="margin-top: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 			<button type="submit" class="bg-blue">Update insight</button>
             <a href="{% url 'problems-view' object.problem_id %}?type=insight" class="buttonLink bg-gray">Cancel</button>
         </form>
     </body>
+	<script type="text/javascript" src="{% static 'js/showCharactersLeft.js' %}"></script>
+	<style>
+		textarea {
+			width: min(96%, 850px);
+			height: 8em;
+		}
+		label {
+			font-size: large;
+			font-weight: bold;
+		}
+	</style>
 </html>

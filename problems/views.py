@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, HttpResponseNotFound
 from django.views.generic.edit import UpdateView, DeleteView
 from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster
-from .forms import HintForm, InsightForm
+from .forms import HintForm, InsightForm, HintUpdateForm, InsightUpdateForm
 
 # Create your views here.
 
@@ -29,7 +29,7 @@ def list(request):
 
 class HintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Hint
-    fields = ['text']
+    form_class = HintUpdateForm
     template_name_suffix = '_update_form'
     def get_success_url(self):
         return f"/problems/{self.get_object().problem_id}?type=hint"
@@ -38,7 +38,7 @@ class HintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class InsightUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Insight
-    fields = ['text']
+    form_class = InsightUpdateForm
     template_name_suffix = '_update_form'
     def get_success_url(self):
         return f"/problems/{self.get_object().problem_id}?type=insight"
