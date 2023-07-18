@@ -64,8 +64,16 @@
 				{% else %}
 					<p id="userHints">You currently don't have any hints.</p>
 				{% endif %}
+				<h3 id="hintFormLocation" style="margin: 0px 0px 0px 0px;"></h3>
 				<form method="POST">
 					{% csrf_token %}
+					{% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                            	{{ message }}
+                            </div>
+                        {% endfor %}
+                	{% endif %}
 					{{ hint_form }}
 					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 					<button type="submit" class="bg-green">Submit hints</button>
@@ -89,8 +97,16 @@
 				{% else %}
 					<p id="userInsights">You currently don't have any insights/observations.</p>
 				{% endif %}
+				<h3 id="insightFormLocation" style="margin: 0px 0px 0px 0px;"></h3>
 				<form method="POST">
 					{% csrf_token %}
+					{% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                            	{{ message }}
+                            </div>
+                        {% endfor %}
+                	{% endif %}
 					{{ insight_form }}
 					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 					<button type="submit" class="bg-green changeButton">Submit insights</button>

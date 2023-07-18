@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 from django.core import serializers
 from django.core.paginator import Paginator
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, HttpResponseNotFound
 from django.views.generic.edit import UpdateView, DeleteView
@@ -24,8 +25,6 @@ def list(request):
         'full_path': request.get_full_path()
     }
     return render(request, 'problems/list.html', context)
-
-# TODO: redirect urls for all these views
 
 class HintUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Hint
@@ -69,9 +68,13 @@ def problem(request, index):
     hint_form = HintForm()
     insight_form = InsightForm()
     if request.method == 'POST':
-        # TODO: at most 10 hints/insights, prevent duplicate hints/insights (maybe regarding other users too)
         if 'hint' in request.POST:
             hint_form = HintForm(request.POST)
+            print(request.user.username)
+            print(Hint.objects.filter(username=request.user.username, problem_id=index).count())
+            if Hint.objects.filter(username=request.user.username, problem_id=index).count() == 10:
+                messages.error(request, 'You can only submit up to 10 hints!')
+                return redirect(f'/problems/{index}?type=hint#hintFormLocation')
             if hint_form.is_valid() and request.user.is_authenticated:
                 new_hint = Hint(
                     text=hint_form.cleaned_data.get('hint'),
@@ -79,9 +82,12 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_hint.save()
-                return redirect(f'/problems/{index}?type=hint#id_hint')
+                return redirect(f'/problems/{index}?type=hint#hintFormLocation')
         elif 'insight' in request.POST:
             insight_form = InsightForm(request.POST)
+            if Insight.objects.filter(username=request.user.username, problem_id=index).count() == 10:
+                messages.error(request, 'You can only submit up to 10 insights!')
+                return redirect(f'/problems/{index}?type=insight#insightFormLocation')
             if insight_form.is_valid() and request.user.is_authenticated:
                 new_insight = Insight(
                     text=insight_form.cleaned_data.get('insight'),
@@ -89,7 +95,7 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_insight.save()
-                return redirect(f'/problems/{index}?type=insight#id_insight')
+                return redirect(f'/problems/{index}?type=insight#insightFormLocation')
         else:
             return redirect(f'/problems/{index}')
     

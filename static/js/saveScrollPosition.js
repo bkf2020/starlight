@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if(scrollYPosition === null) {
         scrollYPosition = 0;
     }
-    window.scrollTo(0, scrollYPosition);
+    if(window.location.hash !== "#insightFormLocation" && window.location.hash !== "#hintFormLocation") {
+        window.scrollTo(0, scrollYPosition);
+    }
     document.addEventListener("scroll", function(event) {
         localStorage.setItem("scrollYPosition", window.pageYOffset);
     });
