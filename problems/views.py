@@ -79,7 +79,7 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_hint.save()
-            return redirect(f'/problems/{index}?type=hint#id_hint')
+                return redirect(f'/problems/{index}?type=hint#id_hint')
         elif 'insight' in request.POST:
             insight_form = InsightForm(request.POST)
             if insight_form.is_valid() and request.user.is_authenticated:
@@ -89,8 +89,9 @@ def problem(request, index):
                     username=request.user.username
                 )
                 new_insight.save()
-            return redirect(f'/problems/{index}?type=insight#id_insight')
-        return redirect(f'/problems/{index}')
+                return redirect(f'/problems/{index}?type=insight#id_insight')
+        else:
+            return redirect(f'/problems/{index}')
     
     problem = Problem.objects.get(id=index)
     
