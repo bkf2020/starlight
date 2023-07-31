@@ -140,7 +140,7 @@ blockquote {
 	align-items: center;
 }
 .navLink, .navLink:visited {
-	color: inherit;
+	color: inherit !important;
 	text-decoration: none;
 	padding: 0.4em;
 	display: inline-block;
@@ -174,6 +174,45 @@ textarea:focus {
 	outline: none;
 	border: darkcyan 0.2em solid;
 }
+/*.dark body {
+	background-color: #2e3440;
+	color: #e5e9f0;
+}
+.dark a, .dark a:visited {
+	color: #88c0d0;
+}
+.dark tr:nth-child(even), .dark .paginationSelected {
+	background-color: #4c566a;
+}
+.dark td, .dark th {
+	border: 1px solid #d8dee9;
+}
+.dark .alert, .dark .errorlist {
+	border-color: #e5e9f0;
+}
+.dark .hintInsightContainer {
+	background-color: #434c5e;
+}
+.dark .bg-gray {
+	background-color: #ddd;
+}
+.dark .buttonLink.bg-gray:hover {
+	background-color: whitesmoke;
+}
+.dark .navLink:hover {
+	background-color: #434C5E;
+	border-radius: 0.2em;
+}
+.dark textarea {
+	background-color: #434c5e;
+}
+.dark textarea::placeholder {
+	color: lightgray;
+}
+.dark textarea:focus {
+	outline: none;
+	border: #88c0d0 0.2em solid;
+}*/
 @media (prefers-color-scheme: dark) {
 	body {
 		background-color: #2e3440;

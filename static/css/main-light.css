@@ -1,0 +1,42 @@
+body {
+    background-color: snow !important;
+	color: #222 !important;
+}
+a, a:visited {
+	color: mediumblue !important;
+}
+a.buttonLink, a.buttonLink:visited {
+	color: black !important;
+}
+tr:nth-child(even), .paginationSelected {
+	background-color: lightgray !important;
+}
+td, th {
+	border: 1px solid #333 !important;
+}
+.alert, .errorlist {
+	border-color: #444 !important;
+}
+.hintInsightContainer {
+	background-color: #e5e9f0 !important;
+}
+.bg-gray {
+	background-color: #e5e9f0 !important;
+}
+.buttonLink.bg-gray:hover {
+	background-color: gainsboro !important;
+}
+.navLink:hover {
+	background-color: lightgray !important;
+	border-radius: 0.2em !important;
+}
+textarea {
+	background-color: #e5e9f0 !important;
+}
+textarea::placeholder {
+	color: gray !important;
+}
+textarea:focus {
+	outline: none !important;
+	border: darkcyan 0.2em solid !important;
+}
