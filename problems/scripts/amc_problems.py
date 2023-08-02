@@ -11,15 +11,17 @@ django.setup()
 
 from problems.models import Problem
 
-tests = ["AMC_8", "AMC_10", "AMC_12", "AIME"]
+tests = ["AMC_8", "AMC_10", "AMC_12", "AIME", "USAMO", "USAJMO"]
 test_types = {}
 test_types["AMC_8"] = [""]
 test_types["AMC_10"] = ["A", "B"]
 test_types["AMC_12"] = ["A", "B"]
 test_types["AIME"] = ["I", "II"]
+test_types["USAMO"] = [""]
+test_types["USAJMO"] = [""]
 
 for test in tests:
-    for year in range(2010, 2024):
+    for year in range(2002, 2024):
         if(year == 2023 and (test == "AMC_10" or test == "AMC_12")):
             continue
         if(year == 2021 and (test == "AMC_8")):
@@ -28,6 +30,8 @@ for test in tests:
             ending = 26
             if(test == "AIME"):
                 ending = 16
+            elif((test == "USAMO") or (test == "USAJMO")):
+                ending = 7
             for num in range(1, ending):
                 if(test == "AIME"):
                     URL = "https://artofproblemsolving.com/wiki/index.php/" + str(year) + "_" + test + "_" + test_type + "_Problems#Problem_" + str(num)
@@ -37,6 +41,7 @@ for test in tests:
                     problem_name = str(year) + " " + test.replace("_", " ") + test_type + " Problem " + str(num)
                 new_problem = Problem(
                     name=problem_name,
-                    link=URL
+                    link=URL,
+                    problem_type=test
                 )
                 new_problem.save()

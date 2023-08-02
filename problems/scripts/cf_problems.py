@@ -17,13 +17,14 @@ URL = "https://codeforces.com/api/problemset.problems"
 page = requests.get(URL)
 data = json.loads(page.content)
 if data['status'] == "OK":
-    for problem in data['result']['problems']:
+    for problem in reversed(data['result']['problems']):
         problem_name = "Codeforces " + str(problem['contestId']) + problem['index'] + ": " + problem['name']
         problem_link = "https://codeforces.com/problemset/problem/" + str(problem['contestId']) + "/" + problem['index']
         if(Problem.objects.filter(name=problem_name, link=problem_link).count() == 0):
             new_problem = Problem(
                 name=problem_name,
-                link=problem_link
+                link=problem_link,
+                problem_type="codeforces"
             )
             new_problem.save()
 else:
