@@ -41,10 +41,69 @@
         </p>
         <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center;">
             <input type="text" name="search" placeholder="Search for a problem.." value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid;">
+            <input type="text" name="problemType" placeholder="Problem type.." value="{{ request.GET.problemType }}" style="display: none;">
             <div>
-                <button type="submit" class="bg-blue">Search</button><a href="{% url 'problems-list' %}" class="buttonLink bg-cyan">Reset</a>
+                <button type="submit" class="bg-blue">Search</button><a href="{% url 'problems-list' %}?problemType={{ request.GET.problemType }}" class="buttonLink bg-cyan">Reset</a>
             </div>
         </form>
+        <div style="text-align: center; margin-top: 0.5em;">
+            <b>Filter by type: </b>
+            {% if request.GET.problemType == None or request.GET.problemType == "" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}" class="buttonLink bg-red">All</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}" class="buttonLink">All</a>
+            {% endif %}
+            {% if request.GET.problemType == "codeforces" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=codeforces" class="buttonLink bg-red">Codeforces</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=codeforces" class="buttonLink">Codeforces</a>
+            {% endif %}
+            {% if request.GET.problemType == "atcoder" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=atcoder" class="buttonLink bg-red">AtCoder</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=atcoder" class="buttonLink">AtCoder</a>
+            {% endif %}
+            {% if request.GET.problemType == "dmoj" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=dmoj" class="buttonLink bg-red">DMOJ</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=dmoj" class="buttonLink">DMOJ</a>
+            {% endif %}
+            {% if request.GET.problemType == "usaco" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=usaco" class="buttonLink bg-red">USACO</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=usaco" class="buttonLink">USACO</a>
+            {% endif %}
+            {% if request.GET.problemType == "AMC_8" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AMC_8" class="buttonLink bg-red">AMC 8</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AMC_8" class="buttonLink">AMC 8</a>
+            {% endif %}
+            {% if request.GET.problemType == "AMC_10" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AMC_10" class="buttonLink bg-red">AMC 10</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AMC_10" class="buttonLink">AMC 10</a>
+            {% endif %}
+            {% if request.GET.problemType == "AMC_12" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AMC_12" class="buttonLink bg-red">AMC 12</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AMC_12" class="buttonLink">AMC 12</a>
+            {% endif %}
+            {% if request.GET.problemType == "AIME" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AIME" class="buttonLink bg-red">AIME</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=AIME" class="buttonLink">AIME</a>
+            {% endif %}
+            {% if request.GET.problemType == "USAJMO" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=USAJMO" class="buttonLink bg-red">USAJMO</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=USAJMO" class="buttonLink">USAJMO</a>
+            {% endif %}
+            {% if request.GET.problemType == "USAMO" %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=USAMO" class="buttonLink bg-red">USAMO</a>
+            {% else %}
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=USAMO" class="buttonLink">USAMO</a>
+            {% endif %}
+        </div>
         <div class="alert bg-green">
             <details>
             <p>

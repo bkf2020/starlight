@@ -3,8 +3,9 @@ from django.db.models.signals import post_delete
 from django.core.validators import MinLengthValidator
 
 class Problem(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     link = models.URLField(default="")
+    problem_type = models.CharField(max_length=100, default="")
 
 class Hint(models.Model):
     text = models.CharField(max_length=300, validators=[MinLengthValidator(8)])

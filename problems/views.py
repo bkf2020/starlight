@@ -13,10 +13,17 @@ from .forms import HintForm, InsightForm, HintUpdateForm, InsightUpdateForm
 
 def list(request):
     query = request.GET.get('search')
-    if query is None or query == "":
-        problems = Problem.objects.all().order_by("-id")
+    problem_type = request.GET.get('problemType')
+    if problem_type is None or problem_type == "":
+        if query is None or query == "":
+            problems = Problem.objects.all().order_by("-id")
+        else:
+            problems = Problem.objects.filter(name__search=query).order_by("-id")
     else:
-        problems = Problem.objects.filter(name__search=query).order_by("-id")
+        if query is None or query == "":
+            problems = Problem.objects.filter(problem_type=problem_type).order_by("-id")
+        else:
+            problems = Problem.objects.filter(problem_type=problem_type, name__search=query).order_by("-id")
     paginator = Paginator(problems, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
