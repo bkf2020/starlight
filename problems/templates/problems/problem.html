@@ -37,6 +37,19 @@
 			</div>
 			</div>
 			<h2 style="margin-top: 0px;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a> (<a href="{% url 'problems-list' %}">View all problems</a>)</h2>
+			{% if messages %}
+				<div id="messages">
+				{% for message in messages %}
+					<div class="alert alert-{{ message.tags }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+				</div>
+			{% endif %}
+			{% if request.GET.type != "hint" %}	
+				<a class="bg-blue buttonLink" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
+				<a class="bg-green buttonLink" href="{% url 'journal' %}">Back to journal</a>
+			{% endif %}
 			<nav class="navbar">
 				{% if request.GET.type == "hint" %}
 					<div class="navDiv">
@@ -95,7 +108,7 @@
 				<div class="alert alert-error">Please login before submitting new hints/insights.</div>
 			{% endif %}
 		{% else %}
-			<h2 id="submit">Submit a new insight</h2>
+			<h2 id="submit">Submit a new insight (automatically adds problem to journal)</h2>
 			{% if user.is_authenticated %}
 				{% if user_insights %}
 					<h3 id="userInsights">Your Insights</h3>
@@ -113,13 +126,13 @@
 				<h3 id="insightFormLocation" style="margin: 0px 0px 0px 0px;"></h3>
 				<form method="POST">
 					{% csrf_token %}
-					{% if messages %}
+					<!--{% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">
                             	{{ message }}
                             </div>
                         {% endfor %}
-                	{% endif %}
+                	{% endif %}-->
 					{{ insight_form }}
 					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 					<button type="submit" class="bg-green changeButton">Submit insights</button>

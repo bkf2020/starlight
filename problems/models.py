@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_save, post_delete
 from django.core.validators import MinLengthValidator
 
 class Problem(models.Model):
@@ -59,9 +59,23 @@ def update_first_insight_cluster(sender, **kwargs):
         new_first.first = True
         new_first.save()
 
+from journal.models import JournalProblem
+def create_journal_problem(sender, **kwargs):
+    problem_id = kwargs.get('instance').problem_id
+    username = kwargs.get('instance').username
+    if JournalProblem.objects.filter(problem_id=problem_id, username=username).count() == 0:
+        new_journal_problem = JournalProblem(
+            problem=Problem.objects.get(id=problem_id),
+            username=username
+        )
+        new_journal_problem.save()
+
 post_delete.connect(
     update_first_hint_cluster, sender=HintCluster
 )
 post_delete.connect(
     update_first_insight_cluster, sender=InsightCluster
+)
+post_save.connect(
+    create_journal_problem, sender=Insight
 )

@@ -118,16 +118,27 @@
             </p>
             </details>
         </div>
+        {% if messages %}
+            <div id="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
         {% if page_obj %}
             <table><tbody>
                 <tr>
                     <th>ID</th>
                     <th>Problem Name</th>
+                    <th>Journal</th>
                 </tr>
                 {% for problem in page_obj %}
                     <tr>
                         <td>{{ problem.id }}</td>
                         <td><a href="{% url 'problems-view' problem.id %}">{{ problem.name }}</a></td>
+                        <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="buttonLink bg-blue" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
                     </tr>
                 {% endfor %}
             </tbody></table>

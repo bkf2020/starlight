@@ -1,0 +1,77 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>&#x1F320; Starlight: Journal</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
+	</head>
+    <body style="max-width: 1400px !important;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>&#x1F320; Starlight: Journal</h1>
+			</div>
+			<div style="float: right; margin-left: 0.7em;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
+                    <div style="margin-right: 0.5em; display: block;">
+                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+                            </div>
+                        </button>
+                    </div>
+					<div>
+				        {% if user.is_authenticated %}
+					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
+					        <a href="{% url 'logout' %}">Logout</a>
+				        {% else %}
+                            <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Login</a> |
+					        <a href="{% url 'register' %}">Register</a>
+				        {% endif %}
+                    </div>
+                </div>
+    			<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+			</div>
+		</div>
+		{% if user_journal_problems %}
+			<table>
+				<tr>
+					<th>View Problem</th>
+					<th>Date started (m/d/y)</th>
+					<th>Status</th>
+					<th>Your Key Insights</th>
+				</tr>
+				{% for journal_problem in user_journal_problems %}
+					<tr>
+						<td><a href="{{ journal_problem.problem.link }}">{{ journal_problem.problem.name }}</a></td>
+						<td>{{ journal_problem.time_created|date:"m-d-Y" }}</td>
+						<td>
+							<form method="POST">
+                                {% csrf_token %}
+                                {{ journal_problem.form.as_p }}
+								<button type="submit">Update</button>
+                            </form>
+						</td>
+						<td>
+							<ul>
+								{% for insight in journal_problem.insights %}
+									<li>{{ insight.text }}</li>
+								{% endfor %}
+							</ul>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<center><h3>You have no problems in the journal currently.</h3></center>
+		{% endif %}
+    </body>
+	<style>
+		.problemId {
+			display: none;
+		}
+	</style>
+	<script type="text/javascript" src="{% static 'js/saveScrollPosition.js' %}"></script>
+</html>

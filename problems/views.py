@@ -77,8 +77,6 @@ def problem(request, index):
     if request.method == 'POST':
         if 'hint' in request.POST:
             hint_form = HintForm(request.POST)
-            print(request.user.username)
-            print(Hint.objects.filter(username=request.user.username, problem_id=index).count())
             if Hint.objects.filter(username=request.user.username, problem_id=index).count() == 10:
                 messages.error(request, 'You can only submit up to 10 hints!')
                 return redirect(f'/problems/{index}?type=hint#hintFormLocation')
