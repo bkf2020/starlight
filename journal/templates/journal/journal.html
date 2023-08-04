@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<p style="margin-top: 0em;">
-			<a href="{% url 'problems-list' %}" class="buttonLink bg-cyan">Add a new problem</a>
+			<a href="{% url 'problems-list' %}" class="buttonLink bg-cyan">Add a new problem/view all problems</a>
 			(<b>Note:</b> problems are automatically added when you create an insight for that problem.)
 		</p>
 		<div style="border-bottom: 0.1em solid; margin-bottom: 1em;"><nav class="navbar">
@@ -69,7 +69,9 @@
 				{% endif %}
 			</div>
 		</nav></div>
-		{% if request.GET.type == "week" %}
+		{% if request.GET.type == "entire" %}
+			<a href="{% url 'journal' %}?type=entire&page=1" class="buttonLink bg-orange">See most recent problems</a>
+		{% elif request.GET.type == "week" %}
 			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
 				<input type="text" name="type" value="week" style="display: none;">
 				<label for="week">Week number (ISO):</label>
@@ -77,6 +79,7 @@
 				<label for="year">ISO year:</label>
 				<input type="number" name="year" value="{{ request.GET.year }}">
 				<button type="submit">Find problems</button>
+				<a href="{% url 'journal' %}?type=week&week={{ today_week }}&year={{ today_iso_year }}&page=1" class="buttonLink bg-cyan">See most recent problems</a>
 				<p style="margin-top: 0.3em;">
 					<b>Note:</b> <a href="https://calendar.online/calendar-weeks/{{ request.GET.year }}" target="_blank" rel="noreferrer noopener">Use this website</a>
 					to find the week numbers for ISO year <b>{{ request.GET.year }}</b>. Replace the end of the url for that link with your desired ISO year.
@@ -92,6 +95,7 @@
 				<label for="year">Year:</label>
 				<input type="number" name="year" value="{{ request.GET.year }}">
 				<button type="submit">Find problems</button>
+				<a href="{% url 'journal' %}?type=month&month={{ today_month }}&year={{ today_year }}&page=1" class="buttonLink bg-cyan">See most recent problems</a>
 			</form>
 		{% elif request.GET.type == "year" %}
 			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
@@ -99,9 +103,10 @@
 				<label for="year">Year:</label>
 				<input type="number" name="year" value="{{ request.GET.year }}">
 				<button type="submit">Find problems</button>
+				<a href="{% url 'journal' %}?type=year&year={{ today_year }}&page=1" class="buttonLink bg-cyan">See most recent problems</a>
 			</form>
 		{% endif %}
-		{% if user_journal_problems %}
+		{% if page_obj %}
 			<table>
 				<tr>
 					<th>View Problem</th>
@@ -109,7 +114,7 @@
 					<th>Status</th>
 					<th>Your Key Insights</th>
 				</tr>
-				{% for journal_problem in user_journal_problems %}
+				{% for journal_problem in page_obj %}
 					<tr>
 						<td><a href="{{ journal_problem.problem.link }}" target="_blank" rel="noopener noreferrer">{{ journal_problem.problem.name }}</a></td>
 						<td>{{ journal_problem.time_created|date:"M d, Y" }}</td>
@@ -150,5 +155,60 @@
 			display: none;
 		}
 	</style>
+	<div class="pagination">
+        {% if page_obj.has_previous %}
+			{% if request.GET.type == "entire" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.previous_page_number }}&type=entire">&larr;</a>
+			{% elif request.GET.type == "week" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.previous_page_number }}&type=week&week={{ request.GET.week }}&year={{ request.GET.year }}">&larr;</a>
+			{% elif request.GET.type == "month" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.previous_page_number }}&type=month&month={{ request.GET.month }}&year={{ request.GET.year }}">&larr;</a>
+			{% elif request.GET.type == "year" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.previous_page_number }}&type=year&year={{ request.GET.year }}">&larr;</a>
+			{% endif %}
+		{% endif %}
+		<span>
+			Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+		</span>
+		{% if page_obj.has_next %}
+			{% if request.GET.type == "entire" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.next_page_number }}&type=entire">&rarr;</a>
+			{% elif request.GET.type == "week" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.next_page_number }}&type=week&week={{ request.GET.week }}&year={{ request.GET.year }}">&rarr;</a>
+			{% elif request.GET.type == "month" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.next_page_number }}&type=month&month={{ request.GET.month }}&year={{ request.GET.year }}">&rarr;</a>
+			{% elif request.GET.type == "year" %}
+   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.next_page_number }}&type=year&year={{ request.GET.year }}">&rarr;</a>
+			{% endif %}
+		{% endif %}
+    </div>
+    <details>
+		<summary>View links to all pages</summary>
+        {% with ''|center:page_obj.paginator.num_pages as range %}
+        {% for i in range %}
+            {% if forloop.counter == page_obj.number %}
+                {% if request.GET.type == "entire" %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type=entire">{{ forloop.counter }}</a>
+				{% elif request.GET.type == "week" %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type=week&week={{ request.GET.week }}&year={{ request.GET.year }}">{{ forloop.counter }}</a>
+				{% elif request.GET.type == "month" %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type=month&month={{ request.GET.month }}&year={{ request.GET.year }}">{{ forloop.counter }}</a>
+				{% elif request.GET.type == "year" %}
+   	        		<a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&type=year&year={{ request.GET.year }}">{{ forloop.counter }}</a>
+				{% endif %}
+            {% else %}
+				{% if request.GET.type == "entire" %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type=entire">{{ forloop.counter }}</a>
+				{% elif request.GET.type == "week" %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type=week&week={{ request.GET.week }}&year={{ request.GET.year }}">{{ forloop.counter }}</a>
+				{% elif request.GET.type == "month" %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type=month&month={{ request.GET.month }}&year={{ request.GET.year }}">{{ forloop.counter }}</a>
+				{% elif request.GET.type == "year" %}
+   	        		<a class="paginationLink" href="?page={{ forloop.counter }}&type=year&year={{ request.GET.year }}">{{ forloop.counter }}</a>
+				{% endif %}
+            {% endif %}
+        {% endfor %}
+        {% endwith %}
+    </details>
 	<script type="text/javascript" src="{% static 'js/saveScrollPosition.js' %}"></script>
 </html>

@@ -47,10 +47,13 @@
                 <script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 			</div>
             </div>
-            <h2 style="margin-top: 0px; margin-bottom: 0.5em;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a> (<a href="{% url 'problems-list' %}">View all problems</a>)</h2>
+            <h2 style="margin-top: 0px; margin-bottom: 0.5em;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></h2>
             <div style="margin-bottom: 0.3em;">
-                <a class="buttonLink" href="{% url 'journal' %}">Go to journal</a>
-			    <a class="bg-cyan buttonLink" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
+                {% if request.user.is_authenticated %}
+                    <a class="buttonLink" href="{% url 'journal' %}">Go to journal</a>
+                    <a class="bg-cyan buttonLink" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
+                {% endif %}
+                <a class="buttonLink bg-orange" href="{% url 'problems-list' %}">View all problems</a>
             </div>
             <nav class="navbar">
 				<div class="navDiv">

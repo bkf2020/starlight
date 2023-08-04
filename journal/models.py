@@ -30,4 +30,4 @@ class JournalConfig(models.Model):
     desired_year = models.IntegerField(default=2023)
     desired_month = models.IntegerField(default=1)
     desired_week = models.IntegerField(default=1)
-    desired_page = models.IntegerField(default=0)
+    desired_page = models.IntegerField(default=1)
