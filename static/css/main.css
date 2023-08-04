@@ -63,6 +63,9 @@ td, th {
 	text-decoration: none;
 	background-color: #ebcb8b;
 }
+.bg-yellow {
+	background-color: #ebcb8b;
+}
 .buttonLink {
 	display: inline-block;
 	padding: 0.4em !important;

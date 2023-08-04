@@ -35,23 +35,98 @@
     			<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 			</div>
 		</div>
+		<p style="margin-top: 0em;">
+			<a href="{% url 'problems-list' %}" class="buttonLink bg-cyan">Add a new problem</a>
+			(<b>Note:</b> problems are automatically added when you create an insight for that problem.)
+		</p>
+		<div style="border-bottom: 0.1em solid; margin-bottom: 1em;"><nav class="navbar">
+			<div class="navDiv">
+				{% if request.GET.type == "entire" %}
+					<a href="#" class="navLink navSelected">&#x1F4C4; Show entire journal</a>
+				{% else %}
+					<a href="{% url 'journal' %}?type=entire" class="navLink">&#x1F4C4; Show entire journal</a>
+				{% endif %}
+			</div>
+			<div class="navDiv">
+				{% if request.GET.type == "week" %}
+					<a href="#" class="navLink navSelected">&#x23F0; By week</a>
+				{% else %}
+					<a href="{% url 'journal' %}?type=week" class="navLink">&#x23F0; By week</a>
+				{% endif %}
+			</div>
+			<div class="navDiv">
+				{% if request.GET.type == "month" %}
+					<a href="#" class="navLink navSelected">&#128197; By month</a>
+				{% else %}
+					<a href="{% url 'journal' %}?type=month" class="navLink">&#128197; By month</a>
+				{% endif %}
+			</div>
+			<div class="navDiv">
+				{% if request.GET.type == "year" %}
+					<a href="#" class="navLink navSelected">&#x1F386; By year</a>
+				{% else %}
+					<a href="{% url 'journal' %}?type=year" class="navLink">&#x1F386; By year</a>
+				{% endif %}
+			</div>
+		</nav></div>
+		{% if request.GET.type == "week" %}
+			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
+				<input type="text" name="type" value="week" style="display: none;">
+				<label for="week">Week number (ISO):</label>
+				<input type="number" name="week" value="{{ request.GET.week }}">
+				<label for="year">ISO year:</label>
+				<input type="number" name="year" value="{{ request.GET.year }}">
+				<button type="submit">Find problems</button>
+				<p style="margin-top: 0.3em;">
+					<b>Note:</b> <a href="https://calendar.online/calendar-weeks/{{ request.GET.year }}" target="_blank" rel="noreferrer noopener">Use this website</a>
+					to find the week numbers for ISO year <b>{{ request.GET.year }}</b>. Replace the end of the url for that link with your desired ISO year.
+					<b>Note that for some days, the ISO year MAY NOT be the SAME as the actual year!</b> If you don't see the desired date, try another subtracting
+					or adding from the year you are trying.
+				</p>
+			</form>
+		{% elif request.GET.type == "month" %}
+			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
+				<input type="text" name="type" value="month" style="display: none;">
+				<label for="week">Month number (1 = Jan, 12 = Dec):</label>
+				<input type="number" name="month" value="{{ request.GET.month }}">
+				<label for="year">Year:</label>
+				<input type="number" name="year" value="{{ request.GET.year }}">
+				<button type="submit">Find problems</button>
+			</form>
+		{% elif request.GET.type == "year" %}
+			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
+				<input type="text" name="type" value="year" style="display: none;">
+				<label for="year">Year:</label>
+				<input type="number" name="year" value="{{ request.GET.year }}">
+				<button type="submit">Find problems</button>
+			</form>
+		{% endif %}
 		{% if user_journal_problems %}
 			<table>
 				<tr>
 					<th>View Problem</th>
-					<th>Date started (m/d/y)</th>
+					<th>Date started (m/d/y, UTC)</th>
 					<th>Status</th>
 					<th>Your Key Insights</th>
 				</tr>
 				{% for journal_problem in user_journal_problems %}
 					<tr>
-						<td><a href="{{ journal_problem.problem.link }}">{{ journal_problem.problem.name }}</a></td>
-						<td>{{ journal_problem.time_created|date:"m-d-Y" }}</td>
-						<td>
+						<td><a href="{{ journal_problem.problem.link }}" target="_blank" rel="noopener noreferrer">{{ journal_problem.problem.name }}</a></td>
+						<td>{{ journal_problem.time_created|date:"M d, Y" }}</td>
+						{% if journal_problem.status == "NS" %}
+							<td class="bg-red" style="color: black !important;">
+						{% elif journal_problem.status == "IP" %}
+							<td class="bg-yellow" style="color: black !important;">
+						{% elif journal_problem.status == "NHS" %}
+							<td class="bg-blue" style="color: black !important;">
+						{% elif journal_problem.status == "SO" %}
+							<td class="bg-green" style="color: black !important;">
+						{% endif %}
+							<p><b>{{ journal_problem.get_status_display }}</b></p>
 							<form method="POST">
                                 {% csrf_token %}
-                                {{ journal_problem.form.as_p }}
-								<button type="submit">Update</button>
+                                {{ journal_problem.form.as_div }}
+								<button type="submit" style="margin-top: 0.7em; border: 0.15em solid;">Update</button>
                             </form>
 						</td>
 						<td>
@@ -60,6 +135,8 @@
 									<li>{{ insight.text }}</li>
 								{% endfor %}
 							</ul>
+							<a href="{% url 'problems-view' journal_problem.problem.id %}" class="buttonLink bg-blue">Add/edit insights</a>
+							<a href="{% url 'view-all-summary' %}?problem={{ journal_problem.problem.id }}&type=insight" class="buttonLink bg-green">View summary of key insights + similar problems</a>
 						</td>
 					</tr>
 				{% endfor %}

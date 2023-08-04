@@ -104,7 +104,7 @@
                 <a href="{% url 'problems-list' %}?search={{ request.GET.search }}&problemType=USAMO" class="buttonLink">USAMO</a>
             {% endif %}
         </div>
-        <div class="alert bg-green">
+        <div class="alert bg-green" style="margin-bottom: 0.5em !important;">
             <details>
             <p>
                 <summary><b>Need help searching?</b> Click for format/examples of problems</summary>
@@ -118,6 +118,9 @@
             </p>
             </details>
         </div>
+        {% if request.user.is_authenticated %}	
+			<a class="bg-cyan buttonLink" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a>
+		{% endif %}
         {% if messages %}
             <div id="messages">
             {% for message in messages %}
@@ -132,13 +135,17 @@
                 <tr>
                     <th>ID</th>
                     <th>Problem Name</th>
-                    <th>Journal</th>
+                    {% if request.user.is_authenticated %}	
+                        <th>Journal</th>
+                    {% endif %}
                 </tr>
                 {% for problem in page_obj %}
                     <tr>
                         <td>{{ problem.id }}</td>
                         <td><a href="{% url 'problems-view' problem.id %}">{{ problem.name }}</a></td>
-                        <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="buttonLink bg-blue" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
+                        {% if request.user.is_authenticated %}	
+                            <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="buttonLink bg-blue" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody></table>
