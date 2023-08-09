@@ -1,0 +1,62 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
+  </head>
+  <body>
+    {% block body %}
+
+    {% if messages %}
+    <div>
+      <strong>{% trans "Messages:" %}</strong>
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{message}}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>&#x1F320; {% block h1_title %}{% endblock %}</h1>
+			</div>
+			<div style="float: right; margin-left: 0.7em;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
+          <div style="margin-right: 0.5em; display: block;">
+            <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+              </div>
+            </button>
+            </div>
+				  <div>
+				    {% if user.is_authenticated %}
+					    <a href="{% url 'profile' %}">{{ user.username }}</a> |
+					    <a href="{% url 'logout' %}">Logout</a>
+				    {% else %}
+              <a href="{% url 'login' %}">Login</a> |
+					    <a href="{% url 'register' %}">Register</a>
+				    {% endif %}
+          </div>
+        </div>
+			</div>
+    	<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+		</div>
+    <a href="{% url 'problems-list' %}" class="buttonLink bg-blue">View all problems</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="buttonLink bg-green">Go to user profile</a>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>
