@@ -43,8 +43,17 @@
 			{% endfor %}
 		{% endif %}
 		<div>
-			<h2>{{ user.username }}</h1>
-			<h2>Your posted hints/observations on these problems</h2>
+			<h2 style="margin-top: 0em;">{{ user.username }}</h2>
+			<a href="{% url 'problems-list' %}" class="buttonLink bg-blue">View all problems</a>
+			<a href="{% url 'journal' %}" class="buttonLink bg-green">Go to journal</a>
+			<h2>User settings</h2>
+			{% if is_socialaccount %}
+				<p>No settings available.</p>
+			{% else %}
+				<ul>
+					<li><a href="{% url 'account_change_password' %}">Change password</a></li>
+				</ul>
+			{% endif %}
 		</div>
   	</body>
 </html>

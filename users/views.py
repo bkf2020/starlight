@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+"""
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -14,7 +15,11 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
+"""
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    is_socialaccount = False
+    if request.user.socialaccount_set.filter(provider='google').exists():
+        is_socialaccount = True
+    return render(request, 'users/profile.html', {'is_socialaccount': is_socialaccount})

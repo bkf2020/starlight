@@ -40,7 +40,7 @@
             Codeforces problems in the problemset are updated daily.
         </p>
         <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center;">
-            <input type="text" name="search" placeholder="Search for a problem.." value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid;">
+            <input type="text" name="search" placeholder="Search for a problem.." value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid; padding: 0.1em;">
             <input type="text" name="problemType" placeholder="Problem type.." value="{{ request.GET.problemType }}" style="display: none;">
             <div>
                 <button type="submit" class="bg-blue">Search</button><a href="{% url 'problems-list' %}?problemType={{ request.GET.problemType }}" class="buttonLink bg-cyan">Reset</a>

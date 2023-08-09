@@ -1,4 +1,4 @@
- @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap');
 
 body {
 	font-family: "Work Sans", "Segoe UI", "Roboto", "BlinkMacSystemFont", -apple-system, Helvetica, Arial, sans-serif;
@@ -51,7 +51,7 @@ td, th {
 	padding: 0.5em;
 	border: 1px solid #333;
 }
-.buttonLink, button {
+.buttonLink, button, input[type="submit"] {
 	font-family: inherit;
 	color: black;
 	padding: 0.5em;
@@ -73,7 +73,7 @@ td, th {
 a.buttonLink:visited {
 	color: black !important;
 }
-button:hover, .buttonLink:hover {
+button:hover, .buttonLink:hover, input[type="submit"]:hover {
 	background-color: #ffe1a4;
 }
 .bg-cyan {
@@ -176,6 +176,13 @@ textarea::placeholder {
 textarea:focus {
 	outline: none;
 	border: darkcyan 0.2em solid;
+}
+input[type=email], input[type=password], input[type=text] {
+    font: inherit;
+    border-radius: 0.5em;
+    padding: 0.3em;
+    display: block;
+    width: 250px;
 }
 /*.dark body {
 	background-color: #2e3440;
