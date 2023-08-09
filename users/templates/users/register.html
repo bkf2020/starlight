@@ -42,11 +42,13 @@
 				</div>
 			{% endfor %}
 		{% endif %}
+		{% load socialaccount %}
 		<div>
 			<form method="POST">
 				{% csrf_token %}
 				<fieldset>
 					<legend>Join Today</legend>
+					<a href="{% provider_login_url 'google' %}?next=/problems/" class="buttonLink bg-blue">Login with Google</a>
 					{{ form.as_p }}
 				</fieldset>
 				<div>
