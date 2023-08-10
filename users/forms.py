@@ -1,9 +1,11 @@
-from allauth.account.forms import ResetPasswordForm
+from allauth.account.forms import ResetPasswordForm, SignupForm
 from allauth.account.adapter import get_adapter
 from django.utils.translation import gettext_lazy as _
 from allauth.account.utils import filter_users_by_email
 from django.core.exceptions import ValidationError
 from allauth.account import app_settings
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 class CustomResetPasswordForm(ResetPasswordForm):
     def clean_email(self):
@@ -19,3 +21,14 @@ class CustomResetPasswordForm(ResetPasswordForm):
                 _("Cannot reset password for sign in with Google account")
             )
         return self.cleaned_data["email"]
+
+class CustomSignupForm(SignupForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+    captcha.error_messages = {'required': 'The Captcha is required.'}
+    field_order = [
+        "username",
+        "email",
+        "password1",
+        "password2",
+        "captcha"
+    ]

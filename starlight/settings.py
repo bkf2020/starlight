@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'captcha'
 ]
 
 SOCIALCCOUNT_PROVIDERS = {
@@ -170,7 +171,8 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_USERNAME_VALIDATORS = 'users.validators.custom_validators'
 ACCOUNT_ADAPTER = "users.adapters.FilterEmailAccountAdapter"
 ACCOUNT_FORMS = {
-    'reset_password': 'users.forms.CustomResetPasswordForm'
+    'reset_password': 'users.forms.CustomResetPasswordForm',
+    'signup': 'users.forms.CustomSignupForm'
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -179,6 +181,9 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = (os.environ.get('EMAIL_USE_TLS') == 'True')
+
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 
 LOGIN_REDIRECT_URL='problems-list'
 LOGIN_URL='login'
