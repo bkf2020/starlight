@@ -27,5 +27,8 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('accounts/social/signup/', user_views.CustomSocialSignupView.as_view(), name='socialaccount_signup'),
+    path('accounts/email/', RedirectView.as_view(url="/profile/"), name='account_email'),
+    path('accounts/password/set/', RedirectView.as_view(url="/profile/"), name='account_set_password'),
     path('accounts/', include('allauth.urls'))
 ]
