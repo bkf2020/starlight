@@ -9,10 +9,9 @@
         {% else %}
 		    <title>&#x1F320; Starlight: View Summary of Insights from {{ problem.name }}</title>
         {% endif %}
+        <script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %}" />
-		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
-		<link rel="stylesheet" type="text/css" href="" id="lightDarkModalStylesheet" />
 	</head>
     <body>
         <main>
@@ -44,7 +43,7 @@
 				        {% endif %}
                     </div>
                 </div>
-                <script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+                <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 			</div>
             </div>
             <h2 style="margin-top: 0px; margin-bottom: 0.5em;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></h2>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
 body {
 	font-family: "Work Sans", "Segoe UI", "Roboto", "BlinkMacSystemFont", -apple-system, Helvetica, Arial, sans-serif;
@@ -14,7 +15,7 @@ body {
 	-webkit-text-size-adjust: 100%;
 }
 html {
-	border-top: 0.4em #d08770 solid;
+	border-top: 0.4em #aa7aa1 solid;
 }
 
 h1, h2, h3 {
@@ -22,7 +23,7 @@ h1, h2, h3 {
 }
 
 a, a:visited {
-	color: mediumblue;
+	color: #1e40af;
 }
 .pagination {
 	border-top: 0.1em solid;
@@ -45,7 +46,7 @@ table {
 	border-collapse: collapse;
 }
 tr:nth-child(even) {
-	background-color: lightgray;
+	background-color: #e5e9f0;
 }
 td, th {
 	padding: 0.5em;
@@ -53,7 +54,7 @@ td, th {
 }
 .buttonLink, button, input[type="submit"] {
 	font-family: inherit;
-	color: black;
+	color: black !important;
 	padding: 0.5em;
 	border-radius: 0.5em;
 	cursor: pointer;
@@ -69,6 +70,7 @@ td, th {
 .buttonLink {
 	display: inline-block;
 	padding: 0.4em !important;
+	color: black !important;
 }
 a.buttonLink:visited {
 	color: black !important;
@@ -116,7 +118,7 @@ button:hover, .buttonLink:hover, input[type="submit"]:hover {
 .alert, .errorlist {
 	border-radius: 0.5em;
 	border: 2px #444 dashed;
-	color: black;
+	color: black !important;
 	margin-top: 1em;
 	margin-bottom: 1em;
 	overflow-wrap: break-word;
@@ -173,23 +175,33 @@ textarea {
 textarea::placeholder {
 	color: gray;
 }
-textarea:focus {
+textarea:focus, input:focus {
 	outline: none;
-	border: darkcyan 0.2em solid;
+	border: darkcyan 0.2em solid !important;
 }
-input[type=email], input[type=password], input[type=text] {
+input[type="email"], input[type="password"], input[type="text"], input[type="number"] {
     font: inherit;
     border-radius: 0.5em;
     padding: 0.3em;
     display: block;
+	background-color: #eceff4;
+	border: 0.15em solid;
+	color: #222;
+}
+input[type="number"] {
+	display: inline;
+	padding: 0.2em;
+	width: 100px;
+}
+input[type="email"], input[type="password"], input[type="text"] {
     width: 250px;
 }
-/*.dark body {
+.dark body {
 	background-color: #2e3440;
 	color: #e5e9f0;
 }
 .dark a, .dark a:visited {
-	color: #88c0d0;
+	color: #97d9eb;
 }
 .dark tr:nth-child(even), .dark .paginationSelected {
 	background-color: #4c566a;
@@ -213,56 +225,16 @@ input[type=email], input[type=password], input[type=text] {
 	background-color: #434C5E;
 	border-radius: 0.2em;
 }
-.dark textarea {
+.dark input[type="email"], .dark input[type="password"], .dark input[type="text"], .dark input[type="number"], .dark textarea {
 	background-color: #434c5e;
+	color: #eceff4;
 }
-.dark textarea::placeholder {
+.dark input::placeholder, .dark textarea::placeholder {
 	color: lightgray;
 }
-.dark textarea:focus {
+.dark input:focus, .dark textarea:focus {
 	outline: none;
-	border: #88c0d0 0.2em solid;
-}*/
-@media (prefers-color-scheme: dark) {
-	body {
-		background-color: #2e3440;
-		color: #e5e9f0;
-	}
-	a, a:visited {
-		color: #88c0d0;
-	}
-	tr:nth-child(even), .paginationSelected {
-		background-color: #4c566a;
-	}
-	td, th {
-		border: 1px solid #d8dee9;
-	}
-	.alert, .errorlist {
-		border-color: #e5e9f0;
-	}
-	.hintInsightContainer {
-		background-color: #434c5e;
-	}
-	.bg-gray {
-		background-color: #ddd;
-	}
-	.buttonLink.bg-gray:hover {
-		background-color: whitesmoke;
-	}
-	.navLink:hover {
-		background-color: #434C5E;
-		border-radius: 0.2em;
-	}
-	textarea {
-		background-color: #434c5e;
-	}
-	textarea::placeholder {
-		color: lightgray;
-	}
-	textarea:focus {
-		outline: none;
-		border: #88c0d0 0.2em solid;
-	}
+	border: #88c0d0 0.2em solid !important;
 }
 @media screen and (max-width: 760px) {
 	.navbar {

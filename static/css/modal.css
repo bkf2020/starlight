@@ -78,16 +78,14 @@ body {
 html {
     border-top: initial;
 }
-@media (prefers-color-scheme: dark) {
-    .modal {
-		background-color: #2e3440;
-		color: #e5e9f0;
-	}
-    .overlay {
-        background-color: #e5e9f0ab;
-    }
-    main {
-		background-color: #2e3440;
-		color: #e5e9f0;
-	}
+.dark .modal {
+    background-color: #2e3440;
+    color: #e5e9f0;
+}
+.dark .overlay {
+    background-color: #e5e9f0ab;
+}
+.dark main {
+    background-color: #2e3440;
+    color: #e5e9f0;
 }

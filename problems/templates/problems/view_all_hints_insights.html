@@ -9,8 +9,8 @@
         {% else %}
 		    <title>&#x1F320; Starlight: View All Insights from {{ problem.name }}</title>
         {% endif %}
+		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
 	</head>
     <body>
 		<div style="border-bottom: 0.1em solid;">
@@ -40,7 +40,7 @@
 					        <a href="{% url 'register' %}">Register</a>
 				        {% endif %}
                     </div>
-    				<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+    				<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
                 </div>
 			</div>
 		</div>

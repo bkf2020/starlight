@@ -8,8 +8,8 @@
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
+    <script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
   </head>
   <body>
     {% block body %}
@@ -47,7 +47,7 @@
           </div>
         </div>
 			</div>
-    	<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+    	<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
     <a href="{% url 'problems-list' %}" class="buttonLink bg-blue">View all problems</a>
     {% if user.is_authenticated %}

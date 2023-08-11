@@ -5,8 +5,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>&#x1F320; Starlight: Update Insight</title>
+		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
 	</head>
     <body>
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
 			</div>
-    		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+    		<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
         <form method="post">{% csrf_token %}
             {{ form }}

@@ -9,8 +9,8 @@
 		{% else %}
 			<title>&#x1F320; Starlight: View Insight Cluster</title>
 		{% endif %}
+		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-		<link rel="stylesheet" type="text/css" href="" id="lightDarkStylesheet" />
 	</head>
     <body>
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 0.1em solid;">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
 			</div>
-    		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+    		<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
 		{% if request.GET.type == "hint" %}
 			<a href="{% url 'view-all-summary'%}?problem={{ request.GET.problem }}&type=hint" class="buttonLink">Back to summary of hints in problem</a>
