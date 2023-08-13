@@ -8,22 +8,33 @@ from django.http import JsonResponse, HttpResponseNotFound
 from django.views.generic.edit import UpdateView, DeleteView
 from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster
 from .forms import HintForm, InsightForm, HintUpdateForm, InsightUpdateForm
+from django.contrib.postgres.search import TrigramSimilarity
 
 # Create your views here.
 
 def list(request):
     query = request.GET.get('search')
+    if query is not None and len(query) > 200:
+        messages.error(request, "Cannot search over 200 characters")
+        return redirect("/problems/")
     problem_type = request.GET.get('problemType')
     if problem_type is None or problem_type == "":
         if query is None or query == "":
             problems = Problem.objects.all().order_by("-id")
         else:
-            problems = Problem.objects.filter(name__search=query).order_by("-id")
+            lower_query = query.lower()
+            if ("amc" in lower_query) or ("aime" in lower_query) or ("usamo" in lower_query) or ("usajmo" in lower_query):
+                problems = Problem.objects.annotate(similarity=TrigramSimilarity("name", query)).filter(similarity__gte=0.3).order_by("-id").order_by("-similarity")
+            else:
+                problems = Problem.objects.filter(name__search=query).order_by("-id")
     else:
         if query is None or query == "":
             problems = Problem.objects.filter(problem_type=problem_type).order_by("-id")
         else:
-            problems = Problem.objects.filter(problem_type=problem_type, name__search=query).order_by("-id")
+            if problem_type == "AMC_8" or problem_type == "AMC_10" or problem_type == "AMC_12" or problem_type == "AIME" or problem_type == "USAMO" or problem_type == "USAJMO":
+                problems = Problem.objects.annotate(similarity=TrigramSimilarity("name", query)).filter(similarity__gte=0.3, problem_type=problem_type).order_by("-id").order_by("-similarity")
+            else:
+                problems = Problem.objects.filter(problem_type=problem_type, name__search=query).order_by("-id")
     paginator = Paginator(problems, 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

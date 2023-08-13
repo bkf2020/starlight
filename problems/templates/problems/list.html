@@ -36,11 +36,11 @@
             <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
         <p>
-            Over <u><b>10,000</b></u> problems available. AMC 8/10/12 and AIME problems from years 2010-2023 are in the database.
-            Codeforces problems in the problemset are updated daily.
+            Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from years 2010-2023 are in the database. USAJMO/USAMO problems from years
+            2002-2023 available. USACO problems from years 2014 to 2023 of all divisions. Codeforces, AtCoder, DMOJ problems in the problemset are updated daily.
         </p>
         <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center;">
-            <input type="text" name="search" placeholder="Search for a problem.." value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid; padding: 0.1em;">
+            <input type="text" name="search" placeholder="Search for a problem.. (max length 200)" maxlength="200" value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid; padding: 0.1em;">
             <input type="text" name="problemType" placeholder="Problem type.." value="{{ request.GET.problemType }}" style="display: none;">
             <div>
                 <button type="submit" class="bg-blue">Search</button><a href="{% url 'problems-list' %}?problemType={{ request.GET.problemType }}" class="buttonLink bg-cyan">Reset</a>
@@ -113,7 +113,11 @@
                     <li><b>AMC 10:</b> [year] AMC 10A Problem # OR [year] AMC 10B Problem #, <i>Ex: 2015 AMC 10A Problem 16</i></li>
                     <li><b>AMC 12:</b> [year] AMC 12A Problem # OR [year] AMC 12B Problem #, <i>Ex: 2021 AMC 12B Problem 25</i></li>
                     <li><b>AIME:</b> [year] AIME I Problem # OR [year] AIME II Problem #, <i>Ex: 2013 AIME I Problem 8</i></li>
+                    <li><b>USAJMO/USAMO:</b> [year] USAJMO/USAMO Problem #, <i>Ex: 2023 USAJMO Problem 1</i></li>
                     <li><b>Codeforces:</b> Codeforces [contest id (e.g. 101)][problem id (e.g. A, B, C)]: [Codeforces problem name], <i>Ex: Codeforces 1336F: Journey</i></li>
+                    <li><b>AtCoder:</b> AtCoder [contest id (e.g. ABC314, ARC164, ZONE2021)]: [problem id (A, B, C)]. [Problem name], <i>Ex: AtCoder ZONE2021: E. Sneaking</i></li>
+                    <li><b>DMOJ:</b> DMOJ [contest name (if applicable)] [problem number (e.g. P1)] - [Problem name], <i>Ex: DMOJ Yet Another Contest 3 P1 - Shell Swap Scam</i></li>
+                    <li><b>USACO:</b> [year] [contest month (e.g. January, US Open)], [division (e.g. Gold)]: [Problem name], <i>Ex: USACO 2023 US Open Contest, Bronze: Rotate and Shift</i></li>
                 </ul>
             </p>
             </details>
