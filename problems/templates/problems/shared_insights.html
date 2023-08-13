@@ -40,11 +40,11 @@
             <p>
                 Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
                 that are similar (thus shared) with <b>only this insight</b> from <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>:
-                <blockquote>{{ insight.text }}</blockquote>
+                <blockquote>{{ insight.text }} by {{ insight.username }}</blockquote>
             </p></div>
             <ul>
                 {% for insight_info in page_obj %}
-                    <li>{{ insight_info.insight.text }}</li>
+                    <li>{{ insight_info.insight.text }} by {{ insight_info.insight.username }}</li>
                 {% endfor %}
             </ul>
 		{% elif request.GET.type == "group" %}
@@ -52,12 +52,12 @@
                 Viewing insights from <a href="{{ otherProblem.link }}" target="_blank" rel="noopener noreferrer">{{ otherProblem.name }}</a>
                 that are similar (thus shared) with <b>any insight in this cluster</b></mark> of <a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>.
                 The first insight of this cluster is:
-				<blockquote>{{ firstInsight.text }}</blockquote>
+				<blockquote>{{ firstInsight.text }} by {{ firstInsight.username }}</blockquote>
             </p></div>
 			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.insightProblem }}" target="_blank" rel="noopener noreferrer" class="buttonLink">View all insights in this cluster</a>
 			<ul>
 				{% for insight in page_obj %}
-					<li>{{ insight.text }}</li>
+					<li>{{ insight.text }} by {{ insight.username }}</li>
 				{% endfor %}
 			</ul>
 		{% else %}
@@ -67,7 +67,7 @@
             </p></div>
 			<ul>
 				{% for insight in page_obj %}
-					<li>{{ insight.text }}</li>
+					<li>{{ insight.text }} by {{ insight.username }}</li>
 				{% endfor %}
 			</ul>
         {% endif %}

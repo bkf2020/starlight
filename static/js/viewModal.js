@@ -8,7 +8,7 @@ async function populateHintPage(page, problemId, clusterId) {
         for(var idx in hintClusterData["new_page_obj"]["hints"]) {
             var hint = hintClusterData["new_page_obj"]["hints"][idx];
             var hintItem = document.createElement("li");
-            hintItem.innerText = hint["text"];
+            hintItem.innerText = hint["text"] + " by " + hint["username"];
             listHints.appendChild(hintItem);
         }
         var description = document.createElement("h3");
@@ -90,7 +90,7 @@ async function populateInsightPage(page, problemId, clusterId) {
             var insightUl = document.createElement("ul");
             insightUl.style.margin = "0px";
             var insightItem = document.createElement("li");
-            insightItem.innerText = insight["text"];
+            insightItem.innerText = insight["text"] + " by " + insight["username"];
             var similarProblemsInsightList = document.createElement("ul");
             var similarProblemsInsight = document.createElement("li");
             var similarProblemsInsightLink = document.createElement("a");
@@ -265,7 +265,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             for(var idx in problem["insights_matched"]) {
                 var sharedInsight = problem["insights_matched"][idx];
                 var sharedInsightPoint = document.createElement("li");
-                sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text));
+                sharedInsightPoint.appendChild(document.createTextNode(sharedInsight.text + " by " + sharedInsight.username));
                 sharedInsightsList.appendChild(sharedInsightPoint);
             }
             var sharedInsightsLink = document.createElement("a");
@@ -293,7 +293,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
         var descriptionCluster = document.createElement("p");
         descriptionCluster.style.marginBottom = "0.2em";
         descriptionCluster.style.marginTop = "0.3em";
-        descriptionCluster.appendChild(document.createTextNode("One insight of this cluster is: " + similarProblemsData["firstInsight"]["text"]));
+        descriptionCluster.appendChild(document.createTextNode("One insight of this cluster is: " + similarProblemsData["firstInsight"]["text"] + " by " + similarProblemsData["firstInsight"]["username"]));
         description.appendChild(descriptionH3);
         description.appendChild(descriptionCluster);
         var insightClusterButton = document.createElement("button");

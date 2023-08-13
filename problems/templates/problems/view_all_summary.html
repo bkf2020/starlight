@@ -118,14 +118,14 @@
                     <details>
                         <summary>Click to show first hint of cluster #{{ info.pos }}</summary>
                         <ul style="margin: 0.5em 0px 0px 0px;">
-                            <li>{{ info.hint.text }} <button class="viewHintCluster bg-cyan" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
+                            <li>{{ info.hint.text }} by {{ info.hint.username }} <button class="viewHintCluster bg-cyan" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button></li>
                         </ul>
                     </details>
                 </div>
             {% else %}
                 <div class="hintInsightContainer">
                     <ul style="margin: 0.5em 0px 0px 0px;"><li>
-                        <p style="margin-top: 0.4em; margin-bottom: 0.4em;">{{ info.insight.text }}</p>
+                        <p style="margin-top: 0.4em; margin-bottom: 0.4em;">{{ info.insight.text }} by {{ info.insight.username }}</p>
                         <div>
                             <button class="viewInsightCluster" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">View this cluster</button>
                             <button class="viewSimilarProblems bg-orange" clusterid="{{ info.cluster_id }}" problemid="{{ info.problem_id }}">Problems with <b>insights similar</b> to any one in this <b>cluster</b></button>

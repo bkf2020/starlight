@@ -60,11 +60,11 @@
         {% endif %}
             {% for info in page_obj %}
                 {% if request.GET.type == "hint" %}
-                    <ul><li>{{ info.text }}</li></ul>
+                    <ul><li>{{ info.text }} by {{ info.username }}</li></ul>
                 {% else %}
 					<div class="hintInsightContainer">
 						<ul style="margin-top: 0em; margin-bottom: 0em;">
-                    	<li>{{ info.text }}</li>
+                    	<li>{{ info.text }} by {{ info.username }}</li>
 						<ul>
 							<li><a href="{% url 'problems-similar-insights' %}?type=individual&insight={{ info.id }}" target="_blank" rel="noopener noreferrer">
 								View similar problems that share ONLY this INSIGHT</a></li>

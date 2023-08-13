@@ -38,7 +38,7 @@
 		{% if request.GET.type == "individual" %}
 			<p>Viewing other problems with insights similar to <b>only this insight</b> from
 				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>:
-				<blockquote><quote>{{ insight.text }}</quote></blockquote>
+				<blockquote><quote>{{ insight.text }} by {{ insight.username }}</quote></blockquote>
 			</p>
 			{% if not page_obj %}
 				<center>
@@ -57,7 +57,7 @@
 										<ul>
 											{% for insight_info in problem.insights_matched %}
 												<li>
-													{{ insight_info.insight.text }}
+													{{ insight_info.insight.text }} by {{ insight_info.insight.username }}
 												</li>
 											{% endfor %}
 											<li>
@@ -80,7 +80,7 @@
 			{% else %}
 			<p>Viewing other problems with insights similar to <b>insights in this group</b> from
 				<a href="{{ firstProblem.link }}" target="_blank" rel="noopener noreferrer">{{ firstProblem.name }}</a>. One insight from the group:
-				<blockquote><quote>{{ firstInsight.text }}</quote></blockquote>
+				<blockquote><quote>{{ firstInsight.text }} by {{ firstInsight.username }}</quote></blockquote>
 			</p>
 			<a href="{% url 'view-cluster' %}?type=insight&cluster={{ request.GET.cluster }}&problem={{ request.GET.problem }}" target="_blank" rel="noopener noreferrer" class="buttonLink">View all insights in this group</a>
 			{% if not page_obj %}
@@ -100,7 +100,7 @@
 										<ul>
 											{% for insight_info in problem.insights_matched %}
 												<li>
-													{{ insight_info.insight.text }}
+													{{ insight_info.insight.text }} by {{ insight_info.insight.username }}
 												</li>
 											{% endfor %}
 											<li>
@@ -140,7 +140,7 @@
 										<ul>
 											{% for insight_info in problem.insights_matched %}
 												<li>
-													{{ insight_info.insight.text }}
+													{{ insight_info.insight.text }} by {{ insight_info.insight.username }}
 												</li>
 											{% endfor %}
 											<li>
