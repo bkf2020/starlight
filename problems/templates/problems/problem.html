@@ -80,6 +80,11 @@
 		{% if request.GET.type == "hint" %}
 			<h2 id="submit">Submit a new hint</h2>
 			{% if user.is_authenticated %}
+				<p>
+					By submitting a hint, you agree to follow the <a href="{% url 'about-rules' %}">Rules</a>
+					of this website and to license the hint under the
+					<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC by 4.0</a> license.
+				</p>
 				{% if user_hints %}
 					<h3 id="userHints">Your Hints</h3>
 					<ol>
@@ -113,6 +118,11 @@
 		{% else %}
 			<h2 id="submit">Submit a new insight (automatically adds problem to journal)</h2>
 			{% if user.is_authenticated %}
+				<p>
+					By submitting an insight, you agree to follow the <a href="{% url 'about-rules' %}">Rules</a>
+					of this website and to license the hint under the
+					<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC by 4.0</a> license.
+				</p>
 				{% if user_insights %}
 					<h3 id="userInsights">Your Insights</h3>
 					<ol>
