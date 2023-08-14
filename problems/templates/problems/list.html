@@ -35,7 +35,7 @@
 			</div>
             <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
-        <p>
+        <p style="margin-top: 0px;">
             Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from years 2010-2023 are in the database. USAJMO/USAMO problems from years
             2002-2023 available. USACO problems from years 2014 to 2023 of all divisions. Codeforces, AtCoder, DMOJ problems in the problemset are updated daily.
         </p>
@@ -123,7 +123,7 @@
             </details>
         </div>
         {% if request.user.is_authenticated %}	
-			<a class="bg-cyan buttonLink" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a>
+			<a class="bg-cyan buttonLink" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a> (The journal stores insights and statuses of problems you solved/are working on)
 		{% endif %}
         {% if messages %}
             <div id="messages">
@@ -138,7 +138,7 @@
             <table><tbody>
                 <tr>
                     <th>ID</th>
-                    <th>Problem Name</th>
+                    <th>Problem Name (click to add insights/hints, view summary of insights/hints and similar problems)</th>
                     {% if request.user.is_authenticated %}	
                         <th>Journal</th>
                     {% endif %}
