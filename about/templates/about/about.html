@@ -5,6 +5,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>About Starlight Problem Solving</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">        
 		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
         <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
@@ -50,6 +53,7 @@
                         <a class="buttonLink bg-blue" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="{% url 'problems-list' %}">View problems </a>
                         <a class="buttonLink bg-cyan" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="https://discord.gg/czgReQSpFz" target="_blank" rel="noopener noreferrer">Join Discord</a>
                         <a class="buttonLink bg-green" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="https://forms.gle/txpWvcZwWxD1yVog6" target="_blank" rel="noopener noreferrer">Join our team</a>
+                        <a class="buttonLink bg-orange" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
                     </div>
                 </div>
             </div>
@@ -133,6 +137,22 @@
                 <b>Repost ads (image and text) that promote this website:</b> They are all licensed under CC by 4.0.
                 <a href="https://gist.github.com/bkf2020/d5d6d548cea2c8cb38e9df62ebc0c05e" target="_blank" rel="noopener noreferrer">Here is the collection of those ads</a>.
             </div>
+        </div>
+        <div style="text-align: center; font-size: smaller;">
+            <p>
+                <a href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a href="{% url 'journal' %}">Journal</a> &#8226;
+                <a href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </p>
+            <p>
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+            </p>
         </div>
     </body>
 </html>

@@ -4,14 +4,19 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>&#x1F320; Starlight: List of Problems</title>
+		<title>Starlight: List of Problems</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">        
         <script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+        <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
 	</head>
     <body>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-			<div>
-				<h1>&#x1F320; Starlight: List of Problems</h1>
+            <div style="display: flex; align-items: center;">
+                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
+				<div><h1 style="display: inline-block;">Starlight: List of Problems</h1></div>
 			</div>
 			<div style="float: right; margin-left: 0.7em;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
@@ -36,8 +41,8 @@
             <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
         <p style="margin-top: 0px;">
-            Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from years 2010-2023 are in the database. USAJMO/USAMO problems from years
-            2002-2023 available. USACO problems from years 2014 to 2023 of all divisions. Codeforces, AtCoder, DMOJ problems in the problemset are updated daily.
+            Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from 2010-2023; USAJMO/USAMO problems from
+            2002-2023 available. USACO problems from 2014 to 2023 (all divisions). Codeforces, AtCoder, DMOJ problems are added daily.
         </p>
         <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center;">
             <input type="text" name="search" placeholder="Search for a problem.. (max length 200)" maxlength="200" value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid; padding: 0.1em;">
@@ -122,7 +127,7 @@
             </p>
             </details>
         </div>
-        {% if request.user.is_authenticated %}	
+        {% if request.user.is_authenticated %}
 			<a class="bg-cyan buttonLink" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a> (The journal stores insights and statuses of problems you solved/are working on)
 		{% endif %}
         {% if messages %}
@@ -177,5 +182,21 @@
             {% endfor %}
             {% endwith %}
         </details>
+        <div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+            <p>
+                <a href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a href="{% url 'journal' %}">Journal</a> &#8226;
+                <a href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </p>
+            <p>
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+            </p>
+        </div>
     </body>
 </html>

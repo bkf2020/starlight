@@ -4,14 +4,19 @@
     <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>&#x1F320; Starlight Problem Solving Rules</title>
+		<title>Starlight Problem Solving Rules</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">        
 		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+        <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
 	</head>
     <body>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-			<div>
-				<h1>&#x1F320; Starlight Problem Solving Rules</h1>
+            <div style="display: flex; align-items: center;">
+                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
+				<div><h1 style="display: inline-block;">Starlight Problem Solving Rules</h1></div>
 			</div>
 			<div style="float: right; margin-left: 0.7em;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
@@ -44,5 +49,21 @@
             </ul>
         </p>
         <p>Any concerns? Please contact starlightproblemsolving at gmail dot com.</p>
+        <div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+            <p>
+                <a href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a href="{% url 'journal' %}">Journal</a> &#8226;
+                <a href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </p>
+            <p>
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+            </p>
+        </div>
     </body>
 </html>
