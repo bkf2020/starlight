@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 SITE_ID = 2
 
 INSTALLED_APPS = [
+    'about.apps.AboutConfig',
     'problems.apps.ProblemsConfig',
     'users.apps.UsersConfig',
     'journal.apps.JournalConfig',

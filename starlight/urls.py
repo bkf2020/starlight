@@ -21,6 +21,7 @@ from users import views as user_views
 from allauth.account.views import LoginView
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('about/', include('about.urls')),
     path('problems/', include('problems.urls')),
     path('journal/', include('journal.urls')),
     path('register/', RedirectView.as_view(url="/accounts/signup/"), name='register'),

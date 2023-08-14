@@ -1,0 +1,134 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>&#x1F320; About Starlight Problem Solving</title>
+		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+	</head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>&#x1F320; Starlight Problem Solving: About</h1>
+			</div>
+			<div style="float: right; margin-left: 0.7em;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
+                    <div style="margin-right: 0.5em; display: block;">
+                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+                            </div>
+                        </button>
+                    </div>
+					<div>
+				        {% if user.is_authenticated %}
+					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
+					        <a href="{% url 'logout' %}">Logout</a>
+				        {% else %}
+                            <a href="{% url 'login' %}">Login</a> |
+					        <a href="{% url 'register' %}">Register</a>
+				        {% endif %}
+                    </div>
+                </div>
+    			<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
+			</div>
+		</div>
+        <div style="display: flex; justify-content: center; border-radius: 0.5em; background-image: url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-position: center; min-height: 300px; background-repeat: no-repeat;">
+            <div style="display: flex; text-align: center; align-items: center; max-width: 1200px; width: 95%; color: white; text-shadow: 1px 1px 5px black;">
+                <div style="padding-top: 1em; padding-bottom: 1em; padding-left: 0.5em; padding-right: 0.5em;">
+                    <h1 style="margin-top: 0px;">Improve your problem solving skills and help others with INSIGHTS.</h1>
+                    <h3>
+                        Share and discover new key insights and hints on over <u>20,000</u> competitive programming/math problems.
+                        Level up your problem solving skills by solving similar problems on insights you struggled with discovering.
+                    </h3>
+                    <div style="text-shadow: initial;">
+                        <a class="buttonLink" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="{% url 'register' %}"><b>Get started</b></a>
+                        <a class="buttonLink bg-blue" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="{% url 'problems-list' %}">View problems </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 style="text-align: center;">Features:</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, max(45%, min(300px, 100%))); gap: 1em; margin-left: auto; margin-right: auto; justify-content: space-evenly; text-align: center;">
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f64b.svg' %}" width="80" height="80"></object>
+                </center>
+                Share <b>key insights/observations</b> as well as <b>hints</b>
+                for over <b>20,000 problems</b> including
+                <i>Codeforces, USA Computing Olympiad, American Math Competitions (AMC) 8/10/12/AIME/USA(J)MO, AtCoder and DMOJ</i>
+            </div>
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f9e0.svg' %}" width="80" height="80"></object>
+                </center>
+                <b>Summarize key insights/hints</b> with <b>artificial intelligence (AI/ML)</b> and see the
+                <b>key insights that other top problem solvers are thinking</b> of in a problem
+            </div>
+        </div>
+        <div style="padding-top: 1em; display: grid; grid-template-columns: repeat(auto-fit, min(300px, 100%)); gap: 1em; justify-content: space-evenly; padding-bottom: 0.5em; border-bottom: 0.1em solid; text-align: center;">
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f50d.svg' %}" width="80" height="80"></object>
+                </center>
+                Find <b>similar problems</b> based on insight(s) of one problem to continue practicing
+                <b>insights/observations you struggled with applying/seeing in a problem.</b>
+            </div>
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f914.svg' %}" width="80" height="80"></object>
+                </center>
+                See <b>hints</b> to be able to take more away from more time spent on hands on problem solving.
+            </div>
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f4d5.svg' %}" width="80" height="80"></object>
+                </center>
+                <b>A journal</b> to store the <b>statuses of all problems you are solving</b> and
+                <b>the key insights used</b> making it convenient to use this website
+            </div>
+        </div>
+        <h2 style="text-align: center;">The future roadmap:</h2>
+        <div style="padding-top: 1em; display: grid; grid-template-columns: repeat(auto-fit, max(45%, min(300px, 100%))); gap: 1em; justify-content: space-evenly; padding-bottom: 0.5em; border-bottom: 0.1em solid; text-align: center;">
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f916.svg' %}" width="80" height="80"></object>
+                </center>
+                An AI to predict key insights/observations needed to solve a problem and apply the necessary algorithms.
+            </div>
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f3c6.svg' %}" width="80" height="80"></object>
+                </center>
+                AI to <b>summarize</b> the key insights used in <b>certain contests/a certain level</b>
+                (e.g. USACO gold) to <b>help you achieve your goals</b>.
+            </div>
+        </div>
+        <h2 style="text-align: center;">Join the community/help us!</h2>
+        <div style="padding-top: 1em; display: grid; grid-template-columns: repeat(auto-fit, min(300px, 100%)); gap: 1em; justify-content: space-evenly; padding-bottom: 0.5em; border-bottom: 0.1em solid; text-align: center;">
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f4ac.svg' %}" width="80" height="80"></object>
+                </center>
+                <a href="https://discord.gg/czgReQSpFz" target="_blank" rel="noopener noreferrer"><b>Join the Discord</b></a> to discuss future plans/features,
+                to hear announcements, or to have a chat with other problem solvers!
+            </div>
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f310.svg' %}" width="80" height="80"></object>
+                </center>
+                <b>Join our team!</b> Wanting web developers, designers, machine learning engineers, and marketing/outreach.
+                Apply <a href="https://forms.gle/txpWvcZwWxD1yVog6" target="_blank" rel="noopener noreferrer">at this form</a>.
+            </div>
+            <div>
+                <center>
+                    <object data="{% static 'emoji/1f450.svg' %}" width="80" height="80"></object>
+                </center>
+                <b>Repost ads (image and text) that promote this website:</b> They are all licensed under CC by 4.0.
+                <a href="https://gist.github.com/bkf2020/d5d6d548cea2c8cb38e9df62ebc0c05e" target="_blank" rel="noopener noreferrer">Here is the collection of those ads</a>.
+            </div>
+        </div>
+    </body>
+</html>
