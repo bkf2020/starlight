@@ -3,6 +3,10 @@ from django.forms import ModelForm, ValidationError
 from django.contrib.postgres.forms import SplitArrayField
 from .models import Hint, Insight
 from better_profanity import profanity
+from django.contrib.staticfiles.storage import staticfiles_storage
+
+profanity_loc = staticfiles_storage.path("profanity.txt")
+profanity.load_censor_words_from_file(profanity_loc)
 
 class HintForm(forms.Form):
     def clean(self):
