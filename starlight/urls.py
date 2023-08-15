@@ -20,6 +20,7 @@ from django.views.generic.base import RedirectView
 from users import views as user_views
 from allauth.account.views import LoginView
 urlpatterns = [
+    path('', user_views.root_page, name='root-page'),
     path('admin/', admin.site.urls),
     path('about/', include('about.urls')),
     path('problems/', include('problems.urls')),

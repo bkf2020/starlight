@@ -22,6 +22,12 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 """
 
+def root_page(request):
+    if request.user.is_authenticated:
+        return redirect('/problems/')
+    else:
+        return redirect('/about/')
+
 @login_required
 def profile(request):
     is_socialaccount = False
