@@ -96,6 +96,7 @@
                 <p style="margin-bottom: 0.5em;">
                     Similar hints are placed in the same <b>group/cluster</b>. This page shows the first hint of each clusters, with 10 clusters a page.
                     The clusters are sorted by the ones with the most number of hints. <b>This helps give a summarized version of the hints.</b>
+                    Hints are clustered every day around 04:00 AM UTC <b>which may cause disruptions</b>.
                 </p>
                 <p><a href="{% url 'view-all-hints-insights' %}?type=hint&problem={{ problem.id }}" class="buttonLink bg-green">View every single hint</a></p>
             </div>
@@ -105,6 +106,7 @@
                 <p style="margin-bottom: 0.5em;">
                     Similar insights are placed in the same <b>group/cluster</b>. This page shows the first insight of each clusters, with 10 clusters a page.
                     The clusters are sorted by the ones with the most number of insights. <b>This helps give a summarized version of the insights.</b>
+                    Insights are clustered every day around 04:00 AM UTC <b>which may cause disruptions</b>.
                 </p>
                 <div style="margin-bottom: 0.5em;">
                     <a href="{% url 'view-all-hints-insights' %}?type=insight&problem={{ problem.id }}" class="buttonLink bg-blue">View every single insight</a>

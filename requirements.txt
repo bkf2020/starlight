@@ -8,11 +8,13 @@ click==8.1.6
 cmake==3.27.2
 cryptography==41.0.3
 defusedxml==0.7.1
+dj-database-url==2.1.0
 Django==4.2.4
 django-allauth==0.54.0
 django-recaptcha==3.0.0
 filelock==3.12.2
 fsspec==2023.6.0
+gunicorn==21.2.0
 huggingface-hub==0.16.4
 idna==3.4
 Jinja2==3.1.2
@@ -62,3 +64,4 @@ transformers==4.31.0
 triton==2.0.0
 typing_extensions==4.7.1
 urllib3==2.0.4
+whitenoise==6.5.0
