@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse, HttpResponseNotFound
 from django.views.generic.edit import UpdateView, DeleteView
-from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster
+from .models import Problem, Hint, Insight, HintCluster, InsightCluster, OverallInsightCluster, Collection, ProblemInCollection
 from .forms import HintForm, InsightForm, HintUpdateForm, InsightUpdateForm
 from django.contrib.postgres.search import TrigramSimilarity
 
@@ -477,3 +477,14 @@ def shared_insights(request):
             'otherProblem': otherProblem
         }
         return render(request, 'problems/shared_insights.html', context)
+
+def view_collection(request, slug):
+    if(Collection.objects.filter(slug=slug).count() == 0):
+        return redirect('/problems/')
+    collection = Collection.objects.filter(slug=slug).first()
+    problems_present_info = ProblemInCollection.objects.filter(collection=collection)
+    context = {
+        'collection': collection,
+        'problems_present_info': problems_present_info
+    }
+    return render(request, 'problems/collection.html', context)

@@ -7,6 +7,14 @@ class Problem(models.Model):
     link = models.URLField(default="")
     problem_type = models.CharField(max_length=100, default="")
 
+class Collection(models.Model):
+    name = models.CharField(max_length=200, default="")
+    slug = models.SlugField()
+
+class ProblemInCollection(models.Model):
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+
 class Hint(models.Model):
     text = models.CharField(max_length=300, validators=[MinLengthValidator(8)])
     problem_id = models.IntegerField(default=-1)

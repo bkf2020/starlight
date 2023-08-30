@@ -14,4 +14,5 @@ urlpatterns = [
     path('sharedInsights/', views.shared_insights, name='shared-insights'),
     path('viewAllSummary/', views.view_all_summary, name='view-all-summary'),
     path('viewAllHI/', views.view_all_hints_insights, name='view-all-hints-insights'),
+    path('collection/<slug:slug>/', views.view_collection, name='problems-collection'),
 ]

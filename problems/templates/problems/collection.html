@@ -1,0 +1,73 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Starlight: View Collection {{ collection.name }}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">        
+		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+        <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
+	</head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+			<div style="display: flex; align-items: center;">
+                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
+                            <div><h1 style="display: inline-block;">Starlight: View Collection</h1></div>
+			</div>
+			<div style="float: right; margin-left: 0.7em;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
+                    <div style="margin-right: 0.5em; display: block;">
+                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+                            </div>
+                        </button>
+                    </div>
+					<div>
+				        {% if user.is_authenticated %}
+					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
+					        <a href="{% url 'logout' %}">Logout</a>
+				        {% else %}
+                            <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Login</a> |
+					        <a href="{% url 'register' %}">Register</a>
+				        {% endif %}
+                    </div>
+                </div>
+    			<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
+			</div>
+		</div>
+		<h2 style="margin-top: 0em; border-bottom: 0.05em solid; padding-bottom: 0.3em;">{{ collection.name }}</h2>
+		<table><tbody>
+		    <tr>
+		        <th>Problem Name</th>
+		       	<th>Add insights/hints</th>
+		    </tr>
+		    {% for info in problems_present_info %}
+		        <tr>
+			    <td>{{ info.problem.name }}</td>
+			    <td><a href="{% url 'problems-view' info.problem.id %}" target="_blank" rel="noopener noreferrer" class="buttonLink bg-blue">Add insights/hints</a></td>
+			</tr>
+		    {% endfor %}
+		</tbody></table>
+		<div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+            <p>
+                <a href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a href="{% url 'journal' %}">Journal</a> &#8226;
+                <a href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </p>
+            <p>
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+            </p>
+        </div>
+    </body>
+</html>
