@@ -1,0 +1,107 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>30 day challenge: Starlight Problem Solving</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">        
+		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+        <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
+	</head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center;">
+                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
+                <div>
+                    <h1 style="display: inline-block;">30 day challenge: Starlight Problem Solving</h1>
+                </div>
+            </div>
+			<div style="float: right; margin-left: 0.7em;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
+                    <div style="margin-right: 0.5em; display: block;">
+                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+                            </div>
+                        </button>
+                    </div>
+					<div>
+				        {% if user.is_authenticated %}
+					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
+					        <a href="{% url 'logout' %}">Logout</a>
+				        {% else %}
+                            <a href="{% url 'login' %}">Login</a> |
+					        <a href="{% url 'register' %}">Register</a>
+				        {% endif %}
+                    </div>
+                </div>
+    			<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
+			</div>
+		</div>
+        <p style="font-weight: bold; font-size: larger;">The challenge ends at
+            <a href="https://www.timeanddate.com/worldclock/fixedtime.html?msg=Starlight+Problem+Solving+30+Day+challenge+end&iso=20231006T04&p1=1440" target="_blank" rel="noopener noreferer">
+                October 6, 2023; 04:00 AM UTC</a>, which is in:
+        </p>
+        <p style="font-size: xx-large; text-align: center">
+            <b><span class="timer" end-time="1696564800" current-server-time="{{ curr_server_time }}"></span></b>
+        </p>
+        <p>Welcome to the Starlight Problem Solving 30 day problem solving challenge!</p>
+        <p>The goal is to solve as many problems as possible in this period,
+            but to qualify for the raffle, you must <b>solve at least 15 different problems and submit at least one insight or hint to each problem</b> from the
+            <a href="{% url 'problems-list' %}" target="_blank" rel="noopener noreferer">problems on Starlight Problem Solving</a> in this time period.
+            A hint or insight over all hints/insights of qualifers will be drawn, so posting more hints/hints <b>will increase your winning chance</b>. We may cancel this event
+            if there is not enough participation.
+        </p>
+        <p>When the challenge ends, a raffle will be drawn where <b>a lucky winner will get a gift card up to $100</b>. The prize will depend on participation and the
+        number of qualifers so please <b>share this with as many people as possible</b>.</p>
+        
+        <p>
+            <b>Please use the <a href="{% url 'journal' %}" target="_blank" rel="noopener noreferer">journal feature</a> to log every problem you do to share as many insights/hints as possible.</b>
+            Here are the some recent contests to help you get started:
+            <ul>
+                <li><b>Codeforces</b>: <a href="https://starlightps.org/problems/collection/cf-edu-154/" target="_blank" rel="noopener noreferer">Codeforces Edu Round 154</a> and <a href="https://starlightps.org/problems/collection/cf-pinely-2/" target="_blank" rel="noopener noreferer">Codeforces Pinely Round 2</a>.</li>
+                <br/>
+                <li><b>2022-2023 American Math Competition problems</b>: <a href="https://starlightps.org/problems/collection/2022-amc-10a" target="_blank" rel="noopener noreferer">2022 AMC 10A</a> |
+                    <a href="https://starlightps.org/problems/collection/2022-amc-10b" target="_blank" rel="noopener noreferer">2022 AMC 10B</a> |
+                    <a href="https://starlightps.org/problems/collection/2022-amc-12a" target="_blank" rel="noopener noreferer">2022 AMC 12A</a> |
+                    <a href="https://starlightps.org/problems/collection/2022-amc-12b" target="_blank" rel="noopener noreferer">2022 AMC 12B</a> |
+                    <a href="https://starlightps.org/problems/collection/2023-amc-8" target="_blank" rel="noopener noreferer">2023 AMC 8</a> |
+                    <a href="https://starlightps.org/problems/collection/2023-aime-i" target="_blank" rel="noopener noreferer">2023 AIME I</a> |
+                    <a href="https://starlightps.org/problems/collection/2023-aime-ii" target="_blank" rel="noopener noreferer">2023 AIME II</a> |
+                    <a href="https://starlightps.org/problems/collection/2023-usajmo" target="_blank" rel="noopener noreferer">2023 USAJMO</a> |
+                    <a href="https://starlightps.org/problems/collection/2023-usamo" target="_blank" rel="noopener noreferer">2023 USAMO</a>
+                </li>
+                <br/>
+                <li>Here are collections of <b>2022-2023 USACO Problems</b>: <a href="https://starlightps.org/problems/collection/2223-usaco-bronze/" target="_blank" rel="noopener noreferer">Bronze</a>, <a href="https://starlightps.org/problems/collection/2223-usaco-silver/" target="_blank" rel="noopener noreferer">Silver</a>, <a href="https://starlightps.org/problems/collection/2223-usaco-gold/" target="_blank" rel="noopener noreferer">Gold</a>, <a href="https://starlightps.org/problems/collection/2223-usaco-plat/" target="_blank" rel="noopener noreferer">Platinum</a>.</li>
+            </ul>
+            Lastly, here are some ways to connect with us/help us out!
+            <ul>
+                <li>You can help us out by sharing this website by copy-pasting ads here: <a href="https://tinyurl.com/starlightps-ads" rel="noopener noreferer" target="_blank">Ads here</a>.</li>
+                <li>Join our community here: <a href="https://discord.gg/czgReQSpFz" rel="noopener noreferer" target="_blank">Discord community</a>.</li>
+                <li>Here is a Google Form to fill out with your qualifications if you are interested in joining us: <a href="https://forms.gle/txpWvcZwWxD1yVog6" rel="noopener noreferer" target="_blank">Google form</a>.</li>
+            </ul>
+        </p>
+
+        <div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+            <p>
+                <a href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a href="{% url 'journal' %}">Journal</a> &#8226;
+                <a href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </p>
+            <p>
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+            </p>
+        </div>
+    </body>
+    <script type="text/javascript" src="{% static 'js/timer.js' %}"></script>
+</html>
