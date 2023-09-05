@@ -482,7 +482,7 @@ def view_collection(request, slug):
     if(Collection.objects.filter(slug=slug).count() == 0):
         return redirect('/problems/')
     collection = Collection.objects.filter(slug=slug).first()
-    problems_present_info = ProblemInCollection.objects.filter(collection=collection)
+    problems_present_info = ProblemInCollection.objects.filter(collection=collection).order_by('id')
     context = {
         'collection': collection,
         'problems_present_info': problems_present_info
