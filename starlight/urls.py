@@ -25,6 +25,7 @@ urlpatterns = [
     path('about/', include('about.urls')),
     path('problems/', include('problems.urls')),
     path('journal/', include('journal.urls')),
+    path('import/', include('import.urls')),
     path('register/', RedirectView.as_view(url="/accounts/signup/"), name='register'),
     path('profile/', user_views.profile, name='profile'),
     path('login/', LoginView.as_view(), name='login'),

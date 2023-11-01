@@ -40,6 +40,9 @@
 			</div>
             <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
+        {% if request.user.is_authenticated %}
+            <div style="margin-bottom: 0.8em;"><a href="{% url 'import' %}" style="font-size: 1.5em; font-weight: bold;">Import insights from spreadsheet</a></div>
+        {% endif %}
         <p style="margin-top: 0px;">
             Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from 2010-2023; USAJMO/USAMO problems from
             2002-2023 available. USACO problems from 2014 to 2023 (all divisions). Codeforces, AtCoder, DMOJ problems are added daily
