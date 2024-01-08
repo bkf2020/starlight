@@ -37,7 +37,7 @@
 	margin-right: auto;
     width: 90%;
 	max-width: 900px;
-    background-color: snow;
+    background-color: white;
     margin-top: 2em;
     padding: 1em;
     border-radius: 1em;
@@ -54,8 +54,7 @@
     transition: opacity 0.1s linear;
 }
 main {
-    font-family: "Work Sans", "Segoe UI", "Roboto", "BlinkMacSystemFont", -apple-system, Helvetica, Arial, sans-serif;
-	background-color: snow;
+	background-color: white;
 	color: #222;
 	margin-left: auto;
 	margin-right: auto;
