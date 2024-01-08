@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from allauth.account.utils import filter_users_by_email
 from django.core.exceptions import ValidationError
 from allauth.account import app_settings
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Checkbox
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 class CustomResetPasswordForm(ResetPasswordForm):
     def clean_email(self):
@@ -32,3 +32,7 @@ class CustomSignupForm(SignupForm):
         "password2",
         "captcha"
     ]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].help_text = None
+        self.fields['password2'].help_text = None
