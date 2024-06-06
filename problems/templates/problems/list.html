@@ -9,115 +9,118 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">        
         <script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/output.css' %}" />
         <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
 	</head>
     <body>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center;">
-                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
-				<div><h1 style="display: inline-block;">Starlight: List of Problems</h1></div>
+		<div class="border-b dark:border-neutral">
+		<div class="mx-auto max-w-screen-lg min-[320px]:navbar">
+			<div class="min-[320px]:flex-1">
+				<svg class="mx-2 max-[320px]:inline" width="35" height="35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#269" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#F4900C" d="M11 9s7.29-4.557 21-4.969c.652-.02 2-.031 2 .969-6 9-9 23-9 23L11 9z"/><path fill="#FFAC33" d="M12 16S24 5 32 4.031C32.647 3.952 34 4 34 5c-7 4-12 19-12 19l-10-8z"/><path fill="#FFD983" d="M15.156 12.438c.826.727 2.388 1.164 3.471.972l4.892-.866c1.084-.192 1.613.478 1.178 1.488l-1.968 4.563c-.436 1.01-.369 2.63.148 3.602l2.335 4.384c.518.972.044 1.682-1.051 1.58l-4.947-.463c-1.095-.102-2.616.462-3.379 1.254l-3.45 3.577c-.763.792-1.585.562-1.827-.512L9.469 27.17c-.241-1.073-1.248-2.345-2.237-2.827l-4.467-2.175c-.989-.481-1.024-1.335-.078-1.896l4.274-2.534c.946-.561 1.845-1.911 1.997-3.001l.689-4.92c.152-1.09.953-1.387 1.779-.66l3.73 3.281z"/></svg>
+				<a class="text-xl my-2">
+					Starlight</a>
 			</div>
-			<div style="float: right; margin-left: 0.7em;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
-                    <div style="margin-right: 0.5em; display: block;">
-                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
-                            <div style="display: flex; justify-content: center; align-items: center;">
-                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
-                            </div>
-                        </button>
-                    </div>
-					<div>
-				        {% if user.is_authenticated %}
-					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
-					        <a href="{% url 'logout' %}">Logout</a>
-				        {% else %}
-                            <a href="{% url 'login' %}?next={{ full_path|urlencode }}">Login</a> |
-					        <a href="{% url 'register' %}">Register</a>
-				        {% endif %}
-                    </div>
-                </div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+					<li><button class="btn-sm" id="colorModeIndBtn">
+						<img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+					</button></li>
+					{% if user.is_authenticated %}
+						<li><a class="btn-sm" href="{% url 'profile' %}">{{ user.username }}</a></li>
+						<li>
+							<form method="post" action="{% url 'logout' %}">
+								{% csrf_token %}
+								<button type="submit">Logout</button>
+							</form>
+						</li>
+					{% else %}
+						<li><a class="btn-sm" href="{% url 'login' %}?next={{ full_path|urlencode }}">Login</a></li>
+						<li><a class="btn-sm" href="{% url 'register' %}">Register</a></li>
+					{% endif %}
+				</ul>
 			</div>
-            <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
+			<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
 		</div>
+		</div>
+		<main class="mt-2 mx-auto w-11/12 max-w-screen-md">
         {% if request.user.is_authenticated %}
-            <div style="margin-bottom: 0.8em;"><a href="{% url 'import' %}" style="font-size: 1.5em; font-weight: bold;">Import insights from spreadsheet</a></div>
+            <div style="margin-bottom: 0.8em;"><a href="{% url 'import' %}" class="link text-blue-700 dark:text-blue-300" style="font-size: 1.5em; font-weight: bold;">Import insights from spreadsheet</a></div>
         {% endif %}
         <p style="margin-top: 0px;">
             Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from 2010-2023; USAJMO/USAMO problems from
             2002-2023 available. USACO problems from 2014 to 2023 (all divisions). Codeforces, AtCoder, DMOJ problems are added daily
             around 04:00 AM UTC, <b>which may cause disruptions</b>.
         </p>
-        <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center;">
-            <input type="text" name="search" placeholder="Search for a problem.. (max length 200)" maxlength="200" value="{{ request.GET.search }}" style="width: 80%; max-width: 700px; border-radius: 0.5em; height: 2em; font-size: inherit; font-family: inherit; border: 2px #81a1c1 solid; padding: 0.1em;">
+        <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center; margin-top: 10px;">
+            <input type="text" name="search" placeholder="Search for a problem.. (max length 200)" maxlength="200" value="{{ request.GET.search }}" class="input input-bordered !min-h-9 h-9 w-3/4">
             <input type="text" name="problemType" placeholder="Problem type.." value="{{ request.GET.problemType }}" style="display: none;">
             <div>
-                <button type="submit" class="bg-blue">Search</button><a href="{% url 'problems-list' %}?problemType={{ request.GET.problemType }}" class="buttonLink bg-cyan">Reset</a>
+                <button type="submit" class="btn btn-primary mr-1 !min-h-9 h-9">Search</button><a href="{% url 'problems-list' %}?problemType={{ request.GET.problemType }}" class="buttonLink btn btn-secondary !min-h-9 h-9">Reset</a>
             </div>
         </form>
         <div style="text-align: center; margin-top: 0.5em;">
             <b>Filter by type: </b>
             {% if request.GET.problemType == None or request.GET.problemType == "" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}" class="buttonLink bg-red">All</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">All</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}" class="buttonLink">All</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">All</a>
             {% endif %}
             {% if request.GET.problemType == "codeforces" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=codeforces" class="buttonLink bg-red">Codeforces</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=codeforces" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">Codeforces</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=codeforces" class="buttonLink">Codeforces</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=codeforces" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">Codeforces</a>
             {% endif %}
             {% if request.GET.problemType == "atcoder" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=atcoder" class="buttonLink bg-red">AtCoder</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=atcoder" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AtCoder</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=atcoder" class="buttonLink">AtCoder</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=atcoder" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AtCoder</a>
             {% endif %}
             {% if request.GET.problemType == "dmoj" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=dmoj" class="buttonLink bg-red">DMOJ</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=dmoj" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">DMOJ</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=dmoj" class="buttonLink">DMOJ</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=dmoj" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">DMOJ</a>
             {% endif %}
             {% if request.GET.problemType == "usaco" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=usaco" class="buttonLink bg-red">USACO</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=usaco" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">USACO</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=usaco" class="buttonLink">USACO</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=usaco" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">USACO</a>
             {% endif %}
             {% if request.GET.problemType == "AMC_8" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_8" class="buttonLink bg-red">AMC 8</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_8" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AMC 8</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_8" class="buttonLink">AMC 8</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_8" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AMC 8</a>
             {% endif %}
             {% if request.GET.problemType == "AMC_10" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_10" class="buttonLink bg-red">AMC 10</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_10" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AMC 10</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_10" class="buttonLink">AMC 10</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_10" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AMC 10</a>
             {% endif %}
             {% if request.GET.problemType == "AMC_12" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_12" class="buttonLink bg-red">AMC 12</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_12" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AMC 12</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_12" class="buttonLink">AMC 12</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_12" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AMC 12</a>
             {% endif %}
             {% if request.GET.problemType == "AIME" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AIME" class="buttonLink bg-red">AIME</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AIME" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AIME</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AIME" class="buttonLink">AIME</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AIME" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AIME</a>
             {% endif %}
             {% if request.GET.problemType == "USAJMO" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAJMO" class="buttonLink bg-red">USAJMO</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAJMO" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">USAJMO</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAJMO" class="buttonLink">USAJMO</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAJMO" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">USAJMO</a>
             {% endif %}
             {% if request.GET.problemType == "USAMO" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAMO" class="buttonLink bg-red">USAMO</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAMO" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">USAMO</a>
             {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAMO" class="buttonLink">USAMO</a>
+                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAMO" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">USAMO</a>
             {% endif %}
         </div>
-        <div class="alert bg-green" style="margin-bottom: 0.5em !important;">
+        <div class="p-2 dark:border-neutral mt-2" style="margin-bottom: 0.5em !important;">
             <details>
             <p>
                 <summary><b>Need help searching?</b> Click for format/examples of problems</summary>
-                <ul>
+                <ul class="list-disc mx-10">
                     <li><b>AMC 8:</b> [year] AMC 8 Problem #, <i>Ex: 2013 AMC 8 Problem 1</i></li>
                     <li><b>AMC 10:</b> [year] AMC 10A Problem # OR [year] AMC 10B Problem #, <i>Ex: 2015 AMC 10A Problem 16</i></li>
                     <li><b>AMC 12:</b> [year] AMC 12A Problem # OR [year] AMC 12B Problem #, <i>Ex: 2021 AMC 12B Problem 25</i></li>
@@ -132,19 +135,20 @@
             </details>
         </div>
         {% if request.user.is_authenticated %}
-			<a class="bg-cyan buttonLink" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a> (The journal stores insights and statuses of problems you solved/are working on)
+			<a class="btn btn-sm btn-primary !min-h-9 h-9 m-1 mb-2" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a> (The journal stores insights and statuses of problems you solved/are working on)
 		{% endif %}
         {% if messages %}
             <div id="messages">
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
+                <div class="m-2 alert alert-{{ message.tags }}">
                     {{ message }}
                 </div>
+                <div class="alert-error alert-info alert-success alert-warning"></div>
             {% endfor %}
             </div>
         {% endif %}
         {% if page_obj %}
-            <table><tbody>
+            <table class="table border-t border-b dark:border-neutral"><tbody>
                 <tr>
                     <th>ID</th>
                     <th>Problem Name (click to add insights/hints, view summary of insights/hints and similar problems)</th>
@@ -155,9 +159,9 @@
                 {% for problem in page_obj %}
                     <tr>
                         <td>{{ problem.id }}</td>
-                        <td><a href="{% url 'problems-view' problem.id %}">{{ problem.name }}</a></td>
+                        <td><a class="link text-blue-700 dark:text-blue-300" href="{% url 'problems-view' problem.id %}">{{ problem.name }}</a></td>
                         {% if request.user.is_authenticated %}	
-                            <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="buttonLink bg-blue" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
+                            <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="btn btn-outline m-1" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -165,13 +169,13 @@
         {% endif %}
         <div class="pagination">
             {% if page_obj.has_previous %}
-   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">&larr;</a>
+   	        	<a class="link text-blue-700 dark:text-blue-300 text-xl" href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">&larr;</a>
 			{% endif %}
 			<span>
 				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
 			</span>
 			{% if page_obj.has_next %}
-   	        	<a class="paginationLink paginationArrow" href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">&rarr;</a>
+   	        	<a class="link text-blue-700 dark:text-blue-300 text-xl" href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">&rarr;</a>
 			{% endif %}
         </div>
         <details>
@@ -179,28 +183,29 @@
             {% with ''|center:page_obj.paginator.num_pages as range %}
             {% for i in range %}
                 {% if forloop.counter == page_obj.number %}
-                     <a class="paginationLink paginationSelected" href="?page={{ forloop.counter }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">{{ forloop.counter }}</a>
+                     <a class="link text-blue-700 dark:text-blue-300 bg-neutral-300 dark:bg-neutral-700 p-1.5" href="?page={{ forloop.counter }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">{{ forloop.counter }}</a>
                 {% else %}
-                     <a class="paginationLink" href="?page={{ forloop.counter }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">{{ forloop.counter }}</a>
+                     <a class="link text-blue-700 dark:text-blue-300 p-1.5" href="?page={{ forloop.counter }}&search={{ request.GET.search|urlencode }}&problemType={{ request.GET.problemType }}">{{ forloop.counter }}</a>
                 {% endif %}
             {% endfor %}
             {% endwith %}
         </details>
-        <div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+        <div style="text-align: center; font-size: smaller; margin-top: 1em; padding: 0.5em;" class="border-t dark:border-neutral">
             <p>
-                <a href="{% url 'about-starlight' %}">About</a> &#8226;
-                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
-                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
-                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
-                <a href="{% url 'journal' %}">Journal</a> &#8226;
-                <a href="{% url 'profile' %}">Your profile</a> &#8226;
-                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'journal' %}">Journal</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
             </p>
             <p>
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
             </p>
         </div>
+        </main>
     </body>
 </html>
