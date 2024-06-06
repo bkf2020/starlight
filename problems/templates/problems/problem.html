@@ -44,7 +44,7 @@
 			</div>
 			</div>
 			<main class="mt-2 mx-auto w-11/12 max-w-screen-md">
-			<h2 style="margin-top: 0px; margin-bottom: 0.5em;">From Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer">{{ problem.name }}</a></h2>
+			<h2 style="margin-top: 0px; margin-bottom: 0.5em;" class="text-xl font-bold">Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer" class="link text-blue-700 dark:text-blue-300">{{ problem.name }}</a></h2>
 			{% if messages %}
 				<div id="messages">
 				{% for message in messages %}
@@ -56,45 +56,47 @@
 			{% endif %}
 			<div style="margin-bottom: 0.3em;">
 				{% if request.user.is_authenticated %}
-					<a class="buttonLink" href="{% url 'journal' %}">Go to journal</a>
-					<a class="bg-cyan buttonLink" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
+					<a class="btn btn-outline btn-primary !min-h-9 h-9 mx-1 mb-1" href="{% url 'journal' %}">Go to journal</a>
+					<a class="btn btn-outline btn-secondary !min-h-9 h-9 mb-1" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
 				{% endif %}
-				<a class="buttonLink bg-orange" href="{% url 'problems-list' %}">View all problems</a>
+				<a class="btn btn-outline btn-accent !min-h-9 h-9 m-1 mb-1" href="{% url 'problems-list' %}">View all problems</a>
 			</div>
-			<div role="tablist" class="md:tabs max-md:tabs-boxed md:tabs-bordered">
+			<div role="tablist" class="min-[665px]:tabs tabs-boxed bg-neutral-100 dark:bg-base-200 min-[665px]:items-center">
 				{% if request.GET.type == "hint" %}
-					<a href="{% url 'problems-view' problem.id %}?type=insight" role="tab" class="tab">&#x270D;&#xFE0F; Add/edit insights</a>
-					<a href="#" role="tab" class="tab tab-active">&#x1F4DD; Add/edit hints</a>
+					<a href="{% url 'problems-view' problem.id %}?type=insight" role="tab" class="tab px-2">&#x270D;&#xFE0F; Add/edit insights</a>
+					<a href="#" role="tab" class="tab tab-active px-2">&#x1F4DD; Add/edit hints</a>
 				{% else %}
 					<a href="#" role="tab" class="tab tab-active">&#x270D;&#xFE0F; Add/edit insights</a>
-					<a href="{% url 'problems-view' problem.id %}?type=hint" role="tab" class="tab">&#x1F4DD; Add/edit hints</a>
+					<a href="{% url 'problems-view' problem.id %}?type=hint" role="tab" class="tab px-2">&#x1F4DD; Add/edit hints</a>
 				{% endif %}
-				<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint" class="tab">&#x1F4A1; Summary of hints</a>
-				<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight" class="tab" style="height: fit-content !important;">&#129504; Summary of insights and similar problems</a>
+				<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=hint" class="tab px-2">&#x1F4A1; Summary of hints</a>
+				<a href="{% url 'view-all-summary' %}?problem={{ problem.id }}&type=insight" class="tab px-2" style="height: fit-content !important;">&#129504; Summary of insights and similar problems</a>
 			</div>
 			</main>
 		</div>
 		<main class="mt-2 mx-auto w-11/12 max-w-screen-md">
 		{% if request.GET.type == "hint" %}
-			<h2 id="submit">Submit a new hint</h2>
+			<h2 id="submit" class="text-lg font-bold mb-1">Submit a new hint</h2>
 			{% if user.is_authenticated %}
 				<p>
 					By submitting a hint, you agree to follow the <a href="{% url 'about-rules' %}">Rules</a>
 					of this website and to license the hint under the
-					<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC by 4.0</a> license.
+					<a class="link text-blue-700 dark:text-blue-300" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC by 4.0</a> license.
 				</p>
 				{% if user_hints %}
-					<h3 id="userHints">Your Hints</h3>
-					<ol>
+					<h3 id="userHints" class="text-lg font-bold">Your Hints</h3>
+					<ol class="list-decimal ml-8">
 					{% for hint in user_hints %}
-						<li><div class="hintInsightContainer">
+						<li><div class="card max-w-2xl bg-base-100 border dark:border-neutral-600 p-3 ml-2 my-2">
 							<p style="margin-top: 0.5em; margin-bottom: 0.5em;">{{ hint.text }}</p>
-							<a class="buttonLink bg-blue changeButton" href="{% url 'hint-update' hint.id %}">Edit</a><a class="buttonLink bg-red changeButton" href="{% url 'hint-delete' hint.id %}">Delete</a>
+							<div class="card-actions">
+								<a class="btn btn-info btn-small !min-h-9 h-9" href="{% url 'hint-update' hint.id %}">Edit</a><a class="btn btn-error btn-small !min-h-9 h-9" href="{% url 'hint-delete' hint.id %}">Delete</a>
+							</div>
 						</div></li>
 					{% endfor %}
 					</ol>
 				{% else %}
-					<p id="userHints">You currently don't have any hints.</p>
+					<p id="userHints" class="mb-2">You currently don't have any hints.</p>
 				{% endif %}
 				<h3 id="hintFormLocation" style="margin: 0px 0px 0px 0px;"></h3>
 				<form method="POST">
@@ -108,31 +110,33 @@
                 	{% endif %}
 					{{ hint_form }}
 					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
-					<button type="submit" class="bg-green">Submit hints</button>
+					<button type="submit" class="btn btn-accent btn-small !h-9 !min-h-9">Submit hints</button>
 				</form>
 			{% else %}
 				<div class="alert alert-error">Please login before submitting new hints/insights.</div>
 			{% endif %}
 		{% else %}
-			<h2 id="submit">Submit a new insight (automatically adds problem to journal)</h2>
+			<h2 id="submit" class="text-lg font-bold mb-1">Submit a new insight (automatically adds problem to journal)</h2>
 			{% if user.is_authenticated %}
-				<p>
+				<p class="mb-1">
 					By submitting an insight, you agree to follow the <a href="{% url 'about-rules' %}">Rules</a>
 					of this website and to license the hint under the
-					<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC by 4.0</a> license.
+					<a class="link text-blue-700 dark:text-blue-300" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC by 4.0</a> license.
 				</p>
 				{% if user_insights %}
-					<h3 id="userInsights">Your Insights</h3>
-					<ol>
+					<h3 id="userInsights" class="text-lg font-bold">Your Insights</h3>
+					<ol class="list-decimal ml-8">
 					{% for insight in user_insights %}
-						<li><div class="hintInsightContainer">
+						<li><div class="card max-w-2xl bg-base-100 border dark:border-neutral-600 p-3 ml-2 my-2">
 							<p style="margin-top: 0.5em; margin-bottom: 0.5em;">{{ insight.text }}</p>
-							<a class="buttonLink bg-blue changeButton" href="{% url 'insight-update' insight.id %}">Update</a><a class="buttonLink bg-red changeButton" href="{% url 'insight-delete' insight.id %}">Delete</a>
+							<div class="card-actions">
+								<a class="btn btn-info btn-small !min-h-9 h-9" href="{% url 'insight-update' insight.id %}">Update</a><a class="btn btn-error btn-small !min-h-9 h-9" href="{% url 'insight-delete' insight.id %}">Delete</a>
+							</div>
 						</div></li>
 					{% endfor %}
 					</ol>
 				{% else %}
-					<p id="userInsights">You currently don't have any insights/observations.</p>
+					<p id="userInsights" class="mb-2">You currently don't have any insights/observations.</p>
 				{% endif %}
 				<h3 id="insightFormLocation" style="margin: 0px 0px 0px 0px;"></h3>
 				<form method="POST">
@@ -145,27 +149,28 @@
                         {% endfor %}
                 	{% endif %}-->
 					{{ insight_form }}
+					<div class="textarea textarea-bordered hidden"></div>
 					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
-					<button type="submit" class="bg-green changeButton">Submit insights</button>
+					<button type="submit" class="btn btn-accent !min-h-9 h-9">Submit insights</button>
 				</form>
 			{% else %}
 				<div class="alert alert-error">Please login before submitting new hints/insights.</div>
 			{% endif %}
 		{% endif %}
-		<div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+		<div style="text-align: center; font-size: smaller; margin-top: 1em; padding: 0.5em;" class="border-t dark:border-neutral">
             <p>
-                <a href="{% url 'about-starlight' %}">About</a> &#8226;
-                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
-                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
-                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
-                <a href="{% url 'journal' %}">Journal</a> &#8226;
-                <a href="{% url 'profile' %}">Your profile</a> &#8226;
-                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'journal' %}">Journal</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
             </p>
             <p>
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
             </p>
         </div>
         </main>
