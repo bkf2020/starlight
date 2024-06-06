@@ -53,38 +53,17 @@
     opacity: 1;
     transition: opacity 0.1s linear;
 }
-main {
-	background-color: white;
-	color: #222;
-	margin-left: auto;
-	margin-right: auto;
-	width: 95%;
-	max-width: 1024px;
-	line-height: 1.5;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
-}
 body {
     margin-left: initial;
     margin-right: initial;
     max-width: initial;
     width: 100%;
     min-height: 100%;
-    border-top: 0.4em #aa7aa1 solid;
     margin-top: 0px;
 }
 html {
     border-top: initial;
 }
-.dark .modal {
-    background-color: #2e3440;
-    color: #e5e9f0;
-}
 .dark .overlay {
     background-color: #e5e9f0ab;
-}
-.dark main {
-    background-color: #2e3440;
-    color: #e5e9f0;
 }
