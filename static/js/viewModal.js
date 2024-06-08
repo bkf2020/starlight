@@ -5,6 +5,8 @@ async function populateHintPage(page, problemId, clusterId) {
         const hintClusterData = await hintCluster.json();
         document.getElementById("clusterModalContent").replaceChildren();
         var listHints = document.createElement("ul");
+        listHints.classList.add("list-disc");
+        listHints.style.marginLeft = "20px";
         for(var idx in hintClusterData["new_page_obj"]["hints"]) {
             var hint = hintClusterData["new_page_obj"]["hints"][idx];
             var hintItem = document.createElement("li");
@@ -13,6 +15,7 @@ async function populateHintPage(page, problemId, clusterId) {
         }
         var description = document.createElement("h3");
         description.appendChild(document.createTextNode("Viewing all hints of this cluster:"));
+        description.classList.add("text-lg", "font-bold");
         document.getElementById("clusterModalContent").append(description);
         if(hintClusterData["new_page_obj"]["hints"].length == 0) {
             var noHintsCurrently = document.createElement("h3");
@@ -28,8 +31,7 @@ async function populateHintPage(page, problemId, clusterId) {
             before.addEventListener('click', () => {
                 renderHintPage(page - 1, problemId, clusterId, false);
             });
-            before.classList.add("paginationLink");
-            before.classList.add("paginationArrow");
+            before.classList.add("link", "text-blue-700", "dark:text-blue-300", "text-xl");
             paginationDiv.appendChild(before);
         }
         var spanInformation = document.createElement("span");
@@ -42,11 +44,11 @@ async function populateHintPage(page, problemId, clusterId) {
             after.addEventListener('click', () => {
                 renderHintPage(page + 1, problemId, clusterId, false);
             });
-            after.classList.add("paginationLink");
-            after.classList.add("paginationArrow");
+            after.classList.add("link", "text-blue-700", "dark:text-blue-300", "text-xl");
             paginationDiv.appendChild(after);
         }
         document.getElementById("clusterModalContent").appendChild(paginationDiv);
+        document.getElementById("clusterModal").classList.add("!bg-base-100");
     } catch (error) {
         console.error("Error:", error);
     }
@@ -86,14 +88,18 @@ async function populateInsightPage(page, problemId, clusterId) {
         for(var idx in insightClusterData["new_page_obj"]["insights"]) {
             var insight = insightClusterData["new_page_obj"]["insights"][idx];
             var insightDiv = document.createElement("div");
-            insightDiv.classList.add("hintInsightContainer");
+            insightDiv.classList.add("card", "max-w-2xl", "bg-base-100", "border", "dark:border-neutral-600", "p-3", "my-2");
             var insightUl = document.createElement("ul");
-            insightUl.style.margin = "0px";
+            insightUl.classList.add("list-disc");
+            insightUl.style.marginLeft = "20px";
             var insightItem = document.createElement("li");
             insightItem.innerText = insight["text"] + " by " + insight["username"];
             var similarProblemsInsightList = document.createElement("ul");
+            similarProblemsInsightList.classList.add("list-disc");
+            similarProblemsInsightList.style.marginLeft = "20px";
             var similarProblemsInsight = document.createElement("li");
             var similarProblemsInsightLink = document.createElement("a");
+            similarProblemsInsightLink.classList.add("link", "dark:text-blue-300", "text-blue-700");
             similarProblemsInsightLink.innerText = "View similar problems that share ONLY this INSIGHT";
             similarProblemsInsightLink.href = "/problems/problemsSimilarInsights/?type=individual&insight=" + insight["id"].toString();
             similarProblemsInsightLink.target = "_blank";
@@ -108,9 +114,11 @@ async function populateInsightPage(page, problemId, clusterId) {
         var description = document.createElement("div");
         var descriptionH3 = document.createElement("h3");
         descriptionH3.style.marginBottom = "0.3em";
+        descriptionH3.classList.add("text-lg", "font-bold");
         descriptionH3.appendChild(document.createTextNode("Viewing all insights in this cluster:"));
         description.appendChild(descriptionH3);
         var similarProblemsButton = document.createElement("button");
+        similarProblemsButton.classList.add("btn", "btn-small", "btn-outline", "btn-warning", "!min-h-9", "h-9", "mb-2");
         const problemIdAttribute = document.createAttribute("problemid");
         problemIdAttribute.value = problemId;
         similarProblemsButton.setAttributeNode(problemIdAttribute);
@@ -147,8 +155,7 @@ async function populateInsightPage(page, problemId, clusterId) {
             before.addEventListener('click', () => {
                 renderInsightPage(page - 1, problemId, clusterId, false);
             });
-            before.classList.add("paginationLink");
-            before.classList.add("paginationArrow");
+            before.classList.add("link", "text-blue-700", "dark:text-blue-300", "text-xl");
             paginationDiv.appendChild(before);
         }
         var spanInformation = document.createElement("span");
@@ -161,11 +168,11 @@ async function populateInsightPage(page, problemId, clusterId) {
             after.addEventListener('click', () => {
                 renderInsightPage(page + 1, problemId, clusterId, false);
             });
-            after.classList.add("paginationLink");
-            after.classList.add("paginationArrow");
+            after.classList.add("link", "text-blue-700", "dark:text-blue-300", "text-xl");
             paginationDiv.appendChild(after);
         }
         document.getElementById("clusterModalContent").appendChild(paginationDiv);
+        document.getElementById("clusterModal").classList.add("!bg-base-100");
     } catch {
         console.error("Error:", error);
     }
@@ -209,7 +216,9 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             var descriptionH3 = document.createElement("h3");
             descriptionH3.style.marginBottom = "0.3em";
             descriptionH3.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
+            descriptionH3.classList.add("text-lg", "font-bold");
             var pleaseWaitH3 = document.createElement("h3");
+            pleaseWaitH3.classList.add("text-lg", "font-bold");
             pleaseWaitH3.appendChild(document.createTextNode("Please try again later... Not all similar problems have been considered. We are in the process of doing so"));
             description.appendChild(descriptionH3);
             description.appendChild(pleaseWaitH3);
@@ -218,6 +227,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             else document.getElementById("clusterModalContent").classList.add("fade");
             button.disabled = false;
             document.getElementById("clusterModal").style.height = null;
+            document.getElementById("clusterModal").classList.add("!bg-base-100");
             return;
         }
         if(similarProblemsData.hasOwnProperty("none_in_cluster")) {
@@ -225,8 +235,10 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             var descriptionH3 = document.createElement("h3");
             descriptionH3.style.marginBottom = "0.3em";
             descriptionH3.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
+            descriptionH3.classList.add("text-lg", "font-bold");
             var tryagainH3 = document.createElement("h3");
             tryagainH3.appendChild(document.createTextNode("The insight cluster has nothing in it! Perhaps all the insights were deleted recently. Please refresh the page."));
+            tryagainH3.classList.add("text-lg", "font-bold");
             description.appendChild(descriptionH3);
             description.appendChild(tryagainH3);
             document.getElementById("clusterModalContent").appendChild(description);
@@ -234,6 +246,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             else document.getElementById("clusterModalContent").classList.add("fade");
             button.disabled = false;
             document.getElementById("clusterModal").style.height = null;
+            document.getElementById("clusterModal").classList.add("!bg-base-100");
             return;
         }
         for(var idx in similarProblemsData["new_page_obj"]["problems"]) {
@@ -245,23 +258,26 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             var problemItemUl = document.createElement("ul");
             var problemItem = document.createElement("li");
             var problemLink = document.createElement("a"); // TODO: SET font size to large
+            problemItemUl.classList.add("list-disc");
             problemLink.href = problem["link"];
             problemLink.target = "_blank";
             problemLink.rel = "noopener noreferrer";
             problemLink.appendChild(document.createTextNode(problem["name"]));
+            problemLink.classList.add("link", "text-blue-700", "dark:text-blue-300");
             var summaryLink = document.createElement("a");
             summaryLink.href = "/problems/viewAllSummary/?problem=" + problem["id"].toString() + "&type=insight";
             summaryLink.target = "_blank";
             summaryLink.rel = "noopener noreferrer";
             summaryLink.appendChild(document.createTextNode("View summary of insights of this problem"));
-            summaryLink.classList.add("buttonLink");
-            summaryLink.classList.add("bg-green");
+            summaryLink.classList.add("btn", "btn-small", "btn-outline", "btn-success", "!min-h-9", "h-9", "mb-2");
             summaryLink.style.padding = "0.4em;";
             problemItem.appendChild(problemLink);
             var sharedInsightsDetails = document.createElement("details");
             var sharedInsightsSummary = document.createElement("summary");
             sharedInsightsSummary.appendChild(document.createTextNode("Shared similar insights from this problem:"));
             var sharedInsightsList = document.createElement("ul");
+            sharedInsightsList.classList.add("list-disc");
+            sharedInsightsList.style = "margin-left: 40px;";
             for(var idx in problem["insights_matched"]) {
                 var sharedInsight = problem["insights_matched"][idx];
                 var sharedInsightPoint = document.createElement("li");
@@ -272,8 +288,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             sharedInsightsLink.href = "/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId;
             sharedInsightsLink.target = "_blank";
             sharedInsightsLink.rel = "noopener noreferrer";
-            sharedInsightsLink.classList.add("buttonLink");
-            sharedInsightsLink.classList.add("bg-cyan");
+            sharedInsightsLink.classList.add("btn", "btn-small", "btn-outline", "btn-info", "!min-h-9", "h-9", "mb-2");
             sharedInsightsLink.appendChild(document.createTextNode("View ALL insights of this problem that are shared with this cluster"));
             sharedInsightsDetails.append(sharedInsightsSummary);
             sharedInsightsDetails.append(sharedInsightsList);
@@ -281,15 +296,16 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             problemItem.appendChild(sharedInsightsDetails);
             problemItem.appendChild(summaryLink);
             problemItemUl.appendChild(problemItem);
-            problemItemUl.style = "margin: 0px 0px 0px 0px;";
+            problemItemUl.style = "margin: 0px 0px 0px 20px;";
             problemItemDiv.appendChild(problemItemUl);
-            problemItemDiv.classList.add("hintInsightContainer");
+            problemItemDiv.classList.add("card", "max-w-2xl", "bg-base-100", "border", "dark:border-neutral-600", "p-3", "my-2");
             listProblems.appendChild(problemItemDiv);
         }
         var description = document.createElement("div");
         var descriptionH3 = document.createElement("h3");
         descriptionH3.style.marginBottom = "0.3em";
         descriptionH3.appendChild(document.createTextNode("Viewing all problems with insights similar to any one in this cluster:"));
+		descriptionH3.classList.add("text-lg", "font-bold");
         var descriptionCluster = document.createElement("p");
         descriptionCluster.style.marginBottom = "0.2em";
         descriptionCluster.style.marginTop = "0.3em";
@@ -297,6 +313,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
         description.appendChild(descriptionH3);
         description.appendChild(descriptionCluster);
         var insightClusterButton = document.createElement("button");
+		insightClusterButton.classList.add("btn", "btn-small", "btn-outline", "btn-warning", "!min-h-9", "h-9", "mb-2");
         const problemIdAttribute = document.createAttribute("problemid");
         problemIdAttribute.value = problemId;
         insightClusterButton.setAttributeNode(problemIdAttribute);
@@ -333,8 +350,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             before.addEventListener('click', () => {
                 renderProblemPage(page - 1, problemId, clusterId, false, button);
             });
-            before.classList.add("paginationLink");
-            before.classList.add("paginationArrow");
+            before.classList.add("link", "text-blue-700", "dark:text-blue-300", "text-xl");
             paginationDiv.appendChild(before);
         }
         var spanInformation = document.createElement("span");
@@ -347,17 +363,17 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             after.addEventListener('click', () => {
                 renderProblemPage(page + 1, problemId, clusterId, false, button);
             });
-            after.classList.add("paginationLink");
-            after.classList.add("paginationArrow");
+            after.classList.add("link", "text-blue-700", "dark:text-blue-300", "text-xl");
             paginationDiv.appendChild(after);
         }
         document.getElementById("clusterModalContent").appendChild(paginationDiv);
         document.getElementById("clusterModal").style.height = null;
+        document.getElementById("clusterModal").classList.add("!bg-base-100");
         if(firstTime) document.getElementById("clusterModelOverlay").classList.add("visibleSlower");
         else document.getElementById("clusterModalContent").classList.add("fade");
         button.disabled = false;
     } catch (error) {
-        console.error("Error:", error);
+       console.error("Error:", error);
     }
 }
 function renderProblemPage(page, problemId, clusterId, firstTime, button) {
@@ -383,6 +399,7 @@ for(let i = 0; i < viewSimilarProblemsBtns.length; i++) {
         renderProblemPage(1, event.currentTarget.getAttribute("problemid"), event.currentTarget.getAttribute("clusterid"), true, event.currentTarget);
     });
 }
+document.getElementById("closeModalButton").classList.add("btn", "btn-small", "btn-error", "!min-h-9", "h-9", "mb-2");
 document.getElementById("closeModalButton").addEventListener("click", function (event) {
     var clusterModelOverlay = document.getElementById("clusterModelOverlay");
     if(clusterModelOverlay.classList.contains("visible")) clusterModelOverlay.classList.remove("visible");

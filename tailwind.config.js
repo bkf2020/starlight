@@ -4,6 +4,13 @@ module.exports = {
   theme: {
     extend: {},
   },
+  safelist: [
+    '!bg-base-100'
+  ],
+  blocklist: [
+    'modal',
+    'hidden',
+  ],
   plugins: [require('daisyui')],
 }
 
