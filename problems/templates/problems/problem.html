@@ -59,6 +59,9 @@
 			{% endif %}
 			<div style="margin-bottom: 0.3em;">
 				{% if request.user.is_authenticated %}
+					<div class="tooltip tooltip-right before:max-w-[80vw]" data-tip="The journal stores insights of problems you desire">
+						<button class="btn btn-outline btn-sm !max-h-9 h-9">&#9432;</button>
+					</div>
 					<a class="btn btn-outline btn-primary !min-h-9 h-9 mx-1 mb-1" href="{% url 'journal' %}">Go to journal</a>
 					<a class="btn btn-outline btn-secondary !min-h-9 h-9 mb-1" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
 				{% endif %}
@@ -104,13 +107,13 @@
 				<h3 id="hintFormLocation" style="margin: 0px 0px 0px 0px;"></h3>
 				<form method="POST">
 					{% csrf_token %}
-					{% if messages %}
+					<!--{% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">
                             	{{ message }}
                             </div>
                         {% endfor %}
-                	{% endif %}
+                	{% endif %}-->
 					{{ hint_form }}
 					<p style="margin-top: 0.5em; margin-bottom: 0.3em;"><b>Characters left:</b> <span id="charactersLeft"></span></p>
 					<button type="submit" class="btn btn-accent btn-small !h-9 !min-h-9">Submit hints</button>

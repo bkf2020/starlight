@@ -52,8 +52,20 @@
             </div>
         <main class="max-w-screen-md w-11/12 mx-auto">
             <h2 style="margin-top: 0.5em; margin-bottom: 0.5em;" class="text-xl font-bold">Problem: <a href="{{ problem.link }}" target="_blank" rel="noopener noreferrer" class="link text-blue-700 dark:text-blue-300">{{ problem.name }}</a></h2>
+            {% if messages %}
+				<div id="messages">
+				{% for message in messages %}
+					<div class="alert alert-{{ message.tags }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+				</div>
+			{% endif %}
             <div style="margin-bottom: 0.3em;">
 				{% if request.user.is_authenticated %}
+					<div class="tooltip tooltip-right before:max-w-[80vw]" data-tip="The journal stores insights of problems you desire">
+						<button class="btn btn-outline btn-sm !max-h-9 h-9">&#9432;</button>
+					</div>
 					<a class="btn btn-outline btn-primary !min-h-9 h-9 mx-1 mb-1" href="{% url 'journal' %}">Go to journal</a>
 					<a class="btn btn-outline btn-secondary !min-h-9 h-9 mb-1" href="{% url 'journal-create' problem.id %}?next={{ request.get_full_path|urlencode }}">Add to journal</a>
 				{% endif %}

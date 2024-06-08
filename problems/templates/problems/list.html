@@ -48,78 +48,81 @@
             </div>
 		<main class="mt-2 mx-auto w-11/12 max-w-screen-md">
         {% if request.user.is_authenticated %}
-            <div style="margin-bottom: 0.8em;"><a href="{% url 'import' %}" class="link text-blue-700 dark:text-blue-300" style="font-size: 1.5em; font-weight: bold;">Import insights from spreadsheet</a></div>
+            <div style="margin-bottom: 0.3em;">
+				<div class="tooltip tooltip-right before:max-w-[80vw]" data-tip="The journal stores insights of problems you desire">
+					<button class="btn btn-sm btn-outline mr-2 !max-h-9 h-9">&#9432;</button>
+				</div>
+				<a href="{% url 'journal' %}" class="link text-blue-700 dark:text-blue-300" style="font-size:1.5em; font-weight: bold;">Go to journal</a><span style="font-size:1.5em;"> | </span><a href="{% url 'import' %}" class="link text-blue-700 dark:text-blue-300" style="font-size:1.5em; font-weight: bold;">Import insights from spreadsheet</a>
+			</div>
         {% endif %}
         <p style="margin-top: 0px;">
-            Over <u><b>20,000</b></u> problems available. AMC 8/10/12 and AIME problems from 2010-2023; USAJMO/USAMO problems from
-            2002-2023 available. USACO problems from 2014 to 2023 (all divisions). Codeforces, AtCoder, DMOJ problems are added daily
-            around 04:00 AM UTC, <b>which may cause disruptions</b>.
-        </p>
+            Over <u><b>20,000</b></u> problems available: AMC 8/10/12 and AIME problems from 2010-2023; USAJMO/USAMO problems from
+            2002-2023; USACO problems from 2014 to 2024 (all divisions); all Codeforces, AtCoder and DMOJ problems. If you leave the search field blank,
+            it returns all problems with the specified type.
+		</p>
         <form method="GET" action="{% url 'problems-list' %}" style="display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; justify-content: center; margin-top: 10px;">
-            <input type="text" name="search" placeholder="Search for a problem.. (max length 200)" maxlength="200" value="{{ request.GET.search }}" class="input input-bordered !min-h-9 h-9 w-3/4">
-            <input type="text" name="problemType" placeholder="Problem type.." value="{{ request.GET.problemType }}" style="display: none;">
-            <div>
-                <button type="submit" class="btn btn-primary mr-1 !min-h-9 h-9">Search</button><a href="{% url 'problems-list' %}?problemType={{ request.GET.problemType }}" class="buttonLink btn btn-secondary !min-h-9 h-9">Reset</a>
+            <input type="text" name="search" placeholder="Search for a problem.. (max length 200)" maxlength="200" value="{{ request.GET.search }}" class="placeholder:text-neutral-500 dark:placeholder:text-neutral-400 input input-bordered !min-h-9 h-9 sm:w-1/2 w-3/4 max-w-md">
+            <div class="text-center">
+				<select name="problemType" id="problemType" class="select select-bordered !min-h-9 h-9">
+				  {% if request.GET.problemType == None or request.GET.problemType == "" %}
+					<option value="" selected>Type: all</option>
+				  {% else %}
+					<option value="">Type: all</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "codeforces" %}
+					<option value="codeforces" selected>Codeforces</option>
+				  {% else %}
+					<option value="codeforces">Codeforces</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "atcoder" %}
+					<option value="atcoder" selected>AtCoder</option>
+				  {% else %}
+					<option value="atcoder">AtCoder</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "dmoj" %}
+					<option value="dmoj" selected>DMOJ</option>
+				  {% else %}
+					<option value="dmoj">DMOJ</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "usaco" %}
+					<option value="usaco" selected>USACO</option>
+				  {% else %}
+					<option value="usaco">USACO</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "AMC_8" %}
+					<option value="AMC_8" selected>AMC 8</option>
+				  {% else %}
+					<option value="AMC_8">AMC 8</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "AMC_10" %}
+					<option value="AMC_10" selected>AMC 10</option>
+				  {% else %}
+					<option value="AMC_10">AMC 10</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "AMC_12" %}
+					<option value="AMC_12" selected>AMC 12</option>
+				  {% else %}
+					<option value="AMC_12">AMC 12</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "AIME" %}
+					<option value="AIME" selected>AIME</option>
+				  {% else %}
+					<option value="AIME">AIME</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "USAJMO" %}
+					<option value="USAJMO" selected>USAJMO</option>
+				  {% else %}
+					<option value="USAJMO">USAJMO</option>
+				  {% endif %}
+				  {% if request.GET.problemType == "USAMO" %}
+					<option value="USAMO" selected>USAMO</option>
+				  {% else %}
+					<option value="USAMO">USAMO</option>
+				  {% endif %}
+				</select>
+                <button type="submit" class="btn btn-primary mr-1 !min-h-9 h-9">Search</button><a href="{% url 'problems-list' %}" class="buttonLink btn btn-secondary !min-h-9 h-9">Reset</a>
             </div>
         </form>
-        <div style="text-align: center; margin-top: 0.5em;">
-            <b>Filter by type: </b>
-            {% if request.GET.problemType == None or request.GET.problemType == "" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">All</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">All</a>
-            {% endif %}
-            {% if request.GET.problemType == "codeforces" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=codeforces" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">Codeforces</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=codeforces" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">Codeforces</a>
-            {% endif %}
-            {% if request.GET.problemType == "atcoder" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=atcoder" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AtCoder</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=atcoder" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AtCoder</a>
-            {% endif %}
-            {% if request.GET.problemType == "dmoj" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=dmoj" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">DMOJ</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=dmoj" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">DMOJ</a>
-            {% endif %}
-            {% if request.GET.problemType == "usaco" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=usaco" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">USACO</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=usaco" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">USACO</a>
-            {% endif %}
-            {% if request.GET.problemType == "AMC_8" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_8" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AMC 8</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_8" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AMC 8</a>
-            {% endif %}
-            {% if request.GET.problemType == "AMC_10" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_10" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AMC 10</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_10" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AMC 10</a>
-            {% endif %}
-            {% if request.GET.problemType == "AMC_12" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_12" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AMC 12</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AMC_12" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AMC 12</a>
-            {% endif %}
-            {% if request.GET.problemType == "AIME" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AIME" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">AIME</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=AIME" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">AIME</a>
-            {% endif %}
-            {% if request.GET.problemType == "USAJMO" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAJMO" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">USAJMO</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAJMO" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">USAJMO</a>
-            {% endif %}
-            {% if request.GET.problemType == "USAMO" %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAMO" class="btn btn-sm btn-accent !min-h-9 h-9 m-1">USAMO</a>
-            {% else %}
-                <a href="{% url 'problems-list' %}?search={{ request.GET.search|urlencode }}&problemType=USAMO" class="btn btn-sm btn-active btn-ghost !min-h-9 h-9 m-1">USAMO</a>
-            {% endif %}
-        </div>
         <div class="p-2 dark:border-neutral mt-2" style="margin-bottom: 0.5em !important;">
             <details>
             <p>
@@ -138,9 +141,6 @@
             </p>
             </details>
         </div>
-        {% if request.user.is_authenticated %}
-			<a class="btn btn-sm btn-primary !min-h-9 h-9 m-1 mb-2" href="{% url 'journal' %}" style="margin-bottom: 0.6em;">Go to journal</a> (The journal stores insights and statuses of problems you solved/are working on)
-		{% endif %}
         {% if messages %}
             <div id="messages">
             {% for message in messages %}
