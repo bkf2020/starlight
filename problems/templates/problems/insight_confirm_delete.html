@@ -9,59 +9,66 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">        
 		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/output.css' %}" />
         <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
 	</head>
     <body>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-			<div style="display: flex; align-items: center;">
-                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
-				<div><h1 style="display: inline-block;">Starlight: Confirm Deleting Insight</h1></div>
-			</div>
-			<div style="float: right; margin-left: 0.7em;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
-                    <div style="margin-right: 0.5em; display: block;">
-                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
-                            <div style="display: flex; justify-content: center; align-items: center;">
-                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
-                            </div>
-                        </button>
-                    </div>
-					<div>
-				        {% if user.is_authenticated %}
-					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
-					        <a href="{% url 'logout' %}">Logout</a>
-				        {% else %}
-                            <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Login</a> |
-					        <a href="{% url 'register' %}">Register</a>
-				        {% endif %}
+        <div class="mx-auto flex-none p-2 text-center border-b dark:border-neutral min-[685px]:navbar">
+					<div class="navbar-start">
+					</div>
+					<div class="navbar-center">
+						<div class="flex justify-center items-center mt-3">
+                    <svg class="mr-2 max-[685px]:inline" width="35" height="35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#269" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#F4900C" d="M11 9s7.29-4.557 21-4.969c.652-.02 2-.031 2 .969-6 9-9 23-9 23L11 9z"/><path fill="#FFAC33" d="M12 16S24 5 32 4.031C32.647 3.952 34 4 34 5c-7 4-12 19-12 19l-10-8z"/><path fill="#FFD983" d="M15.156 12.438c.826.727 2.388 1.164 3.471.972l4.892-.866c1.084-.192 1.613.478 1.178 1.488l-1.968 4.563c-.436 1.01-.369 2.63.148 3.602l2.335 4.384c.518.972.044 1.682-1.051 1.58l-4.947-.463c-1.095-.102-2.616.462-3.379 1.254l-3.45 3.577c-.763.792-1.585.562-1.827-.512L9.469 27.17c-.241-1.073-1.248-2.345-2.237-2.827l-4.467-2.175c-.989-.481-1.024-1.335-.078-1.896l4.274-2.534c.946-.561 1.845-1.911 1.997-3.001l.689-4.92c.152-1.09.953-1.387 1.779-.66l3.73 3.281z"/></svg>
+                    <a class="text-3xl my-1">
+                        Starlight</a>
+                        </div>
+					</div>
+					 <div class="min-[685px]:navbar-end max-[685px]:mx-auto">
+                    <ul class="menu menu-horizontal px-1">
+                        <li><button class="btn-sm" id="colorModeIndBtn">
+                            <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+                        </button></li>
+                        {% if user.is_authenticated %}
+                            <li><a class="btn-sm" href="{% url 'profile' %}">{{ user.username }}</a></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li><a class="btn-sm" href="{% url 'login' %}?next={{ full_path|urlencode }}">Login</a></li>
+                            <li><a class="btn-sm" href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
                     </div>
                 </div>
-    			<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
-			</div>
-		</div>
+                <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
+            </div>
+        <main class="mt-2 mx-auto w-11/12 max-w-screen-md">
         <form method="post">{% csrf_token %}
 			<p>Are you sure you want to delete the insight with text:</p>
-			<blockquote>{{ object.text }}</blockquote>
+			<blockquote class="border-l border-blue-500 border-l-4 ml-2 pl-2"><p>{{ object.text }}</p></blockquote>
             {{ form.as_p }}
-			<button type="submit" class="bg-red">Yes, delete insight</button>
-            <a href="{% url 'problems-view' object.problem_id %}?type=insight" class="buttonLink bg-gray">Cancel</button>
+			<button type="submit" class="btn btn-error !min-h-9 h-9 mx-1 my-2">Yes, delete insight</button>
+            <a href="{% url 'problems-view' object.problem_id %}?type=insight" class="btn btn-active btn-ghost !min-h-9 h-9 mx-1 my-2">Cancel</a>
         </form>
-		<div style="text-align: center; font-size: smaller; border-top: 0.1em solid; margin-top: 1em;">
+		<div style="text-align: center; font-size: smaller; margin-top: 1em; padding: 0.5em;" class="border-t dark:border-neutral">
             <p>
-                <a href="{% url 'about-starlight' %}">About</a> &#8226;
-                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
-                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
-                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
-                <a href="{% url 'journal' %}">Journal</a> &#8226;
-                <a href="{% url 'profile' %}">Your profile</a> &#8226;
-                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'journal' %}">Journal</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
             </p>
             <p>
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
             </p>
         </div>
+        </main>
     </body>
 </html>
