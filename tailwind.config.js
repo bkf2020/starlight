@@ -9,7 +9,11 @@ module.exports = {
     'text-green-700',
     'dark:text-green-300',
     'text-orange-700',
-    'dark:text-orange-300'
+    'dark:text-orange-300',
+    'bg-inherit',
+    'border-black',
+    'focus:border-black',
+    'focus:outline-black'
   ],
   blocklist: [
     'modal',
