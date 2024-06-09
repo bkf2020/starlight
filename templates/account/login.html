@@ -7,17 +7,14 @@
 {% block h1_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-<style>
-  body {
-    max-width: 600px !important;
-  }
-</style>
+
 {% get_providers as socialaccount_providers %}
-<div style="border: 0.1em solid; border-radius: 0.5em; max-width: 600px; margin-left: auto; margin-right: auto; padding: 1em; padding-top: 0em !important; margin-top: 0.5em;">
 {% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+<div class="card max-w-2xl bg-base-100 border border-neutral-400 p-3 my-2 max-w-[350px] mx-auto">
+	<p class="max-w-[400px] mx-auto">{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}" class="link text-blue-700 dark:text-blue-300">sign up</a>
 for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+  <div class="divider"></div> 
 
 <div class="socialaccount_ballot">
 
@@ -25,7 +22,7 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
   </div>
 
-  <div class="login-or">{% trans 'or' %}</div>
+  <div class="login-or my-5 divider">{% trans 'or' %}</div>
 
 </div>
 
@@ -35,15 +32,23 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 <p>{% blocktrans %}If you have not created an account yet, then please
 <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
 {% endif %}
-
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  <div class="max-w-[450px] mx-auto text-left">
+	{{ form.as_p }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+  <button class="primaryAction w-full" type="submit">{% trans "Sign In" %}</button>
+  </div>
 </form>
 </div>
-
+<style>
+	#theNavbar, #theFooter {
+		border: none !important;
+	}
+	#profileBtn, #allProblemsBtn {
+		display: none;
+	}
+</style>
 {% endblock %}

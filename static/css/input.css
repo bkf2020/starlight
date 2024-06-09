@@ -3,5 +3,20 @@
 @tailwind utilities;
 
 .errorlist {
-    @apply alert alert-error;
+    @apply alert alert-error !block;
+}
+ul.errorlist {
+	@apply list-disc pl-10 text-left;
+}
+
+input#id_password, input#id_login, input#id_email, input#id_username, input#id_password1, input#id_password2, input#id_oldpassword {
+	@apply input input-bordered w-11/12 !min-h-9 h-9 max-w-xs m-2;
+}
+
+span.helptext {
+	@apply underline text-blue-700 dark:text-blue-300 block py-2;
+}
+
+button.primaryAction {
+	@apply btn btn-warning !min-h-9 h-9;
 }

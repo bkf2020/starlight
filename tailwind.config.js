@@ -5,7 +5,11 @@ module.exports = {
     extend: {},
   },
   safelist: [
-    '!bg-base-100'
+    '!bg-base-100',
+    'text-green-700',
+    'dark:text-green-300',
+    'text-orange-700',
+    'dark:text-orange-300'
   ],
   blocklist: [
     'modal',

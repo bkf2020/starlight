@@ -7,18 +7,21 @@
 
 {% block content %}
 <style>
-  body {
-    max-width: 600px !important;
-  }
   @media screen and (max-width: 550px) {
     #formRuleFlex {
       flex-direction: column !important;
     }
   }
+  #profileBtn, #allProblemsBtn {
+		display: none;
+	}
+	#theNavbar, #theFooter {
+		border: none !important;
+	}
 </style>
-<div style="border: 0.1em solid; border-radius: 0.5em; max-width: 600px; margin-left: auto; margin-right: auto; padding: 1em; padding-top: 0em !important; margin-top: 0.5em;">
-  <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %} <b>Read rules (may be at bottom of page) before signing up</b></p>
-  <div class="socialaccount_providers">
+<div style="border: 0.1em solid; border-radius: 0.5em; max-width: 600px; margin-left: auto; margin-right: auto; padding: 1em; margin-top: 0.5em;">
+  <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}" class="link text-blue-700 dark:text-blue-300">sign in</a>.{% endblocktrans %} <b>Read rules (may be at bottom of page) before signing up</b></p>
+  <div class="socialaccount_providers max-w-40 py-2">
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
   </div>
 <div id="formRuleFlex" style="display: flex; flex-direction: row;">
@@ -29,12 +32,12 @@
       {% if redirect_field_value %}
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}
-      <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+      <button type="submit" class="btn btn-sm btn-warning mt-2">{% trans "Sign Up" %} &raquo;</button>
     </form>
   </div>
   <div>
     <p><b>The rules:</b></p>
-    <ul>
+    <ul class="list-disc mx-5">
       <li>Usernames must be 35 characters or fewer. Usernames may contain alphanumeric, _, @, +, . and - characters.</li>
       <li>Emails cannot be disposable to prevent spam</li>
       <li>
