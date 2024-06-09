@@ -269,7 +269,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             summaryLink.target = "_blank";
             summaryLink.rel = "noopener noreferrer";
             summaryLink.appendChild(document.createTextNode("View summary of insights of this problem"));
-            summaryLink.classList.add("btn", "btn-small", "btn-outline", "btn-success", "!min-h-9", "h-9", "mb-2");
+            summaryLink.classList.add("btn", "btn-sm", "btn-ghost", "btn-active", "mt-2", "!h-fit", "p-2");
             summaryLink.style.padding = "0.4em;";
             problemItem.appendChild(problemLink);
             var sharedInsightsDetails = document.createElement("details");
@@ -288,7 +288,7 @@ async function populateProblemPage(page, problemId, clusterId, firstTime, button
             sharedInsightsLink.href = "/problems/sharedInsights/?type=group&insightProblem=" + problemId + "&otherProblem=" + problem["id"].toString() + "&cluster=" + clusterId;
             sharedInsightsLink.target = "_blank";
             sharedInsightsLink.rel = "noopener noreferrer";
-            sharedInsightsLink.classList.add("btn", "btn-small", "btn-outline", "btn-info", "!min-h-9", "h-9", "mb-2");
+            sharedInsightsLink.classList.add("btn", "btn-sm", "btn-ghost", "btn-active", "!h-fit", "p-2");
             sharedInsightsLink.appendChild(document.createTextNode("View ALL insights of this problem that are shared with this cluster"));
             sharedInsightsDetails.append(sharedInsightsSummary);
             sharedInsightsDetails.append(sharedInsightsList);
