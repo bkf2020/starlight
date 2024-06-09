@@ -37,7 +37,7 @@
                                 </form>
                             </li>
                         {% else %}
-                            <li><a class="btn-sm" href="{% url 'login' %}?next={{ full_path|urlencode }}">Login</a></li>
+                            <li><a class="btn-sm" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Login</a></li>
                             <li><a class="btn-sm" href="{% url 'register' %}">Register</a></li>
                         {% endif %}
                     </ul>
