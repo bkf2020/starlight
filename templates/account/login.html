@@ -11,10 +11,9 @@
 {% get_providers as socialaccount_providers %}
 {% if socialaccount_providers %}
 <div class="card max-w-2xl bg-base-100 border border-neutral-400 p-3 my-2 max-w-[350px] mx-auto">
-	<p class="max-w-[400px] mx-auto">{% blocktrans with site.name as site_name %}Please sign in with one
+	<p class="max-w-[400px] mx-auto mb-2">{% blocktrans with site.name as site_name %}Please sign in with one
 of your existing third party accounts. Or, <a href="{{ signup_url }}" class="link text-blue-700 dark:text-blue-300">sign up</a>
 for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-  <div class="divider"></div> 
 
 <div class="socialaccount_ballot">
 

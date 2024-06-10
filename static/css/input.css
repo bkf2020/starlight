@@ -20,3 +20,19 @@ span.helptext {
 button.primaryAction {
 	@apply btn btn-warning !min-h-9 h-9;
 }
+
+.btn-warning.btn-outline {
+	@apply text-orange-700 dark:text-yellow-400;
+}
+.btn-warning.btn-outline:hover {
+	@apply dark:text-black;
+}
+@layer base {
+	*, ::before, ::after {
+		@apply border-neutral-300;
+	}
+	input::placeholder,
+	textarea::placeholder {
+		@apply text-neutral-500 dark:text-neutral-400;
+	}
+}

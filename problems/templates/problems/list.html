@@ -120,7 +120,7 @@
 					<option value="USAMO">USAMO</option>
 				  {% endif %}
 				</select>
-                <button type="submit" class="btn btn-primary mr-1 !min-h-9 h-9">Search</button><a href="{% url 'problems-list' %}" class="buttonLink btn btn-secondary !min-h-9 h-9">Reset</a>
+                <button type="submit" class="btn btn-secondary mr-1 !min-h-9 h-9">Search</button><a href="{% url 'problems-list' %}" class="buttonLink btn btn-accent !min-h-9 h-9">Reset</a>
             </div>
         </form>
         <div class="p-2 dark:border-neutral mt-2" style="margin-bottom: 0.5em !important;">
@@ -165,7 +165,7 @@
                         <td>{{ problem.id }}</td>
                         <td><a class="link text-blue-700 dark:text-blue-300" href="{% url 'problems-view' problem.id %}">{{ problem.name }}</a></td>
                         {% if request.user.is_authenticated %}	
-                            <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="btn btn-outline m-1" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
+                            <td><a href="{% url 'journal-create' problem.id %}?next={{ full_path|urlencode }}#messages" class="btn btn-outline btn-primary m-1" style="margin: 0px 0px 0px 0px !important;">Add to journal</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
