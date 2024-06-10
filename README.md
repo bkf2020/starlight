@@ -22,8 +22,8 @@ There are various ads (text/image) to copypaste at https://tinyurl.com/starlight
 GNU AGPLv3 for most files. See `LICENSE` file for more details. Note the `APACHE_LICENSE` and `NOTICE.txt` files are for `problems/scripts/cluster_hints.py,`
 `problems/scripts/cluster_insights.py`, and `problems/scripts/cluster_insights_overall.py`.
 
-`static/img/landingpage.jpg` is from [Unsplash](https://unsplash.com/photos/va_nrBLonf8) and under the
-[Unsplash License](https://unsplash.com/license). I have slightly modified it with gimp.
+`static/img/landingpage.jpg` is from [Unsplash](https://unsplash.com/photos/black-mountain-under-clear-night-sky-zhUzdTgtRP8) and under the
+[Unsplash License](https://unsplash.com/license).
 
 `static/img/darkmode.png` is [Moon Symbol](https://icons8.com/icon/59841/moon-symbol) from [Icons8](https://icons8.com/) and
 `static/img/lightmode.png` is [Sun](https://icons8.com/icon/9313/sun) from [Icons8](https://icons8.com/). The license is

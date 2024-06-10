@@ -9,60 +9,67 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">        
 		<script type="text/javascript" src="{% static 'js/colorChange.js' %}"></script>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/output.css' %}" />
         <link rel="icon" href="{% static 'emoji/logo.png' %}" type="image/png" />
 	</head>
     <body>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-			<div style="display: flex; align-items: center;">
-                <div style="display: flex; justify-content: center; align-items: center; margin-right: 0.5em;"><object style="display: inline-block;" data="{% static 'emoji/1f320.svg' %}" width="35" height="35"></object></div>
-				<div><h1 style="display: inline-block;">Starlight Problem Solving: About</h1></div>
-			</div>
-			<div style="float: right; margin-left: 0.7em;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-left: 0.5em;">
-                    <div style="margin-right: 0.5em; display: block;">
-                        <button style="background-color: transparent; margin: initial; padding: initial; display: block;" id="colorModeIndBtn">
-                            <div style="display: flex; justify-content: center; align-items: center;">
-                                <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
-                            </div>
-                        </button>
-                    </div>
-					<div>
-				        {% if user.is_authenticated %}
-					        <a href="{% url 'profile' %}">{{ user.username }}</a> |
-					        <a href="{% url 'logout' %}">Logout</a>
-				        {% else %}
-                            <a href="{% url 'login' %}">Login</a> |
-					        <a href="{% url 'register' %}">Register</a>
-				        {% endif %}
+        <div>
+                <div class="mx-auto flex-none p-2 text-center border-b dark:border-neutral min-[685px]:navbar">
+					<div class="navbar-start">
+					</div>
+					<div class="navbar-center">
+						<div class="flex justify-center items-center mt-3">
+                    <svg class="mr-2 max-[685px]:inline" width="35" height="35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#269" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#F4900C" d="M11 9s7.29-4.557 21-4.969c.652-.02 2-.031 2 .969-6 9-9 23-9 23L11 9z"/><path fill="#FFAC33" d="M12 16S24 5 32 4.031C32.647 3.952 34 4 34 5c-7 4-12 19-12 19l-10-8z"/><path fill="#FFD983" d="M15.156 12.438c.826.727 2.388 1.164 3.471.972l4.892-.866c1.084-.192 1.613.478 1.178 1.488l-1.968 4.563c-.436 1.01-.369 2.63.148 3.602l2.335 4.384c.518.972.044 1.682-1.051 1.58l-4.947-.463c-1.095-.102-2.616.462-3.379 1.254l-3.45 3.577c-.763.792-1.585.562-1.827-.512L9.469 27.17c-.241-1.073-1.248-2.345-2.237-2.827l-4.467-2.175c-.989-.481-1.024-1.335-.078-1.896l4.274-2.534c.946-.561 1.845-1.911 1.997-3.001l.689-4.92c.152-1.09.953-1.387 1.779-.66l3.73 3.281z"/></svg>
+                    <a class="text-3xl my-1">
+                        Starlight</a>
+                        </div>
+					</div>
+					 <div class="min-[685px]:navbar-end max-[685px]:mx-auto">
+                    <ul class="menu menu-horizontal px-1">
+                        <li><button class="btn-sm" id="colorModeIndBtn">
+                            <img src="{% static 'img/darkmode.png' %}" width="24" height="24" id="colorModeInd">
+                        </button></li>
+                        {% if user.is_authenticated %}
+                            <li><a class="btn-sm" href="{% url 'profile' %}">{{ user.username }}</a></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li><a class="btn-sm" href="{% url 'login' %}">Login</a></li>
+                            <li><a class="btn-sm" href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
                     </div>
                 </div>
-    			<script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
-			</div>
-		</div>
-        <div style="display: flex; justify-content: center; border-radius: 0.5em; background-image: url('{% static 'img/landingpage.jpg' %}'); background-position: center; min-height: 300px; background-repeat: no-repeat; background-size: cover;">
+                <script type="text/javascript" src="{% static 'js/colorChangeButton.js' %}"></script>
+            </div>
+        <div style="display: flex; justify-content: center; background-image: url('{% static 'img/landingpage.jpg' %}'); background-position: center; min-height: 300px; background-repeat: no-repeat; background-size: cover;">
             <div style="display: flex; text-align: center; align-items: center; max-width: 1200px; width: 95%; color: white; text-shadow: 1px 1px 5px black;">
-                <div style="padding-top: 1em; padding-bottom: 1em; padding-left: 0.5em; padding-right: 0.5em;">
-                    <h1 style="margin-top: 0px;">Improve your problem solving skills and help others with INSIGHTS.</h1>
-                    <h3>
+                <div style="padding-top: 2em; padding-bottom: 2em; padding-left: 1em; padding-right: 1em;">
+                    <h1 style="margin-top: 0px;" class="text-3xl font-bold">Improve your problem solving skills and help others with INSIGHTS.</h1>
+                    <h3 class="my-3 text-xl font-bold">
                         Share and discover new key insights and hints on over <u>20,000</u> competitive programming/math problems.
                         Level up your problem solving skills by solving similar problems on insights you struggled with discovering.
                     </h3>
-                    <div style="text-shadow: initial;">
-                        <a class="buttonLink" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="{% url 'register' %}"><b>Get started</b></a>
-                        <a class="buttonLink bg-blue" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="{% url 'problems-list' %}">View problems </a>
-                        <a class="buttonLink bg-cyan" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="https://discord.gg/czgReQSpFz" target="_blank" rel="noopener noreferrer">Join Discord</a>
-                        <a class="buttonLink bg-green" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="https://forms.gle/txpWvcZwWxD1yVog6" target="_blank" rel="noopener noreferrer">Join our team</a>
-                        <a class="buttonLink bg-orange" style="box-shadow: 0.2em 0.2em 0.2em white; font-size: large;" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <div style="text-shadow: initial;" class="mt-2">
+                        <a class="btn btn-warning mr-2 mt-2" style="box-shadow: 2px 2px 5px 2px white; font-size: large;" href="{% url 'register' %}"><b>Get started</b></a>
+                        <a class="btn btn-info mr-2 mt-2" style="box-shadow: 2px 2px 5px 2px white; font-size: large;" href="{% url 'problems-list' %}">View problems </a>
+                        <a class="btn btn-primary mr-2 mt-2" style="box-shadow: 2px 2px 5px 2px white; font-size: large;" href="https://discord.gg/czgReQSpFz" target="_blank" rel="noopener noreferrer">Join Discord</a>
+                        <a class="btn btn-success mr-2 mt-2" style="box-shadow: 2px 2px 5px 2px white; font-size: large;" href="https://forms.gle/txpWvcZwWxD1yVog6" target="_blank" rel="noopener noreferrer">Join our team</a>
+                        <a class="btn btn-accent mr-2 mt-2" style="box-shadow: 2px 2px 5px 2px white; font-size: large;" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
                     </div>
                 </div>
             </div>
         </div>
-        <h2 style="text-align: center;">Features:</h2>
+        <main class="w-11/12 mx-auto max-w-screen-lg">
+        <h2 style="text-align: center;" class="text-xl font-bold my-2">Features:</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, max(45%, min(300px, 100%))); gap: 1em; margin-left: auto; margin-right: auto; justify-content: space-evenly; text-align: center;">
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f64b.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#FA743E" d="M27 27H10v9h21v-5c0-2.209-1.791-4-4-4z"/><path fill="#FFDC5D" d="M15 22v6c0 1.657 1.343 3 3 3s3-1.343 3-3v-6h-6z"/><path fill="#DD551F" d="M26 32h1v4h-1z"/><path fill="#FFAC33" d="M21.906 1.262c-2.02-.654-6.772-.475-7.96 1.069-3.089.059-6.713 2.851-7.188 6.535-.47 3.645.578 5.338.951 8.079.422 3.106 2.168 4.099 3.564 4.515C13.281 24.114 15.415 24 19 24c7 0 10.334-4.684 10.629-12.639.178-4.812-2.645-8.456-7.723-10.099z"/><path fill="#FFDC5D" d="M25.909 11.701c-.677-.938-1.545-1.693-3.446-1.96.713.327 1.396 1.455 1.485 2.079.089.624.178 1.129-.386.505-2.26-2.499-4.722-1.515-7.162-3.041-1.704-1.066-2.223-2.246-2.223-2.246s-.208 1.574-2.792 3.178c-.749.465-1.643 1.5-2.139 3.03C8.889 14.345 9 15.325 9 17c0 4.889 4.029 9 9 9s9-4.147 9-9c0-3.041-.319-4.229-1.091-5.299z"/><path fill="#C1694F" d="M22 22h-8s1 2 4 2 4-2 4-2zm-3-2.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path fill="#662113" d="M14 16c-.552 0-1-.448-1-1v-1c0-.552.448-1 1-1s1 .448 1 1v1c0 .552-.448 1-1 1zm8 0c-.552 0-1-.448-1-1v-1c0-.552.448-1 1-1s1 .448 1 1v1c0 .552-.448 1-1 1z"/><path fill="#FFDC5D" d="M12.421 2.935c-.591-.389-1.387-.224-1.776.367L10 4.284V2c0-1.105-.896-2-2-2H4C2.896 0 2 .896 2 2v8s0 1 1 1h6l1-1V8.957l2.789-4.246c.389-.592.225-1.387-.368-1.776z"/><path fill="#EF9645" d="M4 0h1v5H4zm3 0h1v5H7z"/><path fill="#FA743E" d="M9 27h3l-2 9c-8 0-8-9-8-9V10h8L9 27z"/></svg>
                 </center>
                 Share <b>key insights/observations</b> as well as <b>hints</b>
                 for over <b>20,000 problems</b> including
@@ -70,8 +77,8 @@
             </div>
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f9e0.svg' %}" width="80" height="80"></object>
-                </center>
+					<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#EA596E" d="M29.896 26.667c.003.283-.07.653-.146.958-.531 2.145-2.889 4.552-6.208 4.333-3.008-.198-5.458-1.642-5.458-3.667s2.444-3.667 5.458-3.667 6.335.018 6.354 2.043z"/><path fill="#DD2E44" d="M23.542 24.964c-1.619 0-5.314.448-6.162.448-1.498 0-2.713.94-2.713 2.1 0 .558.286 1.062.744 1.438 0 0 1.006 1.009 2.818.525.793-.212 2.083-1.786 4.354-2.036 1.131-.125 3.25.75 6.974.771.16-.344.193-.583.193-.583 0-2.027-3.194-2.663-6.208-2.663z"/><path fill="#F4ABBA" d="M29.75 27.625s2.184-.443 3.542-2.229c1.583-2.083 1.375-4.312 1.375-4.312 1.604-3-.5-5.813-.5-5.813C33.958 12.104 32 10.792 32 10.792c-1.271-3.021-4.083-3.833-4.083-3.833-2.208-2.583-6.125-2.5-6.125-2.5s-3.67-1.345-8.708.167c-.833.25-3.625.833-5.667 2.083C.981 10.649.494 16.793.584 17.792 1.083 23.375 5 24.375 7.5 24.958c.583 1.583 2.729 4.5 6.583 3.417 4.75-.833 6.75-2.25 7.917-2.25s4.417 1.25 7.75 1.5z"/><g fill="#EA596E"><path d="M17.737 18.648c2.328-1.255 3.59-1.138 4.704-1.037.354.032.689.057 1.028.055 1.984-.045 3.591-.881 4.302-1.69.182-.208.161-.523-.046-.706-.206-.182-.521-.163-.706.045-.548.624-1.899 1.313-3.573 1.351-.3.009-.601-.021-.913-.05-1.195-.111-2.679-.247-5.271 1.152-.665.359-1.577.492-2.565.592-2.197-3.171-.875-5.933-.497-6.591.037.002.073.014.111.014.4 0 .802-.098 1.166-.304.24-.136.325-.441.189-.681s-.441-.325-.681-.189c-.64.362-1.482.153-1.88-.467-.149-.233-.458-.301-.69-.151-.232.149-.3.458-.151.69.237.371.571.65.948.837-.521 1.058-1.51 3.84.372 6.951-1.324.13-2.65.317-3.688.986-.67.432-1.355 1.064-1.878 1.791-.629-.108-2.932-.675-3.334-3.231.25-.194.452-.45.577-.766.102-.257-.024-.547-.281-.649s-.547.024-.649.281c-.089.225-.25.389-.454.461-.202.072-.431.048-.643-.07-.243-.135-.546-.046-.68.194-.134.241-.047.546.194.68.284.158.588.238.89.238.037 0 .072-.017.109-.019.476 2.413 2.383 3.473 3.732 3.794-.176.388-.295.788-.331 1.192-.024.274.179.518.454.542l.045.002c.256 0 .475-.195.498-.456.108-1.213 1.265-2.48 2.293-3.145.964-.621 2.375-.752 3.741-.879 1.325-.121 2.577-.237 3.558-.767zm12.866-1.504c-.131.242-.041.546.2.677.076.042.159.062.24.062.176 0 .347-.093.438-.259.019-.034 1.842-3.449-1.571-5.744-.228-.152-.539-.093-.694.136-.154.229-.093.54.136.694 2.644 1.778 1.309 4.326 1.251 4.434zM9.876 9.07c.156 0 .309-.072.406-.208 1.45-2.017 3.458-1.327 3.543-1.295.259.094.544-.038.64-.296.096-.259-.036-.546-.295-.642-.96-.356-3.177-.468-4.7 1.65-.161.223-.11.536.114.697.089.064.191.094.292.094zm13.072-1.888c2.225-.181 3.237 1.432 3.283 1.508.094.158.26.246.431.246.086 0 .174-.022.253-.069.238-.14.318-.446.179-.684-.054-.091-1.34-2.218-4.224-1.998-.275.021-.48.262-.459.538.022.275.271.484.537.459zm9.15 14.611c-.246-.014-.517.181-.539.457-.002.018-.161 1.719-1.91 2.294-.262.086-.405.368-.318.631.068.21.265.344.475.344.052 0 .104-.008.156-.025 2.372-.778 2.586-3.064 2.594-3.161.021-.276-.183-.518-.458-.54z"/><path d="M7.347 16.934c-.072.267.086.541.353.613.043.012.087.017.13.017.221 0 .422-.147.482-.37.19-.711.927-1.167 1.652-1.014.271.055.535-.116.592-.387.057-.27-.116-.535-.387-.592-.426-.09-.854-.048-1.248.086-1.166-1.994-.939-3.96-.936-3.981.036-.273-.156-.524-.429-.562-.272-.033-.524.154-.562.427-.013.097-.28 2.316 1.063 4.614-.334.301-.588.694-.71 1.149zm11.179-2.47c.407-.377 1.06-.37 1.455.015.098.094.223.141.349.141.131 0 .261-.051.358-.152.192-.198.188-.515-.01-.707-.23-.223-.505-.372-.797-.465.296-1.016.179-1.467-.096-2.312-.048-.147-.101-.311-.157-.498l-.03-.1c-.364-1.208-.605-2.005.087-3.13.145-.235.071-.543-.164-.688-.231-.144-.542-.073-.688.164-.928 1.508-.587 2.637-.192 3.944l.03.1c.059.194.113.364.163.517.247.761.322 1.016.02 1.936-.369.069-.722.236-1.01.504-.202.188-.213.505-.025.707.189.202.506.212.707.024zm6.365-2.985c.291 0 .585-.061.859-.191.25-.118.357-.416.239-.666-.117-.25-.419-.354-.665-.239-.502.236-1.121.031-1.384-.457-.131-.244-.436-.333-.677-.205-.243.13-.335.434-.204.677.18.336.448.601.76.785-.537 1.305-.232 2.691.017 3.426.07.209.265.34.474.34.053 0 .106-.008.16-.026.262-.088.402-.372.313-.633-.168-.498-.494-1.756-.002-2.826.038.002.073.015.11.015zm4.797 9.429c-.019-.275-.257-.492-.531-.467-1.014.072-1.878-.697-1.947-1.703-.02-.275-.265-.48-.533-.465-.275.019-.483.258-.465.533.041.59.266 1.122.608 1.555-.804.946-1.857 1.215-2.444 1.284-.519.062-.973.009-1.498-.053-.481-.055-1.025-.118-1.698-.098l-.005.001c-.02-.286-.088-.703-.305-1.05-.146-.233-.455-.304-.689-.158-.233.146-.305.455-.158.689.134.215.159.558.159.725-.504.181-.94.447-1.334.704-.704.458-1.259.82-2.094.632-.756-.173-1.513-.208-2.155-.118-.1-.251-.258-.551-.502-.782-.201-.19-.517-.182-.707.02-.189.2-.181.517.02.707.086.081.154.199.209.317-1.103.454-1.656 1.213-1.682 1.25-.16.224-.107.533.115.694.088.063.19.094.292.094.155 0 .308-.071.406-.205.005-.008.554-.743 1.637-1.04.56-.154 1.363-.141 2.146.037.219.05.422.067.619.07.093.218.129.477.134.573.016.266.236.472.499.472l.027-.001c.275-.015.486-.248.473-.523-.003-.05-.023-.346-.13-.686.461-.167.862-.428 1.239-.673.572-.373 1.113-.726 1.82-.749.592-.021 1.08.036 1.551.091.474.055.94.091 1.454.061.091.253.084.591.07.704-.033.273.16.523.434.559.021.003.042.004.063.004.247 0 .462-.183.495-.435.008-.062.059-.512-.059-.981.718-.193 1.608-.612 2.345-1.471.431.264.934.419 1.469.419.062 0 .125-.002.187-.006.275-.018.483-.255.465-.531z"/></g></svg>
+				</center>
                 <b>Summarize key insights/hints</b> with <b>artificial intelligence (AI/ML)</b> and see the
                 <b>key insights that other top problem solvers are thinking</b> of in a problem
             </div>
@@ -79,80 +86,81 @@
         <div style="padding-top: 1em; display: grid; grid-template-columns: repeat(auto-fit, min(300px, 100%)); gap: 1em; justify-content: space-evenly; padding-bottom: 0.5em; border-bottom: 0.1em solid; text-align: center;">
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f50d.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#9AAAB4" d="M27.388 24.642L24.56 27.47l-4.95-4.95 2.828-2.828z"/><path fill="#66757F" d="M34.683 29.11l-5.879-5.879c-.781-.781-2.047-.781-2.828 0l-2.828 2.828c-.781.781-.781 2.047 0 2.828l5.879 5.879c1.562 1.563 4.096 1.563 5.658 0 1.56-1.561 1.559-4.094-.002-5.656z"/><circle fill="#8899A6" cx="13.586" cy="13.669" r="13.5"/><circle fill="#BBDDF5" cx="13.586" cy="13.669" r="9.5"/></svg>
                 </center>
                 Find <b>similar problems</b> based on insight(s) of one problem to continue practicing
                 <b>insights/observations you struggled with applying/seeing in a problem.</b>
             </div>
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f914.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><circle fill="#FFCB4C" cx="18" cy="17.018" r="17"/><path fill="#65471B" d="M14.524 21.036c-.145-.116-.258-.274-.312-.464-.134-.46.13-.918.59-1.021 4.528-1.021 7.577 1.363 7.706 1.465.384.306.459.845.173 1.205-.286.358-.828.401-1.211.097-.11-.084-2.523-1.923-6.182-1.098-.274.061-.554-.016-.764-.184z"/><ellipse fill="#65471B" cx="13.119" cy="11.174" rx="2.125" ry="2.656"/><ellipse fill="#65471B" cx="24.375" cy="12.236" rx="2.125" ry="2.656"/><path fill="#F19020" d="M17.276 35.149s1.265-.411 1.429-1.352c.173-.972-.624-1.167-.624-1.167s1.041-.208 1.172-1.376c.123-1.101-.861-1.363-.861-1.363s.97-.4 1.016-1.539c.038-.959-.995-1.428-.995-1.428s5.038-1.221 5.556-1.341c.516-.12 1.32-.615 1.069-1.694-.249-1.08-1.204-1.118-1.697-1.003-.494.115-6.744 1.566-8.9 2.068l-1.439.334c-.54.127-.785-.11-.404-.512.508-.536.833-1.129.946-2.113.119-1.035-.232-2.313-.433-2.809-.374-.921-1.005-1.649-1.734-1.899-1.137-.39-1.945.321-1.542 1.561.604 1.854.208 3.375-.833 4.293-2.449 2.157-3.588 3.695-2.83 6.973.828 3.575 4.377 5.876 7.952 5.048l3.152-.681z"/><path fill="#65471B" d="M9.296 6.351c-.164-.088-.303-.224-.391-.399-.216-.428-.04-.927.393-1.112 4.266-1.831 7.699-.043 7.843.034.433.231.608.747.391 1.154-.216.405-.74.546-1.173.318-.123-.063-2.832-1.432-6.278.047-.257.109-.547.085-.785-.042zm12.135 3.75c-.156-.098-.286-.243-.362-.424-.187-.442.023-.927.468-1.084 4.381-1.536 7.685.48 7.823.567.415.26.555.787.312 1.178-.242.39-.776.495-1.191.238-.12-.072-2.727-1.621-6.267-.379-.266.091-.553.046-.783-.096z"/></svg>
                 </center>
                 See <b>hints</b> to be able to take more away from more time spent on hands on problem solving.
             </div>
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f4d5.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#A0041E" d="M35 26c0 2.209-1.791 4-4 4H5c-2.209 0-4-1.791-4-4V6.313C1 4.104 6.791 0 9 0h20.625C32.719 0 35 2.312 35 5.375V26z"/><path fill="#CCD6DD" d="M33 30c0 2.209-1.791 4-4 4H7c-2.209 0-4-1.791-4-4V6c0-4.119-.021-4 5-4h21c2.209 0 4 1.791 4 4v24z"/><path fill="#E1E8ED" d="M31 31c0 1.657-1.343 3-3 3H4c-1.657 0-3-1.343-3-3V7c0-1.657 1.343-3 3-3h24c1.657 0 3 1.343 3 3v24z"/><path fill="#BE1931" d="M31 32c0 2.209-1.791 4-4 4H6c-2.209 0-4-1.791-4-4V10c0-2.209 1.791-4 4-4h21c2.209 0 4 1.791 4 4v22z"/><path fill="#DD2E44" d="M29 32c0 2.209-1.791 4-4 4H6c-2.209 0-4-1.791-4-4V12c0-2.209 1.791-4 4-4h19.335C27.544 8 29 9.456 29 11.665V32z"/><path fill="#A0041E" d="M6 6C4.312 6 4.269 4.078 5 3.25 5.832 2.309 7.125 2 9.438 2H11V0H8.281C4.312 0 1 2.5 1 5.375V32c0 2.209 1.791 4 4 4h2V6H6z"/></svg>
                 </center>
                 <b>A journal</b> to store the <b>statuses of all problems you are solving</b> and
                 <b>the key insights used</b> making it convenient to use this website
             </div>
         </div>
-        <h2 style="text-align: center;">The future roadmap:</h2>
+        <h2 style="text-align: center;" class="text-xl font-bold my-2">The future roadmap:</h2>
         <div style="padding-top: 1em; display: grid; grid-template-columns: repeat(auto-fit, max(45%, min(300px, 100%))); gap: 1em; justify-content: space-evenly; padding-bottom: 0.5em; border-bottom: 0.1em solid; text-align: center;">
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f916.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><ellipse fill="#F4900C" cx="33.5" cy="14.5" rx="2.5" ry="3.5"/><ellipse fill="#F4900C" cx="2.5" cy="14.5" rx="2.5" ry="3.5"/><path fill="#FFAC33" d="M34 19c0 .553-.447 1-1 1h-3c-.553 0-1-.447-1-1v-9c0-.552.447-1 1-1h3c.553 0 1 .448 1 1v9zM7 19c0 .553-.448 1-1 1H3c-.552 0-1-.447-1-1v-9c0-.552.448-1 1-1h3c.552 0 1 .448 1 1v9z"/><path fill="#FFCC4D" d="M28 5c0 2.761-4.478 4-10 4C12.477 9 8 7.761 8 5s4.477-5 10-5c5.522 0 10 2.239 10 5z"/><path fill="#F4900C" d="M25 4.083C25 5.694 21.865 7 18 7c-3.866 0-7-1.306-7-2.917 0-1.611 3.134-2.917 7-2.917 3.865 0 7 1.306 7 2.917z"/><path fill="#269" d="M30 5.5C30 6.881 28.881 7 27.5 7h-19C7.119 7 6 6.881 6 5.5S7.119 3 8.5 3h19C28.881 3 30 4.119 30 5.5z"/><path fill="#55ACEE" d="M30 6H6c-1.104 0-2 .896-2 2v26h28V8c0-1.104-.896-2-2-2z"/><path fill="#3B88C3" d="M35 33v-1c0-1.104-.896-2-2-2H22.071l-3.364 3.364c-.391.391-1.023.391-1.414 0L13.929 30H3c-1.104 0-2 .896-2 2v1c0 1.104-.104 2 1 2h32c1.104 0 1-.896 1-2z"/><circle fill="#FFF" cx="24.5" cy="14.5" r="4.5"/><circle fill="#DD2E44" cx="24.5" cy="14.5" r="2.721"/><circle fill="#FFF" cx="11.5" cy="14.5" r="4.5"/><path fill="#F5F8FA" d="M29 25.5c0 1.381-1.119 2.5-2.5 2.5h-17C8.119 28 7 26.881 7 25.5S8.119 23 9.5 23h17c1.381 0 2.5 1.119 2.5 2.5z"/><path fill="#CCD6DD" d="M17 23h2v5h-2zm-5 0h2v5h-2zm10 0h2v5h-2zM7 25.5c0 1.21.859 2.218 2 2.45v-4.9c-1.141.232-2 1.24-2 2.45zm20-2.45v4.899c1.141-.232 2-1.24 2-2.45s-.859-2.217-2-2.449z"/><circle fill="#DD2E44" cx="11.5" cy="14.5" r="2.721"/></svg>
                 </center>
                 An AI to predict key insights/observations needed to solve a problem and apply the necessary algorithms.
             </div>
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f3c6.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#FFAC33" d="M5.123 5h6C12.227 5 13 4.896 13 6V4c0-1.104-.773-2-1.877-2h-8c-2 0-3.583 2.125-3 5 0 0 1.791 9.375 1.917 9.958C2.373 18.5 4.164 20 6.081 20h6.958c1.105 0-.039-1.896-.039-3v-2c0 1.104-.773 2-1.877 2h-4c-1.104 0-1.833-1.042-2-2S3.539 7.667 3.539 7.667C3.206 5.75 4.018 5 5.123 5zm25.812 0h-6C23.831 5 22 4.896 22 6V4c0-1.104 1.831-2 2.935-2h8c2 0 3.584 2.125 3 5 0 0-1.633 9.419-1.771 10-.354 1.5-2.042 3-4 3h-7.146C21.914 20 22 18.104 22 17v-2c0 1.104 1.831 2 2.935 2h4c1.104 0 1.834-1.042 2-2s1.584-7.333 1.584-7.333C32.851 5.75 32.04 5 30.935 5zM20.832 22c0-6.958-2.709 0-2.709 0s-3-6.958-3 0-3.291 10-3.291 10h12.292c-.001 0-3.292-3.042-3.292-10z"/><path fill="#FFCC4D" d="M29.123 6.577c0 6.775-6.77 18.192-11 18.192-4.231 0-11-11.417-11-18.192 0-5.195 1-6.319 3-6.319 1.374 0 6.025-.027 8-.027l7-.001c2.917-.001 4 .684 4 6.347z"/><path fill="#C1694F" d="M27 33c0 1.104.227 2-.877 2h-16C9.018 35 9 34.104 9 33v-1c0-1.104 1.164-2 2.206-2h13.917c1.042 0 1.877.896 1.877 2v1z"/><path fill="#C1694F" d="M29 34.625c0 .76.165 1.375-1.252 1.375H8.498C7.206 36 7 35.385 7 34.625v-.25C7 33.615 7.738 33 8.498 33h19.25c.759 0 1.252.615 1.252 1.375v.25z"/></svg>
                 </center>
                 AI to <b>summarize</b> the key insights used in <b>certain contests/a certain level</b>
                 (e.g. USACO gold) to <b>help you achieve your goals</b>.
             </div>
         </div>
-        <h2 style="text-align: center;">Join the community/help us!</h2>
+        <h2 style="text-align: center;" class="text-xl font-bold my-2">Join the community/help us!</h2>
         <div style="padding-top: 1em; display: grid; grid-template-columns: repeat(auto-fit, min(300px, 100%)); gap: 1em; justify-content: space-evenly; padding-bottom: 0.5em; border-bottom: 0.1em solid; text-align: center;">
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f4ac.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#BDDDF4" d="M18 1C8.059 1 0 7.268 0 15c0 4.368 2.574 8.268 6.604 10.835C6.08 28.144 4.859 31.569 2 35c5.758-.96 9.439-3.761 11.716-6.416 1.376.262 2.805.416 4.284.416 9.941 0 18-6.268 18-14S27.941 1 18 1z"/><circle fill="#2A6797" cx="18" cy="15" r="2"/><circle fill="#2A6797" cx="26" cy="15" r="2"/><circle fill="#2A6797" cx="10" cy="15" r="2"/></svg>
                 </center>
                 <a href="https://discord.gg/czgReQSpFz" target="_blank" rel="noopener noreferrer"><b>Join the Discord</b></a> to discuss future plans/features,
                 to hear announcements, or to have a chat with other problem solvers!
             </div>
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f450.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#EF9645" d="M13.375 16.539l.009.061-3.782-8.114c-.286-.611-1.148-.814-1.925-.451l-.061.028c-.68.317-1.071.963-.964 1.53 0 0-1.275-1.147-2.024-.797l-.06.027c-.749.35-1.123 1.136-.833 1.757l.533 1.192c-.301-.644-1.19-.866-1.985-.494l-.062.029c-.795.371-1.197 1.194-.896 1.838l5.131 13.15 6.794.212 2.031-6.25-1.906-3.718zm20.478-5.231l-.062-.029c-.796-.372-1.685-.15-1.985.494l.533-1.192c.29-.621-.084-1.408-.832-1.757l-.06-.027c-.749-.35-1.591-.129-1.882.492l-.143.306c.107-.567-.283-1.213-.964-1.53l-.062-.028c-.777-.363-1.639-.16-1.924.452l-3.771 8.088-.033-.114-2.021 4.52L24 27.375l6.195-4.463 4.554-9.766c.301-.644-.102-1.467-.896-1.838z"/><path fill="#FFDC5D" d="M35.809 15.672s.653-1.043-.454-1.558c-1.106-.515-1.482.657-1.482.657l-2.39 5.142c-.141-.164-.705-.516-.866-.671l3.315-7.136s.653-1.043-.455-1.558c-1.107-.514-1.483.657-1.483.657l-3.118 6.711c-.175-.099-.63-.327-.812-.423l3.616-7.781s.652-1.043-.455-1.558c-1.106-.515-1.482.657-1.482.657l-3.618 7.78c-.193-.078-.797-.335-.988-.404l3.38-7.272s.651-1.043-.455-1.558c-1.108-.515-1.483.657-1.483.657l-3.574 7.689-.286.617-.128.276c3.323 1.544 4.486 5.616 3.2 8.384-.258.554-1.177.3-1.177.3 1.544-3.321.358-6.566-2.964-8.109l.144-4.545s.134-1.213-1.079-1.348c-1.215-.134-1.349 1.08-1.349 1.08l-.509 3.183c-.203 1.262-.431 2.525-.81 3.746-1.066 3.447.551 7.238 3.915 8.803 3.669 1.705 8.027.112 9.732-3.556l.257-.556 3.858-8.306z"/><path fill="#FFDC5D" d="M.192 15.672s-.654-1.043.453-1.558c1.107-.515 1.482.657 1.482.657l2.39 5.142c.141-.164.705-.516.866-.671l-3.315-7.136s-.654-1.043.455-1.558c1.105-.514 1.482.657 1.482.657l3.119 6.711c.175-.099.63-.327.812-.423l-3.615-7.78s-.653-1.043.455-1.558c1.107-.515 1.483.657 1.483.657l3.618 7.78c.193-.078.797-.335.988-.404l-3.38-7.272s-.651-1.043.455-1.558c1.107-.515 1.483.657 1.483.657l3.574 7.689.286.617.128.276c-3.323 1.544-4.486 5.616-3.2 8.384.258.554 1.177.3 1.177.3-1.544-3.321-.358-6.566 2.963-8.109l-.143-4.545s-.134-1.213 1.078-1.348c1.215-.134 1.35 1.08 1.35 1.08l.508 3.183c.203 1.262.432 2.525.811 3.746 1.067 3.447-.552 7.238-3.916 8.803-3.669 1.705-8.027.112-9.732-3.556l-.256-.556-3.859-8.307z"/></svg>
                 </center>
                 <b>Join our team!</b> Wanting web developers, designers, machine learning engineers, and marketing/outreach.
                 Apply <a href="https://forms.gle/txpWvcZwWxD1yVog6" target="_blank" rel="noopener noreferrer">at this form</a>.
             </div>
             <div>
                 <center>
-                    <object data="{% static 'emoji/1f310.svg' %}" width="80" height="80"></object>
+                    <svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#3B88C3" d="M18 0C8.059 0 0 8.059 0 18s8.059 18 18 18 18-8.059 18-18S27.941 0 18 0zM2.05 19h3.983c.092 2.506.522 4.871 1.229 7H4.158c-1.207-2.083-1.95-4.459-2.108-7zM19 8V2.081c2.747.436 5.162 2.655 6.799 5.919H19zm7.651 2c.754 2.083 1.219 4.46 1.317 7H19v-7h7.651zM17 2.081V8h-6.799C11.837 4.736 14.253 2.517 17 2.081zM17 10v7H8.032c.098-2.54.563-4.917 1.317-7H17zM6.034 17H2.05c.158-2.54.901-4.917 2.107-7h3.104c-.705 2.129-1.135 4.495-1.227 7zm1.998 2H17v7H9.349c-.754-2.083-1.219-4.459-1.317-7zM17 28v5.919c-2.747-.437-5.163-2.655-6.799-5.919H17zm2 5.919V28h6.8c-1.637 3.264-4.053 5.482-6.8 5.919zM19 26v-7h8.969c-.099 2.541-.563 4.917-1.317 7H19zm10.967-7h3.982c-.157 2.541-.9 4.917-2.107 7h-3.104c.706-2.129 1.136-4.494 1.229-7zm0-2c-.093-2.505-.523-4.871-1.229-7h3.104c1.207 2.083 1.95 4.46 2.107 7h-3.982zm.512-9h-2.503c-.717-1.604-1.606-3.015-2.619-4.199C27.346 4.833 29.089 6.267 30.479 8zM10.643 3.801C9.629 4.985 8.74 6.396 8.023 8H5.521c1.39-1.733 3.133-3.166 5.122-4.199zM5.521 28h2.503c.716 1.604 1.605 3.015 2.619 4.198C8.654 31.166 6.911 29.733 5.521 28zm19.836 4.198c1.014-1.184 1.902-2.594 2.619-4.198h2.503c-1.39 1.733-3.133 3.166-5.122 4.198z"/></svg>
                 </center>
                 <b>Repost ads (image and text) that promote this website:</b> They are all licensed under CC by 4.0.
                 <a href="https://gist.github.com/bkf2020/d5d6d548cea2c8cb38e9df62ebc0c05e" target="_blank" rel="noopener noreferrer">Here is the collection of those ads</a>.
             </div>
         </div>
-        <div style="text-align: center; font-size: smaller;">
+        <div style="text-align: center; font-size: smaller; margin-top: 1em; padding: 0.5em;">
             <p>
-                <a href="{% url 'about-starlight' %}">About</a> &#8226;
-                <a href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
-                <a href="{% url 'about-rules' %}">Rules</a> &#8226;
-                <a href="{% url 'problems-list' %}">Problems list</a> &#8226;
-                <a href="{% url 'journal' %}">Journal</a> &#8226;
-                <a href="{% url 'profile' %}">Your profile</a> &#8226;
-                <a href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-starlight' %}">About</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-privacy' %}">Privacy Notice</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'about-rules' %}">Rules</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'problems-list' %}">Problems list</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'journal' %}">Journal</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="{% url 'profile' %}">Your profile</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" href="https://github.com/bkf2020/starlight" target="_blank" rel="noopener noreferrer">GitHub</a>
             </p>
             <p>
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
-                Emojis from <a target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/59841/moon-symbol">Moon Symbol</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/9313/sun">Sun</a> icon by <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://icons8.com">Icons8</a> &#8226;
+                Emojis from <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://twemoji.twitter.com/">Twemoji</a> by Twitter under <a class="link text-blue-700 dark:text-blue-300" target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">CC by 4.0</a>
             </p>
         </div>
+        </main>
     </body>
 </html>
