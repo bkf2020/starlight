@@ -52,7 +52,7 @@
 			<a href="{% url 'problems-list' %}" class="btn btn-sm btn-info mt-1">Add a new problem/view all problems</a>
 			(<b>Note:</b> problems are automatically added when you create an insight for that problem.)
 		</p>
-			<div role="tablist" class="tabs-boxed bg-neutral-100 dark:bg-base-200 min-[665px]:items-center">
+			<div role="tablist" class="tabs-bordered my-2 min-[665px]:items-center">
 				{% if request.GET.type == "entire" %}
 					<a href="#" role="tab" class="tab tab-active px-2">&#x1F4C4; Show entire journal</a>
 				{% else %}
@@ -80,9 +80,9 @@
 			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
 				<input type="text" name="type" value="week" style="display: none;">
 				<label for="week">Week number (ISO):</label>
-				<input type="number" name="week" value="{{ request.GET.week }}" class="input input-bordered input-sm">
+				<input type="number" name="week" value="{{ request.GET.week }}" class="input input-bordered input-sm max-w-20">
 				<label for="year">ISO year:</label>
-				<input type="number" name="year" value="{{ request.GET.year }}" class="input input-bordered input-sm">
+				<input type="number" name="year" value="{{ request.GET.year }}" class="input input-bordered input-sm max-w-20">
 				<button type="submit" class="btn btn-sm btn-error mr-1">Find problems</button>
 				<a href="{% url 'journal' %}?type=week&week={{ today_week }}&year={{ today_iso_year }}&page=1" class="btn btn-sm btn-warning mt-2">See most recent problems</a>
 				<p style="margin-top: 0.3em;">
@@ -96,9 +96,9 @@
 			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
 				<input type="text" name="type" value="month" style="display: none;">
 				<label for="week">Month number (1 = Jan, 12 = Dec):</label>
-				<input type="number" name="month" value="{{ request.GET.month }}" class="input input-bordered input-sm">
+				<input type="number" name="month" value="{{ request.GET.month }}" class="input input-bordered input-sm max-w-20">
 				<label for="year">Year:</label>
-				<input type="number" name="year" value="{{ request.GET.year }}" class="input input-bordered input-sm">
+				<input type="number" name="year" value="{{ request.GET.year }}" class="input input-bordered input-sm max-w-20">
 				<button type="submit" class="btn btn-sm btn-error mr-1">Find problems</button>
 				<a href="{% url 'journal' %}?type=month&month={{ today_month }}&year={{ today_year }}&page=1" class="btn btn-sm btn-warning mt-2">See most recent problems</a>
 			</form>
@@ -106,7 +106,7 @@
 			<form method="GET" action="{% url 'journal' %}" style="margin-bottom: 0.5em;">
 				<input type="text" name="type" value="year" style="display: none;">
 				<label for="year">Year:</label>
-				<input type="number" name="year" value="{{ request.GET.year }}" class="input input-bordered input-sm">
+				<input type="number" name="year" value="{{ request.GET.year }}" class="input input-bordered input-sm max-w-20">
 				<button type="submit" class="btn btn-sm btn-error mr-1">Find problems</button>
 				<a href="{% url 'journal' %}?type=year&year={{ today_year }}&page=1" class="btn btn-sm btn-warning mt-2">See most recent problems</a>
 			</form>
