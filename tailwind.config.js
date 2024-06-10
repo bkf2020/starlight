@@ -19,6 +19,7 @@ module.exports = {
     'modal',
     'hidden',
   ],
-  plugins: [require('daisyui')],
+  darkMode: 'selector',
+  plugins: [require('daisyui')]
 }
 
