@@ -43,12 +43,12 @@ module.exports = {
 	warning: "#facc15",
 	success: "#22c55e",
 	error: "#fb7185",
-	"base-100": "#171717",
-	"base-200": "#262626",
-	"base-300": "#404040",
-	"color": "#d2d2d2",
+	"base-100": "#222222",
+	"base-200": "#404040",
+	"base-300": "#525252",
+	"color": "#e5e5e5",
 	"neutral": "#404040",
-	"base-content": "#d2d2d2"
+	"base-content": "#d4d4d4"
       },
       }
     ],
